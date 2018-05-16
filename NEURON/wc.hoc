@@ -1,0 +1,65 @@
+// $Id: wc.hoc,v 1.9 2006/07/28 19:12:00 billl Exp $
+
+// xopen("wc.hoc")
+load_file("nrngui.hoc")
+load_file("pointman.hoc")
+objref g[10],pnm,ppm
+
+create ac
+access ac
+objref wc,nmp
+
+//Begin PointProcessManager
+ac ppm = new PointProcessManager(0)
+object_push(ppm)
+{mt.select("WC") i = mt.selected()
+ms[i] = new MechanismStandard("WC")
+maction(i)
+hoc_ac_ = 0.5
+sec.sec move() d1.flip_to(1)}
+object_pop() 
+ppm.v1.map("PointProcessManager", 748, 86, 262.08, 585.6)
+//End PointProcessManager
+
+wc=WC[0]
+
+tstop=100
+g= new Graph(0)
+graphList[3].append(g)
+g.size(0,1,0,1)
+g.view(0.1, 0.05, 0.7, 0.83, 373, 185, 525.12, 414.4)
+g.xexpr("wc.uu", 0)
+g.label(0.5, 0.9, "x-axis: wc.uu", 2, 1, 0, 0, 1)
+g.addexpr("wc.vv", 1, 1, 0.5, 0.9, 2)
+
+g[1]= new Graph(0)
+graphList[2].append(g[1])
+g[1].size(0,1,0,1)
+g[1].view(0, 0, 100, 1, 620, 40, 300, 200)
+g[1].addexpr("wc.vv", 3, 1, 0.8, 0.9, 2)
+g[1].addexpr("wc.uu", 2, 1, 0.8, 0.9, 2)
+
+nmp = new NumericalMethodPanel()
+nmp.varstep(1)
+
+xpanel("Run", 0)
+xbutton("No drive (slow)","run1(1)")
+xbutton("Driven (slow)","run1(2)")
+xbutton("As set (slow)","run1(3)")
+xbutton("No drive (fast)","run1(4)")
+xbutton("Driven (fast)","run1(5)")
+xbutton("As set (fast)","run1(6)")
+xbutton("Stop","stoprun=1")
+xpanel(379,31)
+
+proc run1 () { local flag
+  flag=$1
+  if (flag==1 || flag==4) {
+    wc.aee=10 wc.aie=8 wc.aei=12 wc.aii=3 ze=0.2 wc.zi=4 wc.tau=1 wc.ie0=0 wc.ie1=0
+    wc.ii0=0 wc.ii1=0 wc.w=0.25
+  } else if (flag==2 || flag==5) {
+    wc.aee=10 wc.aie=8 wc.aei=12 wc.aii=3 ze=0.2 wc.zi=4 wc.tau=1 wc.ie0=0 wc.ie1=0.5
+    wc.ii0=0 wc.ii1=0.5 wc.w=0.25
+  }
+  if (flag>=4) run() else movierun()
+}
