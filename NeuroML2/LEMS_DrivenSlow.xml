@@ -1,0 +1,72 @@
+<Lems>
+
+    <Target component="sim1" />
+
+    <!-- Include core NeuroML2 ComponentType definitions -->
+    <Include file="Cells.xml" />
+    <Include file="Networks.xml" />
+    <Include file="Simulation.xml" />
+    
+    <Include file="WilsonCowan.xml" />
+
+
+
+    <wilsonCowanCell id="E" tau="28ms" />
+    <wilsonCowanCell id="I"     tau="8ms"/>
+    
+    <!--Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection.-->
+    <silentSynapse id="silent1"/>
+    
+    <rateSynapse id="rs" />
+
+    <pulseGenerator id="baselineE" delay="5ms" duration="150ms" amplitude="136.4 pA" />
+    <pulseGenerator id="baselineI" delay="5ms" duration="150ms" amplitude="120 pA" />
+    
+    <pulseGenerator id="modE" delay="30ms" duration="30ms" amplitude="35 pA" />
+    <pulseGenerator id="modI" delay="70ms" duration="30ms" amplitude="35 pA" />
+
+    <network id="net1">
+        <population id="ePop" component="E" size="1" />
+        <population id="iPop" component="I" size="1" />
+        
+        
+        <continuousProjection id ="e_i" presynapticPopulation="ePop" postsynapticPopulation="iPop">
+            <continuousConnectionInstanceW id="0" preCell="../ePop[0]" postCell="../iPop[0]" preComponent="silent1" postComponent="rs" weight="5"/>
+        </continuousProjection>
+        
+        <continuousProjection id ="i_e" presynapticPopulation="iPop" postsynapticPopulation="ePop">
+            <continuousConnectionInstanceW id="0" preCell="../iPop[0]" postCell="../ePop[0]" preComponent="silent1" postComponent="rs" weight="-3"/>
+        </continuousProjection>
+
+        
+        <explicitInput target="ePop[0]" input="baselineE" destination="synapses"/>
+        <explicitInput target="iPop[0]" input="baselineI" destination="synapses"/>
+        
+        <explicitInput target="ePop[0]" input="modE" destination="synapses"/>
+        <explicitInput target="iPop[0]" input="modI" destination="synapses"/>
+        
+        
+    </network>
+
+    <!-- End of NeuroML2 content -->
+
+
+    <Simulation id="sim1" length="120ms" step="0.01ms" target="net1">
+
+        
+        <Display id="d2" title="Rates" timeScale="1s" xmin="-2" xmax="122" ymin="-2" ymax="32">
+            <Line id="ef" quantity="ePop[0]/f" scale="1Hz" color="#8888ff" timeScale="1ms" />
+            <Line id="el" quantity="ePop[0]/r" scale="1Hz" color="#0000ff" timeScale="1ms" />
+            <Line id="if" quantity="iPop[0]/f" scale="1Hz" color="#ff8888" timeScale="1ms" />
+            <Line id="il" quantity="iPop[0]/r" scale="1Hz" color="#ff0000" timeScale="1ms" />
+        </Display>
+    
+        <OutputFile id="of1" fileName="rates.dat">
+            <OutputColumn id="el" quantity="ePop[0]/r"/> 
+            <OutputColumn id="il" quantity="iPop[0]/r"/> 
+        </OutputFile> 
+
+    </Simulation>
+
+
+</Lems>
