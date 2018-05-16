@@ -1,0 +1,2 @@
+# WilsonCowan
+Wilson–Cowan model
