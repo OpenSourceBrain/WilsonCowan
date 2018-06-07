@@ -28,10 +28,7 @@
 
             <DerivedVariable name="iSyn" dimension="none" exposure="iSyn" select="synapses[*]/I" reduce="add" />
 
-            <ConditionalDerivedVariable name="f" dimension="none" exposure="f">
-                <Case condition="iSyn .eq. 0" value="1"/>
-                <Case condition="iSyn .neq. 0" value="iSyn / (1 - exp(-1*iSyn))"/>
-            </ConditionalDerivedVariable>
+            <DerivedVariable name="f" dimension="none" exposure="f" value="1 / (1 + exp(-1*iSyn))"/>
 
             <TimeDerivative variable="R" value="(-1*R + f)/tau"/>
 
