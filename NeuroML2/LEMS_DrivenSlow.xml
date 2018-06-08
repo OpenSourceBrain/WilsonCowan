@@ -15,33 +15,34 @@
     <!--Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection.-->
     <silentSynapseDL id="silent1DL"/>
 
-    <rateSynapseDL id="rsDL" />
+    <rateSynapseDL id="rsDLE" />
+    <rateSynapseDL id="rsDLI" />
 
-    <pulseGeneratorDL id="baselineEDL" delay="0ms" duration="100ms" amplitude="8" />
-    <pulseGeneratorDL id="baselineIDL" delay="0ms" duration="100ms" amplitude="8" />
+    <!-- <pulseGeneratorDL id="baselineEDL" delay="0ms" duration="100ms" amplitude="8" /> -->
+    <!-- <pulseGeneratorDL id="baselineIDL" delay="0ms" duration="100ms" amplitude="8" /> -->
 
     <network id="net1">
         <population id="ePopDL" component="E_DL" size="1" />
         <population id="iPopDL" component="I_DL" size="1" />
 
         <continuousProjection id ="w_ee" presynapticPopulation="ePopDL" postsynapticPopulation="ePopDL">
-            <continuousConnectionInstanceW id="0" preCell="../ePopDL[0]" postCell="../ePopDL[0]" preComponent="silent1DL" postComponent="rsDL" weight="10"/>
+            <continuousConnectionInstanceW id="0" preCell="../ePopDL[0]" postCell="../ePopDL[0]" preComponent="silent1DL" postComponent="rsDLE" weight="10"/>
         </continuousProjection>
 
         <continuousProjection id ="w_ei" presynapticPopulation="ePopDL" postsynapticPopulation="iPopDL">
-            <continuousConnectionInstanceW id="0" preCell="../ePopDL[0]" postCell="../iPopDL[0]" preComponent="silent1DL" postComponent="rsDL" weight="-12"/>
+            <continuousConnectionInstanceW id="0" preCell="../ePopDL[0]" postCell="../iPopDL[0]" preComponent="silent1DL" postComponent="rsDLI" weight="-12"/>
         </continuousProjection>
 
         <continuousProjection id ="w_ie" presynapticPopulation="iPopDL" postsynapticPopulation="ePopDL">
-            <continuousConnectionInstanceW id="0" preCell="../iPopDL[0]" postCell="../ePopDL[0]" preComponent="silent1DL" postComponent="rsDL" weight="-8"/>
+            <continuousConnectionInstanceW id="0" preCell="../iPopDL[0]" postCell="../ePopDL[0]" preComponent="silent1DL" postComponent="rsDLE" weight="-8"/>
         </continuousProjection>
 
         <continuousProjection id ="w_ii" presynapticPopulation="iPopDL" postsynapticPopulation="iPopDL">
-            <continuousConnectionInstanceW id="0" preCell="../iPopDL[0]" postCell="../iPopDL[0]" preComponent="silent1DL" postComponent="rsDL" weight="3"/>
+            <continuousConnectionInstanceW id="0" preCell="../iPopDL[0]" postCell="../iPopDL[0]" preComponent="silent1DL" postComponent="rsDLI" weight="3"/>
         </continuousProjection>
 
-        <explicitInput target="ePopDL[0]" input="baselineEDL" destination="synapses"/>
-        <explicitInput target="iPopDL[0]" input="baselineIDL" destination="synapses"/>
+        <explicitInput target="ePopDL[0]" input="rsDLE" destination="synapses"/>
+        <explicitInput target="iPopDL[0]" input="rsDLI" destination="synapses"/>
 
     </network>
 
