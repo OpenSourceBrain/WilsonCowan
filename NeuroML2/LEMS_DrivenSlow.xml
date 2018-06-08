@@ -18,8 +18,9 @@
     <rateSynapseDL id="rsDLE" />
     <rateSynapseDL id="rsDLI" />
 
-    <!-- <pulseGeneratorDL id="baselineEDL" delay="0ms" duration="100ms" amplitude="8" /> -->
-    <!-- <pulseGeneratorDL id="baselineIDL" delay="0ms" duration="100ms" amplitude="8" /> -->
+    <sineGeneratorDL id="modEDL" phase="0" delay="0ms" duration="100ms" amplitude="1.4" period="20ms"/>
+    <!-- <pulseGeneratorDL id="modEDL" delay="50ms" duration="10ms" amplitude="2" /> 
+    <pulseGeneratorDL id="baselineIDL" delay="0ms" duration="100ms" amplitude="8" /> -->
 
     <network id="net1">
         <population id="ePopDL" component="E_DL" size="1" />
@@ -30,7 +31,7 @@
         </continuousProjection>
 
         <continuousProjection id ="w_ei" presynapticPopulation="ePopDL" postsynapticPopulation="iPopDL">
-            <continuousConnectionInstanceW id="0" preCell="../ePopDL[0]" postCell="../iPopDL[0]" preComponent="silent1DL" postComponent="rsDLI" weight="-12"/>
+            <continuousConnectionInstanceW id="0" preCell="../ePopDL[0]" postCell="../iPopDL[0]" preComponent="silent1DL" postComponent="rsDLI" weight="12"/>
         </continuousProjection>
 
         <continuousProjection id ="w_ie" presynapticPopulation="iPopDL" postsynapticPopulation="ePopDL">
@@ -38,11 +39,11 @@
         </continuousProjection>
 
         <continuousProjection id ="w_ii" presynapticPopulation="iPopDL" postsynapticPopulation="iPopDL">
-            <continuousConnectionInstanceW id="0" preCell="../iPopDL[0]" postCell="../iPopDL[0]" preComponent="silent1DL" postComponent="rsDLI" weight="3"/>
+            <continuousConnectionInstanceW id="0" preCell="../iPopDL[0]" postCell="../iPopDL[0]" preComponent="silent1DL" postComponent="rsDLI" weight="-3"/>
         </continuousProjection>
 
-        <explicitInput target="ePopDL[0]" input="rsDLE" destination="synapses"/>
-        <explicitInput target="iPopDL[0]" input="rsDLI" destination="synapses"/>
+        <explicitInput target="ePopDL[0]" input="modEDL" destination="synapses"/>
+        <!--<explicitInput target="iPopDL[0]" input="rsDLI" destination="synapses"/>-->
 
     </network>
 
