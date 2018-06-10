@@ -14,6 +14,7 @@
 
         <Parameter name="tau" dimension="time"/>
         <Parameter name="R0" dimension="none"/>
+        <Parameter name="z" dimension="none"/>
 
         <Attachments name="synapses" type="basePointCurrentDL"/>
 
@@ -22,13 +23,11 @@
 
         <Dynamics>
 
-            <StateVariable name="V" dimension="none" exposure="V"/>
-
             <StateVariable name="R" dimension="none" exposure="R" description="Rate..."/>
 
             <DerivedVariable name="iSyn" dimension="none" exposure="iSyn" select="synapses[*]/I" reduce="add" />
 
-            <DerivedVariable name="f" dimension="none" exposure="f" value="1 / (1 + exp(-1*iSyn))"/>
+            <DerivedVariable name="f" dimension="none" exposure="f" value="1 / (1 + exp(-1*(iSyn - z)))"/>
 
             <TimeDerivative variable="R" value="(-1*R + f)/tau"/>
 
@@ -53,8 +52,6 @@
 
         <Exposure name="I" dimension="none"/>
 
-        <Requirement name="V" dimension="none"/>
-
         <InstanceRequirement name="peer" type="baseGradedSynapse"/>
 
         <Dynamics>
@@ -70,6 +67,7 @@
 
         <Property name="weight" dimension="none" defaultValue="1"/>
 
+        <Constant name="MSEC" dimension="time" value="1ms"/>
         <Constant name="SEC" dimension="time" value="1s"/>
         <Constant name="PAMP" dimension="current" value="1nA"/>
 

@@ -9,8 +9,8 @@
 
     <Include file="WilsonCowan.xml" />
 
-    <wilsonCowanCell id="E_DL" tau="1ms" R0="0.1" />
-    <wilsonCowanCell id="I_DL" tau="1ms" R0="0.05"/>
+    <wilsonCowanCell id="E_DL" tau="1ms" R0="0.1" z="0.2" />
+    <wilsonCowanCell id="I_DL" tau="1ms" R0="0.05" z="4"/>
 
     <!--Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection.-->
     <silentSynapseDL id="silent1DL"/>
@@ -18,8 +18,8 @@
     <rateSynapseDL id="rsDLE" />
     <rateSynapseDL id="rsDLI" />
 
-    <!-- <pulseGeneratorDL id="baselineEDL" delay="0ms" duration="100ms" amplitude="8" /> -->
-    <!-- <pulseGeneratorDL id="baselineIDL" delay="0ms" duration="100ms" amplitude="8" /> -->
+    <sineGeneratorDL id="modEDL" phase="0" delay="0ms" duration="100ms" amplitude="0" period="5ms"/>
+    <sineGeneratorDL id="modIDL" phase="0" delay="0ms" duration="100ms" amplitude="0" period="5ms"/>
 
     <network id="net1">
         <population id="ePopDL" component="E_DL" size="1" />
@@ -30,7 +30,7 @@
         </continuousProjection>
 
         <continuousProjection id ="w_ei" presynapticPopulation="ePopDL" postsynapticPopulation="iPopDL">
-            <continuousConnectionInstanceW id="0" preCell="../ePopDL[0]" postCell="../iPopDL[0]" preComponent="silent1DL" postComponent="rsDLI" weight="-12"/>
+            <continuousConnectionInstanceW id="0" preCell="../ePopDL[0]" postCell="../iPopDL[0]" preComponent="silent1DL" postComponent="rsDLI" weight="12"/>
         </continuousProjection>
 
         <continuousProjection id ="w_ie" presynapticPopulation="iPopDL" postsynapticPopulation="ePopDL">
@@ -38,16 +38,15 @@
         </continuousProjection>
 
         <continuousProjection id ="w_ii" presynapticPopulation="iPopDL" postsynapticPopulation="iPopDL">
-            <continuousConnectionInstanceW id="0" preCell="../iPopDL[0]" postCell="../iPopDL[0]" preComponent="silent1DL" postComponent="rsDLI" weight="3"/>
+            <continuousConnectionInstanceW id="0" preCell="../iPopDL[0]" postCell="../iPopDL[0]" preComponent="silent1DL" postComponent="rsDLI" weight="-3"/>
         </continuousProjection>
 
-        <explicitInput target="ePopDL[0]" input="rsDLE" destination="synapses"/>
-        <explicitInput target="iPopDL[0]" input="rsDLI" destination="synapses"/>
+        <explicitInput target="ePopDL[0]" input="modEDL" destination="synapses"/>
+        <explicitInput target="iPopDL[0]" input="modIDL" destination="synapses"/>
 
     </network>
 
     <!-- End of NeuroML2 content -->
-
 
     <Simulation id="sim1" length="100ms" step="0.005ms" target="net1">
 
