@@ -1,0 +1,30 @@
+<Lems>
+    
+    <!-- 
+
+        This LEMS file has been automatically generated using PyNeuroML v0.3.11 (libNeuroML v0.2.39)
+
+     -->
+    
+    <!-- Specify which component to run -->
+    <Target component="LEMS_WCSlowSim.xml"/>
+
+    <!-- Include core NeuroML2 ComponentType definitions -->
+    <Include file="Cells.xml"/>
+    <Include file="Networks.xml"/>
+    <Include file="Simulation.xml"/>
+    
+    <Include file="WilsonCowan.xml"/>
+    <Include file="LEMS_WC_Parameters_Slow.xml"/>
+    <Include file="WC_Slow.nml"/>
+   
+    <Simulation id="LEMS_WCSlowSim.xml" length="100ms" step="0.005ms" target="net" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+        
+        <Display id="d2" title="Rates" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-5" ymax="105">
+            <Line id="r_EDL" quantity="EDLPop/0/EDL/R" scale="1" color="#0000ff" timeScale="1ms"/>
+            <Line id="r_IDL" quantity="IDLPop/0/IDL/R" scale="1" color="#ff0000" timeScale="1ms"/>
+        </Display>
+        
+    </Simulation>
+
+</Lems>
