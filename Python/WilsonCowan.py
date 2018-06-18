@@ -7,7 +7,7 @@ def sigmoid_function(x):
     return 1 / (1 + math.exp(-x))
 
 
-def calculate_firing_rate(ie0, ie1, w, t, dt, uu, vv, wee, wie, ze, zi):
+def calculate_firing_rate(ie0, ie1, ii0, ii1, w, t, dt, uu, vv, wee, wie, ze, zi):
     i_e = ie0 + ie1 * math.sin(w*t)
     i_i = ii0 + ii1 * math.sin(w*t)
     dE = dt * (-uu + sigmoid_function((wee * uu) - (wie * vv) - ze + i_e))/tau
@@ -46,9 +46,11 @@ vv0 = 0.05
 for dt_idx in range(len(dt)):
     t = dt_idx * step
     if dt_idx == 0:
-        uu_p[dt_idx], vv_p[dt_idx] = calculate_firing_rate(ie0, ie1, w, t, step, uu0, vv0, wee, wie, ze, zi)
+        uu_p[dt_idx], vv_p[dt_idx] = calculate_firing_rate(ie0, ie1, ii0, ii1, w, t, step, uu0,
+                                                           vv0, wee, wie, ze, zi)
     else:
-        uu_p[dt_idx], vv_p[dt_idx] = calculate_firing_rate(ie0, ie1, w, t, step, uu_p[dt_idx - 1], vv_p[dt_idx - 1], wee, wie, ze, zi)
+        uu_p[dt_idx], vv_p[dt_idx] = calculate_firing_rate(ie0, ie1, ii0, ii1, w, t, step, uu_p[dt_idx - 1],
+                                                           vv_p[dt_idx - 1], wee, wie, ze, zi)
 
 plt.figure()
 plt.plot(dt, uu_p, label='uu', color='red')
@@ -90,9 +92,11 @@ vv0 = 0.05
 for dt_idx in range(len(dt)):
     t = dt_idx * step
     if dt_idx == 0:
-        uu_p[dt_idx], vv_p[dt_idx] = calculate_firing_rate(ie0, ie1, w, t, step, uu0, vv0, wee, wie, ze, zi)
+        uu_p[dt_idx], vv_p[dt_idx] = calculate_firing_rate(ie0, ie1, ii0, ii1,  w, t, step, uu0,
+                                                           vv0, wee, wie, ze, zi)
     else:
-        uu_p[dt_idx], vv_p[dt_idx] = calculate_firing_rate(ie0, ie1, w, t, step, uu_p[dt_idx - 1], vv_p[dt_idx - 1], wee, wie, ze, zi)
+        uu_p[dt_idx], vv_p[dt_idx] = calculate_firing_rate(ie0, ie1, ii0, ii1,  w, t, step, uu_p[dt_idx - 1],
+                                                           vv_p[dt_idx - 1], wee, wie, ze, zi)
 
 plt.figure()
 plt.plot(dt, uu_p, label='uu', color='red')
