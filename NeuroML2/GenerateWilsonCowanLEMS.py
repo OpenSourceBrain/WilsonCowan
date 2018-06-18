@@ -6,6 +6,7 @@ from neuroml import (NeuroMLDocument, Network, Population, ContinuousConnectionI
                      ExplicitInput, SineGeneratorDL, Property, Location, Instance)
 import neuroml.writers as writers
 from pyneuroml.lems.LEMSSimulation import LEMSSimulation
+random.seed(42)
 
 
 def generatePopulationProjection(from_pop, to_pop, n_from_pop, n_to_pop, w_to_from_pop, net):
