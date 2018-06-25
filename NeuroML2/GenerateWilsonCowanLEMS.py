@@ -65,12 +65,14 @@ n_pops = [1, 1]
 w_to_from_pops = np.array([[10, -8],
                            [12, -3]])
 silentSynapsisDL = 'silent1DL'
+externalInpulse = False # pass as external parameter
 
 nml_doc = NeuroMLDocument(id='WC_slow')
 
-for pop_idx, pop in enumerate(pops):
-    pulse = SineGeneratorDL(id='mod_%s' %pop, phase='0', delay='0ms', duration='100ms', amplitude='0', period='5ms')
-    nml_doc.sine_generator_dls.append(pulse)
+if externalInpulse:
+    for pop_idx, pop in enumerate(pops):
+        pulse = SineGeneratorDL(id='mod_%s' %pop, phase='0', delay='0ms', duration='100ms', amplitude='0', period='5ms')
+        nml_doc.sine_generator_dls.append(pulse)
 
 # Create the network
 net = Network(id='net')
@@ -96,10 +98,11 @@ for from_idx, from_pop in enumerate(pops):
                                      w_to_from_pops[to_idx, from_idx], net)
 
 # Add inputs
-for pop_idx, pop in enumerate(pops):
-    for n_idx in range(n_pops[pop_idx]):
-        exp_input = ExplicitInput(target='%sPop/%i/%s' %(pop, n_idx, pop), input='mod_%s' %pops[pop_idx], destination='synapses')
-        net.explicit_inputs.append(exp_input)
+if externalInpulse:
+    for pop_idx, pop in enumerate(pops):
+        for n_idx in range(n_pops[pop_idx]):
+            exp_input = ExplicitInput(target='%sPop/%i/%s' %(pop, n_idx, pop), input='mod_%s' %pops[pop_idx], destination='synapses')
+            net.explicit_inputs.append(exp_input)
 
 nml_file = 'WC_Slow.nml'
 writers.NeuroMLWriter.write(nml_doc, nml_file)
