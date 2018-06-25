@@ -1,8 +1,8 @@
 <Lems>
     <wilsonCowanCell id="EDL" tau="1ms" R0="0.1" z="0.2" />
     <wilsonCowanCell id="IDL" tau="1ms" R0="0.05" z="4"/>
-    <rateSynapseDL id="rsWC" />
-    <!-- <rateSynapseDL id="rsIDL" /> -->
+    <rateSynapseDL id="rsIDL" />
+    <rateSynapseDL id="rsEDL" />
     <silentSynapseDL id="silent1DL"/>
 
 </Lems>

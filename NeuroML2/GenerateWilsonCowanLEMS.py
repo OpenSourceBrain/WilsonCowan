@@ -21,7 +21,7 @@ def generatePopulationProjection(from_pop, to_pop, n_from_pop, n_to_pop, w_to_fr
                                                        pre_cell='../%sPop/%i/%s' %  (from_pop, idx_from_pop, from_pop),
                                                        post_cell='../%sPop/%i/%s' % (to_pop, idx_to_pop, to_pop),
                                                        pre_component=silentSynapsisDL,
-                                                       post_component='rsWC',
+                                                       post_component='rs%s' %to_pop,
                                                        weight=w_to_from_pop
                                                        )
             projection.continuous_connection_instance_ws.append(connection)
@@ -35,7 +35,7 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops):
     sim_t = 100
     dt = 0.005
     ls = LEMSSimulation(sim_id, sim_t, dt, 'net')
-    colours = ['#0000ff', '#ff0000']
+    colours = ['#ff0000', '#0000ff']
 
     # Add additional LEMS files
     # Add Wilson and Cowan Components
@@ -45,18 +45,25 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops):
     ls.include_lems_file('WC_Slow.nml', include_included=True)
 
     disp2 = 'd2'
-    ls.create_display(disp2, 'Rates', -5, 105)
+    ls.create_display(disp2, 'Rates', -.1, 1.2)
     for pop_idx, pop in enumerate(pops):
         for n_pop in range(n_pops[pop_idx]):
             ls.add_line_to_display(disp2, 'r_%s' %pop, '%sPop/%d/%s/R' % (pop, n_pop, pop),   color=colours[pop_idx])
+
+    disp1 = 'd1'
+    ls.create_display(disp1, 'iSyn', -1, 32)
+    for pop_idx, pop in enumerate(pops):
+        for n_pop in range(n_pops[pop_idx]):
+            ls.add_line_to_display(disp1, 'iSyn_%s' %pop, '%sPop/%d/%s/iSyn' % (pop, n_pop, pop),   color=colours[pop_idx])
+            ls.add_line_to_display(disp1, 'f_%s' %pop, '%sPop/%d/%s/f' % (pop, n_pop, pop),   color=colours[pop_idx])
 
     save_path = os.path.join(sim_id)
     ls.save_to_file(file_name=save_path)
 
 pops = ['EDL', 'IDL']
 n_pops = [1, 1]
-w_to_from_pops = np.array([[10, 12],
-                           [-8, -3]])
+w_to_from_pops = np.array([[10, -8],
+                           [12, -3]])
 silentSynapsisDL = 'silent1DL'
 
 nml_doc = NeuroMLDocument(id='WC_slow')

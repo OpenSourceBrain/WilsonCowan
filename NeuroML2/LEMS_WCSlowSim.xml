@@ -20,9 +20,16 @@
    
     <Simulation id="LEMS_WCSlowSim.xml" length="100ms" step="0.005ms" target="net" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
-        <Display id="d2" title="Rates" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-5" ymax="105">
-            <Line id="r_EDL" quantity="EDLPop/0/EDL/R" scale="1" color="#0000ff" timeScale="1ms"/>
-            <Line id="r_IDL" quantity="IDLPop/0/IDL/R" scale="1" color="#ff0000" timeScale="1ms"/>
+        <Display id="d2" title="Rates" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-0.1" ymax="1.2">
+            <Line id="r_EDL" quantity="EDLPop/0/EDL/R" scale="1" color="#ff0000" timeScale="1ms"/>
+            <Line id="r_IDL" quantity="IDLPop/0/IDL/R" scale="1" color="#0000ff" timeScale="1ms"/>
+        </Display>
+        
+        <Display id="d1" title="iSyn" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-1" ymax="32">
+            <Line id="iSyn_EDL" quantity="EDLPop/0/EDL/iSyn" scale="1" color="#ff0000" timeScale="1ms"/>
+            <Line id="f_EDL" quantity="EDLPop/0/EDL/f" scale="1" color="#ff0000" timeScale="1ms"/>
+            <Line id="iSyn_IDL" quantity="IDLPop/0/IDL/iSyn" scale="1" color="#0000ff" timeScale="1ms"/>
+            <Line id="f_IDL" quantity="IDLPop/0/IDL/f" scale="1" color="#0000ff" timeScale="1ms"/>
         </Display>
         
     </Simulation>
