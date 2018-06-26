@@ -7,7 +7,7 @@
      -->
     
     <!-- Specify which component to run -->
-    <Target component="LEMS_WCSlowSim.xml"/>
+    <Target component="LEMS_WC_drivenSim.xml"/>
 
     <!-- Include core NeuroML2 ComponentType definitions -->
     <Include file="Cells.xml"/>
@@ -15,10 +15,10 @@
     <Include file="Simulation.xml"/>
     
     <Include file="WilsonCowan.xml"/>
-    <Include file="LEMS_WC_Parameters_Slow.xml"/>
-    <Include file="WC_Slow.nml"/>
+    <Include file="LEMS_WC_Parameters.xml"/>
+    <Include file="WC_driven.nml"/>
    
-    <Simulation id="LEMS_WCSlowSim.xml" length="100ms" step="0.005ms" target="net" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+    <Simulation id="LEMS_WC_drivenSim.xml" length="100ms" step="0.005ms" target="net" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
         <Display id="d2" title="Rates" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-0.1" ymax="1.2">
             <Line id="r_EDL" quantity="EDLPop/0/EDL/R" scale="1" color="#ff0000" timeScale="1ms"/>
@@ -32,7 +32,7 @@
             <Line id="f_IDL" quantity="IDLPop/0/IDL/f" scale="1" color="#0000ff" timeScale="1ms"/>
         </Display>
         
-        <OutputFile id="of_IDL" fileName="WC_slow.dat">
+        <OutputFile id="of_IDL" fileName="WC_driven.dat">
             <OutputColumn id="r_EDL" quantity="EDLPop/0/EDL/R"/> 
             <OutputColumn id="r_IDL" quantity="IDLPop/0/IDL/R"/> 
         </OutputFile>

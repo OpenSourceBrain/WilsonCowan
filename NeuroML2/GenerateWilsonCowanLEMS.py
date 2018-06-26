@@ -1,5 +1,6 @@
 import os
 import random
+import argparse
 import numpy as np
 
 from neuroml import (NeuroMLDocument, Network, Population, ContinuousConnectionInstanceW, ContinuousProjection,
@@ -31,7 +32,7 @@ def generatePopulationProjection(from_pop, to_pop, n_from_pop, n_to_pop, w_to_fr
 def generatePopulationSimulationLEMS(n_pops, baseline, pops):
     # Create simulation
     # Create LEMS file
-    sim_id = 'LEMS_WCSlowSim.xml'
+    sim_id = 'LEMS_WC_%sSim.xml' %baseline
     sim_t = 100
     dt = 0.005
     ls = LEMSSimulation(sim_id, sim_t, dt, 'net')
@@ -40,9 +41,9 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops):
     # Add additional LEMS files
     # Add Wilson and Cowan Components
     ls.include_lems_file('WilsonCowan.xml', include_included=True)
-    ls.include_lems_file('LEMS_WC_Parameters_Slow.xml', include_included=True)
+    ls.include_lems_file('LEMS_WC_Parameters.xml', include_included=True)
     # Add the network definition
-    ls.include_lems_file('WC_Slow.nml', include_included=True)
+    ls.include_lems_file('WC_%s.nml' %baseline, include_included=True)
 
     disp2 = 'd2'
     ls.create_display(disp2, 'Rates', -.1, 1.2)
@@ -67,19 +68,26 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops):
     save_path = os.path.join(sim_id)
     ls.save_to_file(file_name=save_path)
 
+parser = argparse.ArgumentParser(description='Parameters for the Wilson and Cowan.')
+parser.add_argument('-ie0', help='excitatory population input current', type=float)
+parser.add_argument('-ii0', help='inhibitory population input current', type=float)
+args = parser.parse_args()
+
 pops = ['EDL', 'IDL']
 n_pops = [1, 1]
 w_to_from_pops = np.array([[10, -8],
                            [12, -3]])
 silentSynapsisDL = 'silent1DL'
-externalInpulse = False # pass as external parameter
+if args.ie0 or args.ii0 > 0:
+    baseline = 'driven'
+else:
+    baseline = 'slow'
 
-nml_doc = NeuroMLDocument(id='WC_slow')
+nml_doc = NeuroMLDocument(id='WC_%s' %baseline)
 
-if externalInpulse:
-    for pop_idx, pop in enumerate(pops):
-        pulse = SineGeneratorDL(id='mod_%s' %pop, phase='0', delay='0ms', duration='100ms', amplitude='0', period='5ms')
-        nml_doc.sine_generator_dls.append(pulse)
+for pop_idx, pop in enumerate(pops):
+    pulse = SineGeneratorDL(id='mod_%s' %pop, phase='0', delay='0ms', duration='100ms', amplitude=args.ie0, period='25ms')
+    nml_doc.sine_generator_dls.append(pulse)
 
 # Create the network
 net = Network(id='net')
@@ -105,14 +113,12 @@ for from_idx, from_pop in enumerate(pops):
                                      w_to_from_pops[to_idx, from_idx], net)
 
 # Add inputs
-if externalInpulse:
-    for pop_idx, pop in enumerate(pops):
-        for n_idx in range(n_pops[pop_idx]):
-            exp_input = ExplicitInput(target='%sPop/%i/%s' %(pop, n_idx, pop), input='mod_%s' %pops[pop_idx], destination='synapses')
-            net.explicit_inputs.append(exp_input)
+for pop_idx, pop in enumerate(pops):
+    for n_idx in range(n_pops[pop_idx]):
+        exp_input = ExplicitInput(target='%sPop/%i/%s' %(pop, n_idx, pop), input='mod_%s' %pops[pop_idx], destination='synapses')
+        net.explicit_inputs.append(exp_input)
 
-nml_file = 'WC_Slow.nml'
+nml_file = 'WC_%s.nml' %baseline
 writers.NeuroMLWriter.write(nml_doc, nml_file)
 
-baseline = 'slow'
 generatePopulationSimulationLEMS(n_pops, baseline, pops)

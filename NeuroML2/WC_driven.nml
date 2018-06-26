@@ -1,6 +1,6 @@
-<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta5.xsd" id="WC_slow">
-    <sineGeneratorDL id="mod_EDL" delay="0ms" phase="0" duration="100ms" amplitude="0.0" period="25ms"/>
-    <sineGeneratorDL id="mod_IDL" delay="0ms" phase="0" duration="100ms" amplitude="0.0" period="25ms"/>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta5.xsd" id="WC_driven">
+    <sineGeneratorDL id="mod_EDL" delay="0ms" phase="0" duration="100ms" amplitude="0.5" period="25ms"/>
+    <sineGeneratorDL id="mod_IDL" delay="0ms" phase="0" duration="100ms" amplitude="0.5" period="25ms"/>
     <network id="net">
         <population id="EDLPop" component="EDL" size="1" type="populationList">
             <property tag="color" value="0 0 1"/>
