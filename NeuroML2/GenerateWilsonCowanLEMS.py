@@ -4,7 +4,7 @@ import argparse
 import numpy as np
 
 from neuroml import (NeuroMLDocument, Network, Population, ContinuousConnectionInstanceW, ContinuousProjection,
-                     ExplicitInput, SineGeneratorDL, Property, Location, Instance)
+                     ExplicitInput, SineGeneratorDL, Property, Location, Instance, IncludeType)
 import neuroml.writers as writers
 from pyneuroml.lems.LEMSSimulation import LEMSSimulation
 random.seed(42)
@@ -43,7 +43,7 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops):
     ls.include_lems_file('WilsonCowan.xml', include_included=True)
     ls.include_lems_file('LEMS_WC_Parameters.xml', include_included=True)
     # Add the network definition
-    ls.include_lems_file('WC_%s.nml' %baseline, include_included=True)
+    ls.include_lems_file('WC_%s.net.nml' %baseline, include_included=True)
 
     disp2 = 'd2'
     ls.create_display(disp2, 'Rates', -.1, 1.2)
@@ -92,19 +92,21 @@ for pop_idx, pop in enumerate(pops):
 # Create the network
 net = Network(id='net')
 nml_doc.networks.append(net)
+nml_doc.includes.append(IncludeType('WilsonCowan.xml'))
 
 colours = ['0 0 1', '1 0 0']
 for pop_idx, pop in enumerate(pops):
     population = Population(id='%sPop' %pop, component=(pops[pop_idx]).upper(), size=n_pops[pop_idx], type='populationList')
     net.populations.append(population)
     population.properties.append(Property(tag='color', value=colours[pop_idx]))
+    population.properties.append(Property(tag='radius', value='10'))
 
     for n_pop in range(n_pops[pop_idx]):
         inst = Instance(id=n_pop)
         population.instances.append(inst)
-        inst.location = Location(x=str(random.random() * 100),
-                                 y=str(random.random() * 100),
-                                 z=str(random.random() * 100 ))
+        inst.location = Location(x=-20 if 'E' in pop else 20,
+                                 y=0,
+                                 z=0)
 
 
 for from_idx, from_pop in enumerate(pops):
@@ -118,7 +120,7 @@ for pop_idx, pop in enumerate(pops):
         exp_input = ExplicitInput(target='%sPop/%i/%s' %(pop, n_idx, pop), input='mod_%s' %pops[pop_idx], destination='synapses')
         net.explicit_inputs.append(exp_input)
 
-nml_file = 'WC_%s.nml' %baseline
+nml_file = 'WC_%s.net.nml' %baseline
 writers.NeuroMLWriter.write(nml_doc, nml_file)
 
 generatePopulationSimulationLEMS(n_pops, baseline, pops)

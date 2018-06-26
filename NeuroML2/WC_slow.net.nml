@@ -1,30 +1,33 @@
 <neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta5.xsd" id="WC_slow">
+    <include href="WilsonCowan.xml"/>
     <sineGeneratorDL id="mod_EDL" delay="0ms" phase="0" duration="100ms" amplitude="0.0" period="25ms"/>
     <sineGeneratorDL id="mod_IDL" delay="0ms" phase="0" duration="100ms" amplitude="0.0" period="25ms"/>
     <network id="net">
         <population id="EDLPop" component="EDL" size="1" type="populationList">
             <property tag="color" value="0 0 1"/>
+            <property tag="radius" value="10"/>
             <instance id="0">
-                <location x="63.942679845800001" y="2.50107552227" z="27.5029318369"/>
+                <location x="-20." y="0." z="0."/>
             </instance>
         </population>
         <population id="IDLPop" component="IDL" size="1" type="populationList">
             <property tag="color" value="1 0 0"/>
+            <property tag="radius" value="10"/>
             <instance id="0">
-                <location x="22.3210738149" y="73.647121416399997" z="67.669948742299994"/>
+                <location x="20." y="0." z="0."/>
             </instance>
         </population>
         <continuousProjection id="EDL_EDL" presynapticPopulation="EDLPop" postsynapticPopulation="EDLPop">
-            <continuousConnectionInstanceW id="0" preCell="../EDLPop/0/EDL" preSegment="0" preFractionAlong="0.5" postCell="../EDLPop/0/EDL" postSegment="0" postFractionAlong="0.5" preComponent="silent1DL" postComponent="rsEDL" weight="10."/>
+            <continuousConnectionInstanceW id="0" preCell="../EDLPop/0/EDL" postCell="../EDLPop/0/EDL" preComponent="silent1DL" postComponent="rsEDL" weight="10."/>
         </continuousProjection>
         <continuousProjection id="EDL_IDL" presynapticPopulation="EDLPop" postsynapticPopulation="IDLPop">
-            <continuousConnectionInstanceW id="0" preCell="../EDLPop/0/EDL" preSegment="0" preFractionAlong="0.5" postCell="../IDLPop/0/IDL" postSegment="0" postFractionAlong="0.5" preComponent="silent1DL" postComponent="rsIDL" weight="12."/>
+            <continuousConnectionInstanceW id="0" preCell="../EDLPop/0/EDL" postCell="../IDLPop/0/IDL" preComponent="silent1DL" postComponent="rsIDL" weight="12."/>
         </continuousProjection>
         <continuousProjection id="IDL_EDL" presynapticPopulation="IDLPop" postsynapticPopulation="EDLPop">
-            <continuousConnectionInstanceW id="0" preCell="../IDLPop/0/IDL" preSegment="0" preFractionAlong="0.5" postCell="../EDLPop/0/EDL" postSegment="0" postFractionAlong="0.5" preComponent="silent1DL" postComponent="rsEDL" weight="-8."/>
+            <continuousConnectionInstanceW id="0" preCell="../IDLPop/0/IDL" postCell="../EDLPop/0/EDL" preComponent="silent1DL" postComponent="rsEDL" weight="-8."/>
         </continuousProjection>
         <continuousProjection id="IDL_IDL" presynapticPopulation="IDLPop" postsynapticPopulation="IDLPop">
-            <continuousConnectionInstanceW id="0" preCell="../IDLPop/0/IDL" preSegment="0" preFractionAlong="0.5" postCell="../IDLPop/0/IDL" postSegment="0" postFractionAlong="0.5" preComponent="silent1DL" postComponent="rsIDL" weight="-3."/>
+            <continuousConnectionInstanceW id="0" preCell="../IDLPop/0/IDL" postCell="../IDLPop/0/IDL" preComponent="silent1DL" postComponent="rsIDL" weight="-3."/>
         </continuousProjection>
         <explicitInput target="EDLPop/0/EDL" input="mod_EDL" destination="synapses"/>
         <explicitInput target="IDLPop/0/IDL" input="mod_IDL" destination="synapses"/>

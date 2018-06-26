@@ -2,7 +2,7 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.3.11 (libNeuroML v0.2.39)
+        This LEMS file has been automatically generated using PyNeuroML v0.3.12 (libNeuroML v0.2.43)
 
      -->
     
@@ -16,7 +16,7 @@
     
     <Include file="WilsonCowan.xml"/>
     <Include file="LEMS_WC_Parameters.xml"/>
-    <Include file="WC_driven.nml"/>
+    <Include file="WC_driven.net.nml"/>
    
     <Simulation id="LEMS_WC_drivenSim.xml" length="100ms" step="0.005ms" target="net" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
