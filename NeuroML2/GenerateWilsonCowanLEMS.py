@@ -57,6 +57,13 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops):
             ls.add_line_to_display(disp1, 'iSyn_%s' %pop, '%sPop/%d/%s/iSyn' % (pop, n_pop, pop),   color=colours[pop_idx])
             ls.add_line_to_display(disp1, 'f_%s' %pop, '%sPop/%d/%s/f' % (pop, n_pop, pop),   color=colours[pop_idx])
 
+    of1 = 'of_%s' %pop
+    ls.create_output_file(of1, 'WC_%s.dat' %baseline)
+    for pop_idx, pop in enumerate(pops):
+        # save rates in output file
+        for n_pop in range(n_pops[pop_idx]):
+            ls.add_column_to_output_file(of1, 'r_%s' %pop, '%sPop/%d/%s/R' %(pop, n_pop, pop))
+
     save_path = os.path.join(sim_id)
     ls.save_to_file(file_name=save_path)
 

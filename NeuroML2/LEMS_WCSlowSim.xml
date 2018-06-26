@@ -32,6 +32,11 @@
             <Line id="f_IDL" quantity="IDLPop/0/IDL/f" scale="1" color="#0000ff" timeScale="1ms"/>
         </Display>
         
+        <OutputFile id="of_IDL" fileName="WC_slow.dat">
+            <OutputColumn id="r_EDL" quantity="EDLPop/0/EDL/R"/> 
+            <OutputColumn id="r_IDL" quantity="IDLPop/0/IDL/R"/> 
+        </OutputFile>
+        
     </Simulation>
 
 </Lems>
