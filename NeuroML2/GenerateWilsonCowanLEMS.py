@@ -93,6 +93,7 @@ for pop_idx, pop in enumerate(pops):
 net = Network(id='net')
 nml_doc.networks.append(net)
 nml_doc.includes.append(IncludeType('WilsonCowan.xml'))
+nml_doc.includes.append(IncludeType('LEMS_WC_Parameters.xml'))
 
 colours = ['0 0 1', '1 0 0']
 for pop_idx, pop in enumerate(pops):

@@ -2,3 +2,7 @@
 /NeuroML2/rates.dat
 /NeuroML2/WC_slow.dat
 /NeuroML2/WC_driven.dat
+/NeuroML2/*.mod
+/NeuroML2/x86_64
+/NeuroML2/*_nrn.py
+/NeuroML2/*.pov
