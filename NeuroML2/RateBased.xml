@@ -1,16 +1,29 @@
 <Lems xmlns="http://www.neuroml.org/lems/0.7.4"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.neuroml.org/lems/0.7.4 ../../LEMS/Schemas/LEMS/LEMS_v0.7.4.xsd" >
+      xsi:schemaLocation="http://www.neuroml.org/lems/0.7.4 ../../LEMS/Schemas/LEMS/LEMS_v0.7.4.xsd" 
+      description="A number of ComponentTypes for rate based models">
 
     <ComponentType name="baseRateUnitDL"
                    extends="baseCellMembPotDL"
-                   description="Base type of any cell/population which has a (dimensionless) rate _r.">
-              <Exposure name="R" dimension="none"/>
+                   description="Base type of any cell/population which has a (dimensionless) rate _R.">
+        <!-- Note: initially at least this will extend the baseCellMembPotDL (i.e. with V) for greater compatibility with 
+             other export simulators... -->
+        <Exposure name="R" dimension="none"/>
     </ComponentType>
+    
+    
+    <ComponentType name="baseRateUnit"
+                   extends="baseCellMembPot"
+                   description="Base type of any cell/population which has a (dimensional) rate _r.">
+        <!-- Note: initially at least this will extend the baseCellMembPot (i.e. with v) for greater compatibility with 
+        other export simulators, particularly Neuron... -->
+        <Exposure name="r" dimension="per_time"/>
+    </ComponentType>
+    
 
-    <ComponentType  name="wilsonCowanCell"
+    <ComponentType  name="wilsonCowanCellDL"
                     extends="baseRateUnitDL"
-                    description="...">
+                    description="Work in progress...">
 
         <Parameter name="tau" dimension="time"/>
         <Parameter name="R0" dimension="none"/>
@@ -36,7 +49,7 @@
             </OnStart>
 
             <!-- On condition is not need on the model but NeuroML requires its definition -->
-            <OnCondition test="R .gt. 1000*R0">
+            <OnCondition test="R .lt. 0">
                 <EventOut port="spike"/>
             </OnCondition>
 
@@ -55,7 +68,6 @@
         <InstanceRequirement name="peer" type="baseGradedSynapse"/>
 
         <Dynamics>
-            <DerivedVariable name="rpeer" dimension="none" select="peer/R"/>
             <DerivedVariable name="I" exposure="I"  value="0"/>
         </Dynamics>
 

@@ -40,8 +40,8 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops):
 
     # Add additional LEMS files
     # Add Wilson and Cowan Components
-    ls.include_lems_file('WilsonCowan.xml', include_included=True)
-    ls.include_lems_file('LEMS_WC_Parameters.xml', include_included=True)
+    ls.include_lems_file('RateBased.xml', include_included=True)
+    ls.include_lems_file('WC_Parameters.xml', include_included=True)
     # Add the network definition
     ls.include_lems_file('WC_%s.net.nml' %baseline, include_included=True)
 
@@ -92,8 +92,8 @@ for pop_idx, pop in enumerate(pops):
 # Create the network
 net = Network(id='net')
 nml_doc.networks.append(net)
-nml_doc.includes.append(IncludeType('WilsonCowan.xml'))
-nml_doc.includes.append(IncludeType('LEMS_WC_Parameters.xml'))
+nml_doc.includes.append(IncludeType('RateBased.xml'))
+nml_doc.includes.append(IncludeType('WC_Parameters.xml'))
 
 colours = ['0 0 1', '1 0 0']
 for pop_idx, pop in enumerate(pops):
