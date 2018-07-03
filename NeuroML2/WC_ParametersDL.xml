@@ -4,6 +4,6 @@
     <wilsonCowanCellDL id="Inh" tau="1ms" R0="0.05" z="4"/>
     <rateSynapseDL id="rsExc" />
     <rateSynapseDL id="rsInh" />
-    <silentSynapseDL id="silent1DL"/>
+    <silentRateSynapseDL id="silent1DL"/>
 
 </Lems>

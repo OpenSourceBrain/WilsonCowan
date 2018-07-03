@@ -1,13 +1,14 @@
 <Lems xmlns="http://www.neuroml.org/lems/0.7.4"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.neuroml.org/lems/0.7.4 ../../LEMS/Schemas/LEMS/LEMS_v0.7.4.xsd" 
-      description="A number of ComponentTypes for rate based models">
+      description="A number of ComponentTypes for rate based/population models">
 
+    
     <ComponentType name="baseRateUnitDL"
                    extends="baseCellMembPotDL"
                    description="Base type of any cell/population which has a (dimensionless) rate _R.">
         <!-- Note: initially at least this will extend the baseCellMembPotDL (i.e. with V) for greater compatibility with 
-             other export simulators... -->
+        other export simulators... -->
         <Exposure name="R" dimension="none"/>
     </ComponentType>
     
@@ -81,13 +82,14 @@
         <Dynamics>
 
             <StateVariable name="r" dimension="per_time" exposure="r" description="Rate..."/>
+            <StateVariable name="v" dimension="voltage" exposure="v"/>
 
             <DerivedVariable name="iSyn" dimension="current" exposure="iSyn" select="synapses[*]/i" reduce="add" />
 
             <DerivedVariable name="f" dimension="none" exposure="f" value="1 / (1 + exp(-1*(iSyn - z)/NAMP_SCALE))"/>
 
-            <!-- Set v to zero for now... -->
-            <DerivedVariable name="v" dimension="voltage" exposure="v" value="0*MVOLT_SCALE"/>
+            <!-- Set v to r for now... 
+            <DerivedVariable name="v" dimension="voltage" exposure="v" value="0*MVOLT_SCALE"/>-->
         
             <TimeDerivative variable="r" value="(-1*r + f*HZ_SCALE)/tau"/>
 
@@ -111,7 +113,7 @@
     </ComponentType>
     
 
-    <ComponentType name="silentSynapseDL"
+    <ComponentType name="silentRateSynapseDL"
                    extends="baseGradedSynapseDL"
                    description="Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection.">
 
@@ -123,6 +125,24 @@
 
         <Dynamics>
             <DerivedVariable name="I" exposure="I"  value="0"/>
+        </Dynamics>
+
+    </ComponentType>
+    
+    
+    <ComponentType name="silentRateSynapse"
+                   extends="baseGradedSynapse"
+                   description="Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection.">
+
+        <Property name="weight" dimension="none" defaultValue="1"/> <!-- Not used...-->
+
+        <Exposure name="i" dimension="current"/>
+
+        <InstanceRequirement name="peer" type="baseGradedSynapse"/>
+
+        <Dynamics>
+            <DerivedVariable name="rpeer" dimension="per_time" select="peer/r"/>
+            <DerivedVariable name="i" exposure="i"  value="0"/>
         </Dynamics>
 
     </ComponentType>

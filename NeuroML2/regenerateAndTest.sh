@@ -14,5 +14,8 @@ jnml LEMS_WC_slowDL.xml -nogui
 jnml LEMS_WC_driven.xml -nogui
 jnml LEMS_WC_slow.xml -nogui
 
+jnml LEMS_WC_driven.xml -neuron -run -nogui
+jnml LEMS_WC_slow.xml -neuron -run -nogui
+
 omv all -V 
 
