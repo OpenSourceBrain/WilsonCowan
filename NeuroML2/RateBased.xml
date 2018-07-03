@@ -130,24 +130,6 @@
     </ComponentType>
     
     
-    <ComponentType name="silentRateSynapse"
-                   extends="baseGradedSynapse"
-                   description="Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection.">
-
-        <Property name="weight" dimension="none" defaultValue="1"/> <!-- Not used...-->
-
-        <Exposure name="i" dimension="current"/>
-
-        <InstanceRequirement name="peer" type="baseGradedSynapse"/>
-
-        <Dynamics>
-            <DerivedVariable name="rpeer" dimension="per_time" select="peer/r"/>
-            <DerivedVariable name="i" exposure="i"  value="0"/>
-        </Dynamics>
-
-    </ComponentType>
-    
-
     <ComponentType name="rateSynapseDL"
                    extends="baseGradedSynapseDL"
                    description="...">
@@ -170,19 +152,42 @@
     </ComponentType>
 
 
-    <ComponentType name="rateSynapse"
+    <ComponentType name="baseRateSynapse"
                    extends="baseGradedSynapse"
+                   description="Base type for rae based synapses">
+        
+        <Requirement name="r" dimension="per_time"/>
+        
+    </ComponentType>
+    
+    <!-- TODO: make it a baseRateSynapse... -->
+    <ComponentType name="silentRateSynapse"
+                   extends="baseGradedSynapse"
+                   description="Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection.">
+
+        <Property name="weight" dimension="none" defaultValue="1"/> <!-- Not used...-->
+
+        <Exposure name="i" dimension="current"/>
+
+        <InstanceRequirement name="peer" type="baseGradedSynapse"/>
+
+        <Dynamics>
+            <DerivedVariable name="rpeer" dimension="per_time" select="peer/r"/>
+            <DerivedVariable name="i" exposure="i"  value="0"/>
+        </Dynamics>
+
+    </ComponentType>
+    
+
+    <ComponentType name="rateSynapse"
+                   extends="baseRateSynapse"
                    description="...">
         
         <Property name="weight" dimension="none" defaultValue="1"/> 
         
         <Constant name="SEC" dimension="time" value="1s"/>
         <Constant name="NAMP_SCALE" dimension="current" value="1nA"/>
-        
-        <Exposure name="i" dimension="current"/>
-        
-        <Requirement name="r" dimension="per_time"/>
-
+       
         <InstanceRequirement name="peer" type="rateSynapse"/>
 
         <Dynamics>
@@ -193,7 +198,7 @@
     
     
     <ComponentType name="rateSynapsePicoAmp"
-                   extends="baseGradedSynapse"
+                   extends="baseRateSynapse"
                    description="...">
         
         <Property name="weight" dimension="none" defaultValue="1"/> 
@@ -201,10 +206,6 @@
         <Constant name="SEC" dimension="time" value="1s"/>
         <Constant name="PAMP_SCALE" dimension="current" value="1pA"/>
         
-        <Exposure name="i" dimension="current"/>
-        
-        <Requirement name="r" dimension="per_time"/>
-
         <InstanceRequirement name="peer" type="rateSynapse"/>
 
         <Dynamics>
