@@ -190,5 +190,27 @@
             <DerivedVariable name="i" exposure="i"  value="weight * SEC * NAMP_SCALE * rpeer"/>
         </Dynamics>
     </ComponentType>
+    
+    
+    <ComponentType name="rateSynapsePicoAmp"
+                   extends="baseGradedSynapse"
+                   description="...">
+        
+        <Property name="weight" dimension="none" defaultValue="1"/> 
+        
+        <Constant name="SEC" dimension="time" value="1s"/>
+        <Constant name="PAMP_SCALE" dimension="current" value="1pA"/>
+        
+        <Exposure name="i" dimension="current"/>
+        
+        <Requirement name="r" dimension="per_time"/>
+
+        <InstanceRequirement name="peer" type="rateSynapse"/>
+
+        <Dynamics>
+            <DerivedVariable name="rpeer" dimension="per_time" select="peer/r"/>
+            <DerivedVariable name="i" exposure="i"  value="weight * SEC * PAMP_SCALE * rpeer"/>
+        </Dynamics>
+    </ComponentType>
 
 </Lems>
