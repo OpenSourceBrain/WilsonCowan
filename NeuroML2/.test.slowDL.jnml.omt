@@ -1,6 +1,6 @@
 # Script for running automated tests on OSB using Travis-CI, see https://github.com/OpenSourceBrain/osb-model-validation
  
-target: LEMS_WC_slowSim.xml 
+target: LEMS_WC_slowDL.xml
 engine: jNeuroML
 mep: .test.slow.mep
 experiments:
@@ -8,7 +8,7 @@ experiments:
     observables:
       spike times:
         file: 
-          path: WC_slow.dat
+          path: WC_slowDL.dat
           columns: [0,1]
           scaling: [1000, 1]
         spike detection: 
@@ -19,7 +19,7 @@ experiments:
     observables:
       spike times:
         file: 
-          path: WC_slow.dat
+          path: WC_slowDL.dat
           columns: [0,2]
           scaling: [1000, 1]
         spike detection: 

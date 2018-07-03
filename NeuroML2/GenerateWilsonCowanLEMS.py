@@ -29,10 +29,11 @@ def generatePopulationProjection(from_pop, to_pop, n_from_pop, n_to_pop, w_to_fr
             connection_count += 1
 
 
-def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration):
+def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl):
     # Create simulation
     # Create LEMS file
-    sim_id = 'LEMS_WC_%sSim.xml' %baseline
+    dl_str = 'DL' if dl else ''
+    sim_id = 'LEMS_WC_%s%s.xml' %(baseline,dl_str)
     dt = 0.005
     ls = LEMSSimulation(sim_id, duration, dt, 'net')
     colours = ['#ff0000', '#0000ff']
@@ -41,9 +42,9 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration):
     # Add additional LEMS files
     # Add Wilson and Cowan Components
     ls.include_lems_file('RateBased.xml', include_included=True)
-    ls.include_lems_file('WC_Parameters.xml', include_included=True)
+    ls.include_lems_file('WC_Parameters%s.xml'%dl_str, include_included=True)
     # Add the network definition
-    ls.include_lems_file('WC_%s.net.nml' %baseline, include_included=True)
+    ls.include_lems_file('WC_%s%s.net.nml' %(baseline,dl_str), include_included=True)
 
     disp2 = 'd2'
     ls.create_display(disp2, 'Rates', -.1, 1.2)
@@ -59,7 +60,7 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration):
             ls.add_line_to_display(disp1, 'f_%s' %pop, '%sPop/%d/%s/f' % (pop, n_pop, pop),   color=colours2[pop_idx])
 
     of1 = 'of_%s' %pop
-    ls.create_output_file(of1, 'WC_%s.dat' %baseline)
+    ls.create_output_file(of1, 'WC_%s%s.dat' %(baseline,dl_str))
     for pop_idx, pop in enumerate(pops):
         # save rates in output file
         for n_pop in range(n_pops[pop_idx]):
@@ -71,11 +72,13 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration):
 parser = argparse.ArgumentParser(description='Parameters for the Wilson and Cowan.')
 parser.add_argument('-ie0', help='excitatory population input current', type=float)
 parser.add_argument('-ii0', help='inhibitory population input current', type=float)
-parser.add_argument('-dims', help='generate dimensional model', type=bool)
+parser.add_argument('-dims', help='generate dimensional model', action='store_true', default=False)
 
 args = parser.parse_args()
 
 dl = not args.dims
+print('Generating as dimensionless: %s'%dl)
+dl_str = 'DL' if dl else ''
 
 pops = ['Exc', 'Inh'] # E would give errors in NEURON; EDL is not a nice variable name...
 n_pops = [1, 1]
@@ -89,18 +92,23 @@ if args.ie0 or args.ii0 > 0:
 else:
     baseline = 'slow'
 
-nml_doc = NeuroMLDocument(id='WC_%s' %baseline)
+nml_doc = NeuroMLDocument(id='WC_%s%s' % (baseline, dl_str))
 duration = 100 # ms
 
 for pop_idx, pop in enumerate(pops):
-    pulse = SineGeneratorDL(id='mod_%s' %pop, phase='0', delay='0ms', duration='%sms'%duration, amplitude=args.ie0, period='25ms')
-    nml_doc.sine_generator_dls.append(pulse)
+    if dl:
+        pulse = SineGeneratorDL(id='mod_%s' %pop, phase='0', delay='0ms', duration='%sms'%duration, amplitude=args.ie0, period='25ms')
+        nml_doc.sine_generator_dls.append(pulse)
+    else:
+        pulse = SineGeneratorDL(id='mod_%s' %pop, phase='0', delay='0ms', duration='%sms'%duration, amplitude=args.ie0, period='25ms')
+        nml_doc.sine_generator_dls.append(pulse)
 
 # Create the network
 net = Network(id='net')
 nml_doc.networks.append(net)
 nml_doc.includes.append(IncludeType('RateBased.xml'))
-nml_doc.includes.append(IncludeType('WC_Parameters.xml'))
+
+nml_doc.includes.append(IncludeType('WC_Parameters%s.xml'%dl_str))
 
 colours = ['0 0 1', '1 0 0']
 for pop_idx, pop in enumerate(pops):
@@ -128,7 +136,9 @@ for pop_idx, pop in enumerate(pops):
         exp_input = ExplicitInput(target='%sPop/%i/%s' %(pop, n_idx, pop), input='mod_%s' %pops[pop_idx], destination='synapses')
         net.explicit_inputs.append(exp_input)
 
-nml_file = 'WC_%s.net.nml' %baseline
+nml_file = 'WC_%s%s.net.nml' %(baseline,dl_str)
 writers.NeuroMLWriter.write(nml_doc, nml_file)
 
-generatePopulationSimulationLEMS(n_pops, baseline, pops, duration)
+print('Written NeuroML file: %s'%nml_file)
+
+generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl)
