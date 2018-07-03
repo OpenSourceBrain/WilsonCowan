@@ -1,0 +1,29 @@
+sudo: false
+
+addons:
+   apt:
+     packages:
+     - python-matplotlib 
+    
+
+language: python
+python: 2.7
+
+ 
+virtualenv:
+   system_site_packages: true
+
+env:
+    - OMV_ENGINE=jNeuroML
+    - OMV_ENGINE=Brian     # Pythoin script runs with Brian; should be just Python, but Brian engine is quick to set up...
+
+install: 
+    - pip install git+https://github.com/OpenSourceBrain/osb-model-validation
+
+script:
+    - omv all -V
+    
+    
+    
+    
+

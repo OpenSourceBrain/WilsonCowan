@@ -1,0 +1,31 @@
+# Script for running automated tests on OSB using Travis-CI, see https://github.com/OpenSourceBrain/osb-model-validation
+ 
+# runs with Brian; should be just Python, but Brian engine is quick to set up...
+
+target: WilsonCowan.py 
+engine: Brian   
+mep: ../NeuroML2/.test.slow.mep
+experiments:
+  e:
+    observables:
+      spike times:
+        file: 
+          path: NoDrive.dat
+          columns: [0,1]
+          scaling: [1000, 1]
+        spike detection: 
+          method: threshold
+          threshold: 0.557
+        tolerance: 0
+  i:
+    observables:
+      spike times:
+        file: 
+          path: NoDrive.dat
+          columns: [0,2]
+          scaling: [1000, 1]
+        spike detection: 
+          method: threshold
+          threshold: 0.652
+        tolerance: 0
+

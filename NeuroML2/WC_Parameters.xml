@@ -1,8 +1,8 @@
 <Lems>
-    <wilsonCowanCellDL id="EDL" tau="1ms" R0="0.1" z="0.2" />
-    <wilsonCowanCellDL id="IDL" tau="1ms" R0="0.05" z="4"/>
-    <rateSynapseDL id="rsIDL" />
-    <rateSynapseDL id="rsEDL" />
+    <wilsonCowanCellDL id="Exc" tau="1ms" R0="0.1" z="0.2" />
+    <wilsonCowanCellDL id="Inh" tau="1ms" R0="0.05" z="4"/>
+    <rateSynapseDL id="rsExc" />
+    <rateSynapseDL id="rsInh" />
     <silentSynapseDL id="silent1DL"/>
 
 </Lems>

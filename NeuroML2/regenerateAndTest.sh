@@ -8,3 +8,5 @@ python GenerateWilsonCowanLEMS.py -ie0 0.5 -ii0 0.5
 jnml LEMS_WC_drivenSim.xml -nogui
 jnml LEMS_WC_slowSim.xml -nogui
 
+omv all -V 
+

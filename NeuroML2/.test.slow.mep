@@ -1,0 +1,9 @@
+system: Test Slow
+
+experiments:
+    e:
+        expected:
+            spike times: [0.865, 5.71, 9.66, 13.47, 17.295]
+    i:
+        expected:
+            spike times: [1.645, 6.27, 10.175, 13.97, 17.78]

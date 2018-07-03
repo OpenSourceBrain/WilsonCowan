@@ -6,3 +6,6 @@
 /NeuroML2/x86_64
 /NeuroML2/*_nrn.py
 /NeuroML2/*.pov
+/Python/*.dat
+/Python/*.dat
+/notebooks/.ipynb_checkpoints
