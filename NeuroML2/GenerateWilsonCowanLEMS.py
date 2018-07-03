@@ -4,7 +4,7 @@ import argparse
 import numpy as np
 
 from neuroml import (NeuroMLDocument, Network, Population, ContinuousConnectionInstanceW, ContinuousProjection,
-                     ExplicitInput, SineGeneratorDL, Property, Location, Instance, IncludeType)
+                     ExplicitInput, SineGeneratorDL, SineGenerator, Property, Location, Instance, IncludeType)
 import neuroml.writers as writers
 from pyneuroml.lems.LEMSSimulation import LEMSSimulation
 random.seed(42)
@@ -50,13 +50,13 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl):
     ls.create_display(disp2, 'Rates', -.1, 1.2)
     for pop_idx, pop in enumerate(pops):
         for n_pop in range(n_pops[pop_idx]):
-            ls.add_line_to_display(disp2, 'r_%s' %pop, '%sPop/%d/%s/R' % (pop, n_pop, pop),   color=colours[pop_idx])
+            ls.add_line_to_display(disp2,  'r_%s' %pop, '%sPop/%d/%s/%s' % (pop, n_pop, pop, 'R' if dl else 'r'),   color=colours[pop_idx])
 
     disp1 = 'd1'
     ls.create_display(disp1, 'iSyn', -2, 8)
     for pop_idx, pop in enumerate(pops):
         for n_pop in range(n_pops[pop_idx]):
-            ls.add_line_to_display(disp1, 'iSyn_%s' %pop, '%sPop/%d/%s/iSyn' % (pop, n_pop, pop),   color=colours[pop_idx])
+            ls.add_line_to_display(disp1, 'iSyn_%s' %pop, '%sPop/%d/%s/iSyn' % (pop, n_pop, pop),   color=colours[pop_idx], scale=1 if dl else '1nA')
             ls.add_line_to_display(disp1, 'f_%s' %pop, '%sPop/%d/%s/f' % (pop, n_pop, pop),   color=colours2[pop_idx])
 
     of1 = 'of_%s' %pop
@@ -64,7 +64,7 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl):
     for pop_idx, pop in enumerate(pops):
         # save rates in output file
         for n_pop in range(n_pops[pop_idx]):
-            ls.add_column_to_output_file(of1, 'r_%s' %pop, '%sPop/%d/%s/R' %(pop, n_pop, pop))
+            ls.add_column_to_output_file(of1, 'r_%s' %pop, '%sPop/%d/%s/%s' %(pop, n_pop, pop, 'R' if dl else 'r'))
 
     save_path = os.path.join(sim_id)
     ls.save_to_file(file_name=save_path)
@@ -100,8 +100,8 @@ for pop_idx, pop in enumerate(pops):
         pulse = SineGeneratorDL(id='mod_%s' %pop, phase='0', delay='0ms', duration='%sms'%duration, amplitude=args.ie0, period='25ms')
         nml_doc.sine_generator_dls.append(pulse)
     else:
-        pulse = SineGeneratorDL(id='mod_%s' %pop, phase='0', delay='0ms', duration='%sms'%duration, amplitude=args.ie0, period='25ms')
-        nml_doc.sine_generator_dls.append(pulse)
+        pulse = SineGenerator(id='mod_%s' %pop, phase='0', delay='0ms', duration='%sms'%duration, amplitude='%snA'%args.ie0, period='25ms')
+        nml_doc.sine_generators.append(pulse)
 
 # Create the network
 net = Network(id='net')

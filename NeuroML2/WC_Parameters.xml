@@ -1,9 +1,9 @@
 <Lems>
     
-    <wilsonCowanCell id="Exc" tau="1ms" R0="0.1" z="0.2" />
-    <wilsonCowanCell id="Inh" tau="1ms" R0="0.05" z="4"/>
+    <wilsonCowanCell id="Exc" tau="1ms" r0="0.1Hz" z="0.2nA" />
+    <wilsonCowanCell id="Inh" tau="1ms" r0="0.05Hz" z="4nA"/>
     <rateSynapse id="rsExc" />
     <rateSynapse id="rsInh" />
-    <silentSynapseDL id="silent1DL"/>
+    <silentSynapse id="silent1DL"/>
 
 </Lems>

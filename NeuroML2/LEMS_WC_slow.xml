@@ -21,20 +21,20 @@
     <Simulation id="LEMS_WC_slow.xml" length="100ms" step="0.005ms" target="net" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
         <Display id="d2" title="Rates" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-0.1" ymax="1.2">
-            <Line id="r_Exc" quantity="ExcPop/0/Exc/R" scale="1" color="#ff0000" timeScale="1ms"/>
-            <Line id="r_Inh" quantity="InhPop/0/Inh/R" scale="1" color="#0000ff" timeScale="1ms"/>
+            <Line id="r_Exc" quantity="ExcPop/0/Exc/r" scale="1" color="#ff0000" timeScale="1ms"/>
+            <Line id="r_Inh" quantity="InhPop/0/Inh/r" scale="1" color="#0000ff" timeScale="1ms"/>
         </Display>
         
         <Display id="d1" title="iSyn" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-2" ymax="8">
-            <Line id="iSyn_Exc" quantity="ExcPop/0/Exc/iSyn" scale="1" color="#ff0000" timeScale="1ms"/>
+            <Line id="iSyn_Exc" quantity="ExcPop/0/Exc/iSyn" scale="1nA" color="#ff0000" timeScale="1ms"/>
             <Line id="f_Exc" quantity="ExcPop/0/Exc/f" scale="1" color="#ff7777" timeScale="1ms"/>
-            <Line id="iSyn_Inh" quantity="InhPop/0/Inh/iSyn" scale="1" color="#0000ff" timeScale="1ms"/>
+            <Line id="iSyn_Inh" quantity="InhPop/0/Inh/iSyn" scale="1nA" color="#0000ff" timeScale="1ms"/>
             <Line id="f_Inh" quantity="InhPop/0/Inh/f" scale="1" color="#7777ff" timeScale="1ms"/>
         </Display>
         
         <OutputFile id="of_Inh" fileName="WC_slow.dat">
-            <OutputColumn id="r_Exc" quantity="ExcPop/0/Exc/R"/> 
-            <OutputColumn id="r_Inh" quantity="InhPop/0/Inh/R"/> 
+            <OutputColumn id="r_Exc" quantity="ExcPop/0/Exc/r"/> 
+            <OutputColumn id="r_Inh" quantity="InhPop/0/Inh/r"/> 
         </OutputFile>
         
     </Simulation>

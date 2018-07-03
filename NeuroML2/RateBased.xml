@@ -62,37 +62,41 @@
 
 
     <ComponentType  name="wilsonCowanCell"
-                    extends="baseRateUnitDL"
+                    extends="baseRateUnit"
                     description="Work in progress...">
 
         <Parameter name="tau" dimension="time"/>
-        <Parameter name="R0" dimension="none"/>
-        <Parameter name="z" dimension="none"/>
+        <Parameter name="r0" dimension="per_time"/>
+        <Parameter name="z" dimension="current"/>
 
-        <Attachments name="synapses" type="basePointCurrentDL"/>
+        <Attachments name="synapses" type="basePointCurrent"/>
 
         <Exposure name="f" dimension="none"/>
-        <Exposure name="iSyn" dimension="none"/>
+        <Exposure name="iSyn" dimension="current"/>
+        
+        <Constant name="NAMP_SCALE" dimension="current" value="1 nA"/>
+        <Constant name="HZ_SCALE" dimension="per_time" value="1 Hz"/>
+        <Constant name="MVOLT_SCALE" dimension="voltage" value="1mV"/>
 
         <Dynamics>
 
-            <StateVariable name="R" dimension="none" exposure="R" description="Rate..."/>
+            <StateVariable name="r" dimension="per_time" exposure="r" description="Rate..."/>
 
-            <DerivedVariable name="iSyn" dimension="none" exposure="iSyn" select="synapses[*]/I" reduce="add" />
+            <DerivedVariable name="iSyn" dimension="current" exposure="iSyn" select="synapses[*]/i" reduce="add" />
 
-            <DerivedVariable name="f" dimension="none" exposure="f" value="1 / (1 + exp(-1*(iSyn - z)))"/>
+            <DerivedVariable name="f" dimension="none" exposure="f" value="1 / (1 + exp(-1*(iSyn - z)/NAMP_SCALE))"/>
 
-            <!-- Set V to zero for now... -->
-            <DerivedVariable name="V" dimension="none" exposure="V" value="0"/>
+            <!-- Set v to zero for now... -->
+            <DerivedVariable name="v" dimension="voltage" exposure="v" value="0*MVOLT_SCALE"/>
         
-            <TimeDerivative variable="R" value="(-1*R + f)/tau"/>
+            <TimeDerivative variable="r" value="(-1*r + f*HZ_SCALE)/tau"/>
 
             <OnStart>
-                <StateAssignment variable="R" value="R0"/>
+                <StateAssignment variable="r" value="r0"/>
             </OnStart>
 
             <!-- On condition is not need on the model but NeuroML requires its definition -->
-            <OnCondition test="R .lt. 0">
+            <OnCondition test="r .lt. 0">
                 <EventOut port="spike"/>
             </OnCondition>
 
@@ -130,7 +134,6 @@
 
         <Property name="weight" dimension="none" defaultValue="1"/>
 
-        <Constant name="MSEC" dimension="time" value="1ms"/>
         <Constant name="SEC" dimension="time" value="1s"/>
         <Constant name="PAMP" dimension="current" value="1nA"/>
 
@@ -148,24 +151,23 @@
 
 
     <ComponentType name="rateSynapse"
-                   extends="baseGradedSynapseDL"
+                   extends="baseGradedSynapse"
                    description="...">
-
-        <Property name="weight" dimension="none" defaultValue="1"/>
-
-        <Constant name="MSEC" dimension="time" value="1ms"/>
+        
+        <Property name="weight" dimension="none" defaultValue="1"/> 
+        
         <Constant name="SEC" dimension="time" value="1s"/>
-        <Constant name="PAMP" dimension="current" value="1nA"/>
+        <Constant name="NAMP_SCALE" dimension="current" value="1nA"/>
+        
+        <Exposure name="i" dimension="current"/>
+        
+        <Requirement name="r" dimension="per_time"/>
 
-        <Exposure name="I" dimension="none"/>
-
-        <Requirement name="R" dimension="none"/>
-
-        <InstanceRequirement name="peer" type="rateSynapseDL"/>
+        <InstanceRequirement name="peer" type="rateSynapse"/>
 
         <Dynamics>
-            <DerivedVariable name="rpeer" dimension="none" select="peer/R"/>
-            <DerivedVariable name="I" exposure="I"  value="weight * SEC * rpeer"/>
+            <DerivedVariable name="rpeer" dimension="per_time" select="peer/r"/>
+            <DerivedVariable name="i" exposure="i"  value="weight * SEC * NAMP_SCALE * rpeer"/>
         </Dynamics>
     </ComponentType>
 
