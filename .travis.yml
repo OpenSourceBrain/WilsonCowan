@@ -3,7 +3,10 @@ sudo: false
 addons:
    apt:
      packages:
-     - python-matplotlib 
+        - python-numpy 
+        - python-scipy 
+        - python-matplotlib 
+        - python-sympy
     
 
 language: python
