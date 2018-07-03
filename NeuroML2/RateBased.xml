@@ -41,6 +41,9 @@
             <DerivedVariable name="iSyn" dimension="none" exposure="iSyn" select="synapses[*]/I" reduce="add" />
 
             <DerivedVariable name="f" dimension="none" exposure="f" value="1 / (1 + exp(-1*(iSyn - z)))"/>
+            
+            <!-- Set V to zero for now... -->
+            <DerivedVariable name="V" dimension="none" exposure="V" value="0"/>
 
             <TimeDerivative variable="R" value="(-1*R + f)/tau"/>
 
@@ -56,6 +59,7 @@
         </Dynamics>
 
     </ComponentType>
+
 
     <ComponentType  name="wilsonCowanCell"
                     extends="baseRateUnitDL"
@@ -78,6 +82,9 @@
 
             <DerivedVariable name="f" dimension="none" exposure="f" value="1 / (1 + exp(-1*(iSyn - z)))"/>
 
+            <!-- Set V to zero for now... -->
+            <DerivedVariable name="V" dimension="none" exposure="V" value="0"/>
+        
             <TimeDerivative variable="R" value="(-1*R + f)/tau"/>
 
             <OnStart>
@@ -93,9 +100,15 @@
 
     </ComponentType>
 
+    
+    <ComponentType name="baseGradedSynapseDL"
+                   extends="baseSynapseDL"
+                   description="Base type for dimensionless graded synapses">
+    </ComponentType>
+    
 
     <ComponentType name="silentSynapseDL"
-                   extends="baseGradedSynapse"
+                   extends="baseGradedSynapseDL"
                    description="Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection.">
 
         <Property name="weight" dimension="none" defaultValue="1"/> <!-- Not used...-->
@@ -112,7 +125,7 @@
     
 
     <ComponentType name="rateSynapseDL"
-                   extends="baseGradedSynapse"
+                   extends="baseGradedSynapseDL"
                    description="...">
 
         <Property name="weight" dimension="none" defaultValue="1"/>
@@ -135,7 +148,7 @@
 
 
     <ComponentType name="rateSynapse"
-                   extends="baseGradedSynapse"
+                   extends="baseGradedSynapseDL"
                    description="...">
 
         <Property name="weight" dimension="none" defaultValue="1"/>

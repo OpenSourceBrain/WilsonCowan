@@ -11,5 +11,8 @@ python GenerateWilsonCowanLEMS.py -ie0 0.5 -ii0 0.5  -dims
 jnml LEMS_WC_drivenDL.xml -nogui
 jnml LEMS_WC_slowDL.xml -nogui
 
+jnml LEMS_WC_driven.xml -nogui
+jnml LEMS_WC_slow.xml -nogui
+
 omv all -V 
 

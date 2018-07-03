@@ -58,16 +58,17 @@ for dt_idx in range(len(dt)):
     
 data_file.close()
 
-plt.figure()
-plt.plot(dt, uu_p, label='uu', color='red')
-plt.plot(dt, vv_p, label='vv', color='blue')
-plt.xlabel('Time')
-plt.legend()
+if not '-nogui' in sys.argv:
+    plt.figure()
+    plt.plot(dt, uu_p, label='uu', color='red')
+    plt.plot(dt, vv_p, label='vv', color='blue')
+    plt.xlabel('Time')
+    plt.legend()
 
-plt.figure()
-plt.plot(uu_p, vv_p)
-plt.xlabel('I')
-plt.ylabel('E')
+    plt.figure()
+    plt.plot(uu_p, vv_p)
+    plt.xlabel('I')
+    plt.ylabel('E')
 # ------------------------------------------------------------------------------------------------------------------
 #                                                   Driven
 # ------------------------------------------------------------------------------------------------------------------
@@ -107,16 +108,16 @@ for dt_idx in range(len(dt)):
 
 data_file.close()
 
-plt.figure()
-plt.plot(dt, uu_p, label='uu', color='red')
-plt.plot(dt, vv_p, label='vv', color='blue')
-plt.xlabel('Time')
-plt.legend()
-
-plt.figure()
-plt.plot(uu_p, vv_p)
-plt.xlabel('I')
-plt.ylabel('E')
-
 if not '-nogui' in sys.argv:
+    plt.figure()
+    plt.plot(dt, uu_p, label='uu', color='red')
+    plt.plot(dt, vv_p, label='vv', color='blue')
+    plt.xlabel('Time')
+    plt.legend()
+
+    plt.figure()
+    plt.plot(uu_p, vv_p)
+    plt.xlabel('I')
+    plt.ylabel('E')
+
     plt.show()
