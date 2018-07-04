@@ -1,4 +1,5 @@
 import math
+import sys
 import numpy as np
 import matplotlib.pylab as plt
 
@@ -20,13 +21,13 @@ def calculate_firing_rate(ie0, ie1, ii0, ii1, w, t, dt, uu, vv, wee, wie, ze, zi
 #                                                   No Drive
 # ------------------------------------------------------------------------------------------------------------------
 # settings
-wee = 10
-wie = 8
-wei = 12
-wii = 3
+wee = 10.
+wie = 8.
+wei = 12.
+wii = 3.
 ze = 0.2
-zi = 4
-tau = 1
+zi = 4.
+tau = 1.
 ie0 = 0
 ie1 = 0
 ii0 = 0
@@ -43,6 +44,8 @@ vv_p = np.zeros((len(dt), 1))
 uu0 = 0.1
 vv0 = 0.05
 
+data_file = open('NoDrive.dat','w')
+
 for dt_idx in range(len(dt)):
     t = dt_idx * step
     if dt_idx == 0:
@@ -51,28 +54,30 @@ for dt_idx in range(len(dt)):
     else:
         uu_p[dt_idx], vv_p[dt_idx] = calculate_firing_rate(ie0, ie1, ii0, ii1, w, t, step, uu_p[dt_idx - 1],
                                                            vv_p[dt_idx - 1], wee, wie, ze, zi)
+    data_file.write('%s\t%s\t%s\n'%(t/1000.,uu_p[dt_idx][0], vv_p[dt_idx][0]))
+    
+data_file.close()
 
-plt.figure()
-plt.plot(dt, uu_p, label='uu', color='red')
-plt.plot(dt, vv_p, label='vv', color='blue')
-plt.xlabel('Time')
-plt.legend()
-plt.show()
+if not '-nogui' in sys.argv:
+    plt.figure()
+    plt.plot(dt, uu_p, label='uu', color='red')
+    plt.plot(dt, vv_p, label='vv', color='blue')
+    plt.xlabel('Time')
+    plt.legend()
 
-plt.figure()
-plt.plot(uu_p, vv_p)
-plt.xlabel('I')
-plt.ylabel('E')
-plt.show()
+    plt.figure()
+    plt.plot(uu_p, vv_p)
+    plt.xlabel('I')
+    plt.ylabel('E')
 # ------------------------------------------------------------------------------------------------------------------
 #                                                   Driven
 # ------------------------------------------------------------------------------------------------------------------
 # settings
-wei = 12
-wii = 3
+wei = 12.
+wii = 3.
 ze = 0.2
-zi = 4
-tau = 1
+zi = 4.
+tau = 1.
 ie0 = 0
 ie1 = 0.5
 ii0 = 0
@@ -89,6 +94,8 @@ vv_p = np.zeros((len(dt), 1))
 uu0 = 0.1
 vv0 = 0.05
 
+data_file = open('Driven.dat','w')
+
 for dt_idx in range(len(dt)):
     t = dt_idx * step
     if dt_idx == 0:
@@ -97,16 +104,20 @@ for dt_idx in range(len(dt)):
     else:
         uu_p[dt_idx], vv_p[dt_idx] = calculate_firing_rate(ie0, ie1, ii0, ii1,  w, t, step, uu_p[dt_idx - 1],
                                                            vv_p[dt_idx - 1], wee, wie, ze, zi)
+    data_file.write('%s\t%s\t%s\n'%(t/1000.,uu_p[dt_idx][0], vv_p[dt_idx][0]))
 
-plt.figure()
-plt.plot(dt, uu_p, label='uu', color='red')
-plt.plot(dt, vv_p, label='vv', color='blue')
-plt.xlabel('Time')
-plt.legend()
-plt.show()
+data_file.close()
 
-plt.figure()
-plt.plot(uu_p, vv_p)
-plt.xlabel('I')
-plt.ylabel('E')
-plt.show()
+if not '-nogui' in sys.argv:
+    plt.figure()
+    plt.plot(dt, uu_p, label='uu', color='red')
+    plt.plot(dt, vv_p, label='vv', color='blue')
+    plt.xlabel('Time')
+    plt.legend()
+
+    plt.figure()
+    plt.plot(uu_p, vv_p)
+    plt.xlabel('I')
+    plt.ylabel('E')
+
+    plt.show()

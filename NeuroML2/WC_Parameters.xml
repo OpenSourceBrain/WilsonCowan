@@ -1,0 +1,9 @@
+<Lems>
+    
+    <wilsonCowanCell id="Exc" tau="1ms" r0="0.1Hz" z="0.2nA" />
+    <wilsonCowanCell id="Inh" tau="1ms" r0="0.05Hz" z="4nA"/>
+    <rateSynapse id="rsExc" />
+    <rateSynapse id="rsInh" />
+    <silentRateSynapse id="silent1DL"/>
+
+</Lems>
