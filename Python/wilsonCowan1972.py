@@ -21,8 +21,8 @@ theta_e = 2.8
 theta_i = 4
 re = 1
 ri = 1
-ke = .98
-ki = .97
+ke = 1
+ki = 1
 q = 0
 p = 0
 
