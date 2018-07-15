@@ -1,26 +1,26 @@
 <Lems xmlns="http://www.neuroml.org/lems/0.7.4"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.neuroml.org/lems/0.7.4 ../../LEMS/Schemas/LEMS/LEMS_v0.7.4.xsd" 
+      xsi:schemaLocation="http://www.neuroml.org/lems/0.7.4 ../../LEMS/Schemas/LEMS/LEMS_v0.7.4.xsd"
       description="A number of ComponentTypes for rate based/population models">
 
-    
+
     <ComponentType name="baseRateUnitDL"
                    extends="baseCellMembPotDL"
                    description="Base type of any cell/population which has a (dimensionless) rate _R.">
-        <!-- Note: initially at least this will extend the baseCellMembPotDL (i.e. with V) for greater compatibility with 
+        <!-- Note: initially at least this will extend the baseCellMembPotDL (i.e. with V) for greater compatibility with
         other export simulators... -->
         <Exposure name="R" dimension="none"/>
     </ComponentType>
-    
-    
+
+
     <ComponentType name="baseRateUnit"
                    extends="baseCellMembPot"
                    description="Base type of any cell/population which has a (dimensional) rate _r.">
-        <!-- Note: initially at least this will extend the baseCellMembPot (i.e. with v) for greater compatibility with 
+        <!-- Note: initially at least this will extend the baseCellMembPot (i.e. with v) for greater compatibility with
         other export simulators, particularly Neuron... -->
         <Exposure name="r" dimension="per_time"/>
     </ComponentType>
-    
+
 
     <ComponentType  name="wilsonCowanCellDL"
                     extends="baseRateUnitDL"
@@ -42,7 +42,7 @@
             <DerivedVariable name="iSyn" dimension="none" exposure="iSyn" select="synapses[*]/I" reduce="add" />
 
             <DerivedVariable name="f" dimension="none" exposure="f" value="1 / (1 + exp(-1*(iSyn - z)))"/>
-            
+
             <!-- Set V to zero for now... -->
             <DerivedVariable name="V" dimension="none" exposure="V" value="0"/>
 
@@ -61,6 +61,31 @@
 
     </ComponentType>
 
+    <ComponentType  name="isoclineDL"
+                    extends="baseRateUnitDL"
+                    description="Work in progress...">
+
+        <Parameter name="e0" dimension="none"/>
+        <Parameter name="w1" dimension="none"/>
+        <Parameter name="w2" dimension="none"/>
+        <Parameter name="z" dimension="none"/>
+
+        <Exposure name="f_inverse" dimension="none"/>
+        <Exposure name="R_iso" dimension="none"/>
+        <Exposure name="x" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="x" dimension="none" exposure="x" value="e0 / 1 - (1 * e0)" />
+            <DerivedVariable name="f_inverse" dimension="none" exposure="f_inverse" value="-log((1/x) - 1) + z"/>
+            <DerivedVariable name="R_iso" dimension="none" exposure="R_iso" value="((w1 * e0) - f_inverse)/w2"/>
+
+            <OnCondition test="R_iso .lt. 0">
+                <EventOut port="spike"/>
+            </OnCondition>
+
+        </Dynamics>
+
+    </ComponentType>
 
     <ComponentType  name="wilsonCowanCell"
                     extends="baseRateUnit"
@@ -74,7 +99,7 @@
 
         <Exposure name="f" dimension="none"/>
         <Exposure name="iSyn" dimension="current"/>
-        
+
         <Constant name="NAMP_SCALE" dimension="current" value="1 nA"/>
         <Constant name="HZ_SCALE" dimension="per_time" value="1 Hz"/>
         <Constant name="MVOLT_SCALE" dimension="voltage" value="1mV"/>
@@ -88,9 +113,9 @@
 
             <DerivedVariable name="f" dimension="none" exposure="f" value="1 / (1 + exp(-1*(iSyn - z)/NAMP_SCALE))"/>
 
-            <!-- Set v to r for now... 
+            <!-- Set v to r for now...
             <DerivedVariable name="v" dimension="voltage" exposure="v" value="0*MVOLT_SCALE"/>-->
-        
+
             <TimeDerivative variable="r" value="(-1*r + f*HZ_SCALE)/tau"/>
 
             <OnStart>
@@ -106,12 +131,12 @@
 
     </ComponentType>
 
-    
+
     <ComponentType name="baseGradedSynapseDL"
                    extends="baseSynapseDL"
                    description="Base type for dimensionless graded synapses">
     </ComponentType>
-    
+
 
     <ComponentType name="silentRateSynapseDL"
                    extends="baseGradedSynapseDL"
@@ -128,8 +153,8 @@
         </Dynamics>
 
     </ComponentType>
-    
-    
+
+
     <ComponentType name="rateSynapseDL"
                    extends="baseGradedSynapseDL"
                    description="...">
@@ -155,11 +180,11 @@
     <ComponentType name="baseRateSynapse"
                    extends="baseGradedSynapse"
                    description="Base type for rae based synapses">
-        
+
         <Requirement name="r" dimension="per_time"/>
-        
+
     </ComponentType>
-    
+
     <!-- TODO: make it a baseRateSynapse... -->
     <ComponentType name="silentRateSynapse"
                    extends="baseGradedSynapse"
@@ -177,17 +202,17 @@
         </Dynamics>
 
     </ComponentType>
-    
+
 
     <ComponentType name="rateSynapse"
                    extends="baseRateSynapse"
                    description="...">
-        
-        <Property name="weight" dimension="none" defaultValue="1"/> 
-        
+
+        <Property name="weight" dimension="none" defaultValue="1"/>
+
         <Constant name="SEC" dimension="time" value="1s"/>
         <Constant name="NAMP_SCALE" dimension="current" value="1nA"/>
-       
+
         <InstanceRequirement name="peer" type="rateSynapse"/>
 
         <Dynamics>
@@ -195,17 +220,17 @@
             <DerivedVariable name="i" exposure="i"  value="weight * SEC * NAMP_SCALE * rpeer"/>
         </Dynamics>
     </ComponentType>
-    
-    
+
+
     <ComponentType name="rateSynapsePicoAmp"
                    extends="baseRateSynapse"
                    description="...">
-        
-        <Property name="weight" dimension="none" defaultValue="1"/> 
-        
+
+        <Property name="weight" dimension="none" defaultValue="1"/>
+
         <Constant name="SEC" dimension="time" value="1s"/>
         <Constant name="PAMP_SCALE" dimension="current" value="1pA"/>
-        
+
         <InstanceRequirement name="peer" type="rateSynapse"/>
 
         <Dynamics>

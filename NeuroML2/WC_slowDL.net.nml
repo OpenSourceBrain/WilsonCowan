@@ -1,9 +1,9 @@
 <neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta5.xsd" id="WC_slowDL">
-    <include href="RateBased.xml"/>
-    <include href="WC_ParametersDL.xml"/>
+    <include href="RateBased.xml"></include>
+    <include href="WC_ParametersDL.xml"></include>
     <sineGeneratorDL id="mod_Exc" delay="0ms" phase="0" duration="100ms" amplitude="0.0" period="25ms"/>
     <sineGeneratorDL id="mod_Inh" delay="0ms" phase="0" duration="100ms" amplitude="0.0" period="25ms"/>
-    <network id="net">
+    <network id="net1">
         <population id="ExcPop" component="Exc" size="1" type="populationList">
             <property tag="color" value="0 0 1"/>
             <property tag="radius" value="10"/>
@@ -19,18 +19,21 @@
             </instance>
         </population>
         <continuousProjection id="Exc_Exc" presynapticPopulation="ExcPop" postsynapticPopulation="ExcPop">
-            <continuousConnectionInstanceW id="0" preCell="../ExcPop/0/Exc" postCell="../ExcPop/0/Exc" preComponent="silent1DL" postComponent="rsExc" weight="10."/>
+            <continuousConnectionInstanceW id="0" preCell="../ExcPop/0/Exc" preSegment="0" preFractionAlong="0.5" postCell="../ExcPop/0/Exc" postSegment="0" postFractionAlong="0.5" preComponent="silent1DL" postComponent="rsExc" weight="10."/>
         </continuousProjection>
         <continuousProjection id="Exc_Inh" presynapticPopulation="ExcPop" postsynapticPopulation="InhPop">
-            <continuousConnectionInstanceW id="0" preCell="../ExcPop/0/Exc" postCell="../InhPop/0/Inh" preComponent="silent1DL" postComponent="rsInh" weight="12."/>
+            <continuousConnectionInstanceW id="0" preCell="../ExcPop/0/Exc" preSegment="0" preFractionAlong="0.5" postCell="../InhPop/0/Inh" postSegment="0" postFractionAlong="0.5" preComponent="silent1DL" postComponent="rsInh" weight="12."/>
         </continuousProjection>
         <continuousProjection id="Inh_Exc" presynapticPopulation="InhPop" postsynapticPopulation="ExcPop">
-            <continuousConnectionInstanceW id="0" preCell="../InhPop/0/Inh" postCell="../ExcPop/0/Exc" preComponent="silent1DL" postComponent="rsExc" weight="-8."/>
+            <continuousConnectionInstanceW id="0" preCell="../InhPop/0/Inh" preSegment="0" preFractionAlong="0.5" postCell="../ExcPop/0/Exc" postSegment="0" postFractionAlong="0.5" preComponent="silent1DL" postComponent="rsExc" weight="-8."/>
         </continuousProjection>
         <continuousProjection id="Inh_Inh" presynapticPopulation="InhPop" postsynapticPopulation="InhPop">
-            <continuousConnectionInstanceW id="0" preCell="../InhPop/0/Inh" postCell="../InhPop/0/Inh" preComponent="silent1DL" postComponent="rsInh" weight="-3."/>
+            <continuousConnectionInstanceW id="0" preCell="../InhPop/0/Inh" preSegment="0" preFractionAlong="0.5" postCell="../InhPop/0/Inh" postSegment="0" postFractionAlong="0.5" preComponent="silent1DL" postComponent="rsInh" weight="-3."/>
         </continuousProjection>
         <explicitInput target="ExcPop/0/Exc" input="mod_Exc" destination="synapses"/>
         <explicitInput target="InhPop/0/Inh" input="mod_Inh" destination="synapses"/>
+    </network>
+    <network id="net2">
+        <population id="isoDL" component="isoDL" size="1"/>
     </network>
 </neuroml>

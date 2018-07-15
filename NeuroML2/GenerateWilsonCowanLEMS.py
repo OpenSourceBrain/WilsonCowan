@@ -29,13 +29,14 @@ def generatePopulationProjection(from_pop, to_pop, n_from_pop, n_to_pop, w_to_fr
             connection_count += 1
 
 
-def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl):
+def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl,
+                                     isocline):
     # Create simulation
     # Create LEMS file
     dl_str = 'DL' if dl else ''
     sim_id = 'LEMS_WC_%s%s.xml' %(baseline,dl_str)
     dt = 0.005
-    ls = LEMSSimulation(sim_id, duration, dt, 'net')
+    ls = LEMSSimulation(sim_id, duration, dt, 'net1')
     colours = ['#ff0000', '#0000ff']
     colours2 = ['#ff7777', '#7777ff']
 
@@ -66,25 +67,43 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl):
         for n_pop in range(n_pops[pop_idx]):
             ls.add_column_to_output_file(of1, 'r_%s' %pop, '%sPop/%d/%s/%s' %(pop, n_pop, pop, 'R' if dl else 'r'))
 
+    if isocline:
+        ls2 = LEMSSimulation('sim2', duration, dt, 'net2')
+        ls2.create_output_file(of1, 'WC_isocline.dat')
+        print 'Calculating isocline'
+        ls2.add_column_to_output_file(of1, 'R_isoExc', 'isoDL[0]/R_iso')
+
+
     save_path = os.path.join(sim_id)
     ls.save_to_file(file_name=save_path)
 
 parser = argparse.ArgumentParser(description='Parameters for the Wilson and Cowan.')
-parser.add_argument('-ie0', help='excitatory population input current', type=float)
-parser.add_argument('-ii0', help='inhibitory population input current', type=float)
-parser.add_argument('-dims', help='generate dimensional model', action='store_true', default=False)
-
+parser.add_argument('-ie0',
+                    help='excitatory population input current',
+                    type=float)
+parser.add_argument('-ii0',
+                    help='inhibitory population input current',
+                    type=float)
+parser.add_argument('-dims',
+                    help='generate dimensional model',
+                    action='store_true',
+                    default=False)
+parser.add_argument('-isocline',
+                    help='plot isocline',
+                    action='store_true',
+                   default=False)
 args = parser.parse_args()
 
+# Check if the simulation should be dimensionless or not
 dl = not args.dims
-print('Generating as dimensionless: %s'%dl)
+print('Generating a dimensionless model: %s' %dl)
 dl_str = 'DL' if dl else ''
 
-pops = ['Exc', 'Inh'] # E would give errors in NEURON; EDL is not a nice variable name...
+pops = ['Exc', 'Inh']
 n_pops = [1, 1]
 w_to_from_pops = np.array([[10, -8],
                            [12, -3]])
-                           
+
 silentSynapsisDL = 'silent1DL'
 
 if args.ie0 or args.ii0 > 0:
@@ -104,7 +123,7 @@ for pop_idx, pop in enumerate(pops):
         nml_doc.sine_generators.append(pulse)
 
 # Create the network
-net = Network(id='net')
+net = Network(id='net1')
 nml_doc.networks.append(net)
 nml_doc.includes.append(IncludeType('RateBased.xml'))
 
@@ -123,6 +142,11 @@ for pop_idx, pop in enumerate(pops):
         inst.location = Location(x=-20 if 'E' in pop else 20,
                                  y=0,
                                  z=0)
+if args.isocline:
+    net2 = Network(id='net2')
+    nml_doc.networks.append(net2)
+    isoclines = Population(id='isoDL', component='isoDL', size=1)
+    net2.populations.append(isoclines)
 
 
 for from_idx, from_pop in enumerate(pops):
@@ -141,4 +165,6 @@ writers.NeuroMLWriter.write(nml_doc, nml_file)
 
 print('Written NeuroML file: %s'%nml_file)
 
-generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl)
+
+generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl, args.isocline)
+
