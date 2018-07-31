@@ -17,9 +17,6 @@ def calculate_firing_rate(ie0, ie1, ii0, ii1, w, t, dt, uu, vv, wee, wei, wie, w
     vv_p = vv + dI
     return uu_p, vv_p
 
-def inverse_sigmoid(x):
-    return -math.log(abs(1/x - 1))
-
 
 parser = argparse.ArgumentParser(description='Parameters for the Wilson and Cowan Simulation')
 parser.add_argument('-wee', type=float, dest='wee', help='Weight between Excitatory - Excitatory layers')
@@ -73,6 +70,7 @@ plt.figure()
 plt.plot(dt, uu_p, label='uu', color='red')
 plt.plot(dt, vv_p, label='vv', color='blue')
 plt.xlabel('Time')
+plt.ylabel('Firing Rate')
 plt.legend()
 
 pop_step = .02
@@ -90,7 +88,7 @@ plt.figure()
 plt.plot(uu_p, vv_p)
 plt.plot(population, E, label=r'$\frac{dI}{dt}=0$', linestyle='-.')
 plt.plot(I, population, label=r'$\frac{dE}{dt}=0$', linestyle='-.')
-plt.legend()
+plt.legend(loc='upper left')
 plt.xlabel('I')
 plt.ylabel('E')
 if not '-nogui' in sys.argv:
