@@ -7,6 +7,7 @@ from neuroml import (NeuroMLDocument, Network, Population, ContinuousConnectionI
                      ExplicitInput, SineGeneratorDL, SineGenerator, Property, Location, Instance, IncludeType)
 import neuroml.writers as writers
 from pyneuroml.lems.LEMSSimulation import LEMSSimulation
+
 random.seed(42)
 
 
@@ -29,8 +30,7 @@ def generatePopulationProjection(from_pop, to_pop, n_from_pop, n_to_pop, w_to_fr
             connection_count += 1
 
 
-def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl,
-                                     isocline):
+def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl):
     # Create simulation
     # Create LEMS file
     dl_str = 'DL' if dl else ''
@@ -67,13 +67,6 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl,
         for n_pop in range(n_pops[pop_idx]):
             ls.add_column_to_output_file(of1, 'r_%s' %pop, '%sPop/%d/%s/%s' %(pop, n_pop, pop, 'R' if dl else 'r'))
 
-    if isocline:
-        ls2 = LEMSSimulation('sim2', duration, dt, 'net2')
-        ls2.create_output_file(of1, 'WC_isocline.dat')
-        print 'Calculating isocline'
-        ls2.add_column_to_output_file(of1, 'R_isoExc', 'isoDL[0]/R_iso')
-
-
     save_path = os.path.join(sim_id)
     ls.save_to_file(file_name=save_path)
 
@@ -88,10 +81,6 @@ parser.add_argument('-dims',
                     help='generate dimensional model',
                     action='store_true',
                     default=False)
-parser.add_argument('-isocline',
-                    help='plot isocline',
-                    action='store_true',
-                   default=False)
 args = parser.parse_args()
 
 # Check if the simulation should be dimensionless or not
@@ -142,12 +131,6 @@ for pop_idx, pop in enumerate(pops):
         inst.location = Location(x=-20 if 'E' in pop else 20,
                                  y=0,
                                  z=0)
-if args.isocline:
-    net2 = Network(id='net2')
-    nml_doc.networks.append(net2)
-    isoclines = Population(id='isoDL', component='isoDL', size=1)
-    net2.populations.append(isoclines)
-
 
 for from_idx, from_pop in enumerate(pops):
     for to_idx, to_pop in enumerate(pops):
@@ -164,7 +147,5 @@ nml_file = 'WC_%s%s.net.nml' %(baseline,dl_str)
 writers.NeuroMLWriter.write(nml_doc, nml_file)
 
 print('Written NeuroML file: %s'%nml_file)
-
-
-generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl, args.isocline)
+generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl)
 

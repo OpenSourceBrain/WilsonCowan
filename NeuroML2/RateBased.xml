@@ -61,32 +61,6 @@
 
     </ComponentType>
 
-    <ComponentType  name="isoclineDL"
-                    extends="baseRateUnitDL"
-                    description="Work in progress...">
-
-        <Parameter name="e0" dimension="none"/>
-        <Parameter name="w1" dimension="none"/>
-        <Parameter name="w2" dimension="none"/>
-        <Parameter name="z" dimension="none"/>
-
-        <Exposure name="f_inverse" dimension="none"/>
-        <Exposure name="R_iso" dimension="none"/>
-        <Exposure name="x" dimension="none"/>
-
-        <Dynamics>
-            <DerivedVariable name="x" dimension="none" exposure="x" value="e0 / 1 - (1 * e0)" />
-            <DerivedVariable name="f_inverse" dimension="none" exposure="f_inverse" value="-log((1/x) - 1) + z"/>
-            <DerivedVariable name="R_iso" dimension="none" exposure="R_iso" value="((w1 * e0) - f_inverse)/w2"/>
-
-            <OnCondition test="R_iso .lt. 0">
-                <EventOut port="spike"/>
-            </OnCondition>
-
-        </Dynamics>
-
-    </ComponentType>
-
     <ComponentType  name="wilsonCowanCell"
                     extends="baseRateUnit"
                     description="Work in progress...">
