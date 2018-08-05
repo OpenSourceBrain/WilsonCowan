@@ -18,6 +18,6 @@ See [here](NEURON).
 
 ## NeuroML
 <p float="left">
-  <img src="NeuroML/img/NeuroML_no_drive.png" width="400" />
-  <img src="NeuroML/img/NeuroML_driven.png" width="400" />
+  <img src="NeuroML2/img/NeuroML_no_drive.png" width="400" />
+  <img src="NeuroML2/img/NeuroML_driven.png" width="400" />
 </p>
