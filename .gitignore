@@ -1,3 +1,5 @@
+.DS_Store
+.idea
 /NEURON/x86_64
 /NeuroML2/rates.dat
 /NeuroML2/WC_slow.dat
@@ -6,7 +8,9 @@
 /NeuroML2/x86_64
 /NeuroML2/*_nrn.py
 /NeuroML2/*.pov
+/NeuroML2/*.json
 /Python/*.dat
 /Python/*.dat
 /notebooks/.ipynb_checkpoints
 /NeuroML2/*.dat
+/NeuroML2/*.gv
