@@ -13,7 +13,7 @@ Following the Bard Ermentrout's implementation in xppau the dynamics of the mode
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\tau&space;\frac{dI}{dt}&space;=&space;-v&space;&plus;&space;\phi&space;(w_{ei}\cdot&space;u&space;-&space;w_{ii}&space;\cdot&space;v&space;-&space;z_i)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\tau&space;\frac{dI}{dt}&space;=&space;-v&space;&plus;&space;\phi&space;(w_{ei}\cdot&space;u&space;-&space;w_{ii}&space;\cdot&space;v&space;-&space;z_i)" title="\tau \frac{dI}{dt} = -v + \phi (w_{ei}\cdot u - w_{ii} \cdot v - z_i + i_i)" /></a>
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=\tau&space;\frac{dE}{dt}&space;=&space;-u&space;&plus;&space;\phi&space;(w_{ee}&space;\cdot&space;u&space;-&space;w_{ei}&space;\cdot&space;v&space;-&space;z_e" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\tau&space;\frac{dE}{dt}&space;=&space;-u&space;&plus;&space;\phi&space;(w_{ee}&space;\cdot&space;u&space;-&space;w_{ei}&space;\cdot&space;v&space;-&space;z_e" title="\tau \frac{dE}{dt} = -u + \phi (w_{ee} \cdot u - w_{ei} \cdot v - z_e + i_e)" /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=\tau&space;\frac{dE}{dt}&space;=&space;-u&space;&plus;&space;\phi&space;(w_{ee}&space;\cdot&space;u&space;-&space;w_{ei}&space;\cdot&space;v&space;-&space;z_e)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\tau&space;\frac{dE}{dt}&space;=&space;-u&space;&plus;&space;\phi&space;(w_{ee}&space;\cdot&space;u&space;-&space;w_{ei}&space;\cdot&space;v&space;-&space;z_e)" title="\tau \frac{dE}{dt} = -u + \phi (w_{ee} \cdot u - w_{ei} \cdot v - z_e)" /></a>
 
 where u and v represents the proportion of excitatory and inhibitory cells firing, i_e and i_i are input currents, z_e and z_i correspond to constant modulatory currents that are applied to the populations, w_{ee}, w_{ei}, w_{ie}, w_{ii} are the connections synaptic coupling strength between the excitatory-excitatory, excitatory-inhibitory, inhibitory-excitatory, and inhibitory-inhibitory population respectively.
 
@@ -63,6 +63,7 @@ jnml LEMS_WC_driven.xml
 ## Model dynamics:
 We also explored the generated dynamics of the models in NeuroML2 and Python.
 While a more detailed description of the dynamics and isoline analysis with different parameters can be found [here](Python/README.md), a short example of isocline analysis in NeuroML2 can be found in this [jupyter notebook].
+
 
 ## Requirements
 The simulations require [NEURON](https://www.neuron.yale.edu/neuron/download) and
