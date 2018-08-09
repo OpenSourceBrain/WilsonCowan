@@ -22,7 +22,7 @@ Simulations for the Wilson and Cowan model are available in XPP, NEURON, Python 
 
 ### XPP
 Although we did not analyse this simulation, for completeness the links for the XPP can be found [here](XPP).
-˜
+
 ### NEURON
 See [here](NEURON).
 
@@ -60,11 +60,11 @@ jnml LEMS_WC_driven.xml
   <img src="NeuroML2/img/NeuroML_driven.png" width="400" />
 </p>
 
-## Model dynamics:
+## Model dynamics
 We also explored the generated dynamics of the models in NeuroML2 and Python.
 While a more detailed description of the dynamics and isoline analysis with different parameters can be found [here](Python/README.md), a short example of isocline analysis in NeuroML2 can be found in this [jupyter notebook].
 
+## Requirements
 
-## Requirements
 The simulations require [NEURON](https://www.neuron.yale.edu/neuron/download) and
 [jnml](https://github.com/NeuroML/jNeuroML) to be installed.
