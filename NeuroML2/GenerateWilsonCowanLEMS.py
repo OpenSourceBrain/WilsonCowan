@@ -10,6 +10,17 @@ from pyneuroml.lems.LEMSSimulation import LEMSSimulation
 
 random.seed(42)
 
+# The file GenerateWilsonCowanLEMS contains the description of
+# the Wilson and Cowan model and will generate two files with the
+# NeuroML2/LEMS definition of the model.
+# Inputs:
+#      -ie0: Modulatory current added to the excitatory population
+#      -ii0: Modulatory current added to the excitatory population
+#      -dims: Use SI dimension to generate the NeuroML/LEMS file
+#             (if the dims argument is not passed the generated
+#              NeuroML/LEMS file will not contain any units)
+# Output:
+#      - The script will generate a NeuroML/LEMS
 
 def generatePopulationProjection(from_pop, to_pop, n_from_pop, n_to_pop, w_to_from_pop, net):
     connection_count = 0

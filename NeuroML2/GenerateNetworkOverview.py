@@ -4,6 +4,8 @@ from neuromllite import Network, Population, Projection
 
 import sys
 
+# This function generates the overview of the network using neuromllite
+
 # Build the network
 net = Network(id='WC')
 net.notes = 'A simple WC network'
