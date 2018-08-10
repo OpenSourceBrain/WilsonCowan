@@ -1,11 +1,28 @@
+import numpy as np
 from neuromllite.NetworkGenerator import check_to_generate_or_run
 from neuromllite import Simulation
-from neuromllite import Network, Population, Projection
+from neuromllite import Network, Population, Projection, RandomConnectivity
 
 import sys
 
 # This function generates the overview of the network using neuromllite
+def internal_connections(pops):
+    for pre in pops:
+        for post in pops:
 
+            weight = W[pops.index(post)][pops.index(pre)]
+            print('Connection %s -> %s weight %s'%(pre.id,
+            post.id, weight))
+            if weight!=0:
+
+                net.projections.append(Projection(id='proj_%s_%s'%(pre.id,post.id),
+                                                    presynaptic=pre.id,
+                                                    postsynaptic=post.id,
+                                                    synapse='rs',
+                                                    type='continuousProjection',
+                                                    delay=0,
+                                                    weight=weight,
+                                                    random_connectivity=RandomConnectivity(probability=1)))
 # Build the network
 net = Network(id='WC')
 net.notes = 'A simple WC network'
@@ -19,13 +36,12 @@ print(p1.to_json())
 net.populations.append(p0)
 net.populations.append(p1)
 
-# Add projections
-net.projections.append(Projection(id='proj0',
-                                 presynaptic=p0.id,
-                                 postsynaptic=p1.id))
-net.projections.append(Projection(id='proj1',
-                                 presynaptic=p1.id,
-                                 postsynaptic=p0.id))
+W = np.array([[10, -8],
+              [12, -3]])
+
+# Add internal connections
+pops = [p0, p1]
+internal_connections(pops)
 
 # Save to JSON format
 net.id = 'WC'
