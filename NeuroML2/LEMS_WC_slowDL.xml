@@ -1,0 +1,26 @@
+<Lems>
+    
+    <!-- 
+
+        This LEMS file has been automatically generated using PyNeuroML v0.3.11 (libNeuroML v0.2.39)
+
+     -->
+    
+    <!-- Specify which component to run -->
+    <Target component="sim2"/>
+
+    <!-- Include core NeuroML2 ComponentType definitions -->
+    <Include file="Cells.xml"/>
+    <Include file="Networks.xml"/>
+    <Include file="Simulation.xml"/>
+    
+   
+    <Simulation id="sim2" length="100ms" step="0.005ms" target="net2" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+        
+        <OutputFile id="of_Inh" fileName="WC_isocline.dat">
+            <OutputColumn id="R_isoExc" quantity="isoDL[0]/R_iso"/> 
+        </OutputFile>
+        
+    </Simulation>
+
+</Lems>

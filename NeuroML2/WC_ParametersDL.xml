@@ -1,0 +1,12 @@
+<Lems>
+
+    <!--<wilsonCowanCellDL id="Exc" tau="1ms" R0="0.1" z="0.2" e0="0.4" w1="12" w2="4"/>-->
+    <!--<wilsonCowanCellDL id="Inh" tau="1ms" R0="0.05" z="4" e0="0.4" w1="11" w2="13"/>-->
+    <rateSynapseDL id="rsExc" />
+    <rateSynapseDL id="rsInh" />
+    <silentRateSynapseDL id="silent1DL"/>
+    <wilsonCowanCellDL id="Exc" tau="1ms" R0="0.1" z="0.2"/>
+    <wilsonCowanCellDL id="Inh" tau="1ms" R0="0.05" z="4"/>
+    <isoclineDL id="isoDL" e0="0.4" w1="12" w2="4" z="4"/>
+
+</Lems>

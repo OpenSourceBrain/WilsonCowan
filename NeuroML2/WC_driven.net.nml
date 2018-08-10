@@ -1,0 +1,36 @@
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta5.xsd" id="WC_driven">
+    <include href="RateBased.xml"/>
+    <include href="WC_Parameters.xml"/>
+    <sineGenerator id="mod_Exc" delay="0ms" phase="0" duration="100ms" amplitude="0.5nA" period="25ms"/>
+    <sineGenerator id="mod_Inh" delay="0ms" phase="0" duration="100ms" amplitude="0.5nA" period="25ms"/>
+    <network id="net">
+        <population id="ExcPop" component="Exc" size="1" type="populationList">
+            <property tag="color" value="0 0 1"/>
+            <property tag="radius" value="10"/>
+            <instance id="0">
+                <location x="-20." y="0." z="0."/>
+            </instance>
+        </population>
+        <population id="InhPop" component="Inh" size="1" type="populationList">
+            <property tag="color" value="1 0 0"/>
+            <property tag="radius" value="10"/>
+            <instance id="0">
+                <location x="20." y="0." z="0."/>
+            </instance>
+        </population>
+        <continuousProjection id="Exc_Exc" presynapticPopulation="ExcPop" postsynapticPopulation="ExcPop">
+            <continuousConnectionInstanceW id="0" preCell="../ExcPop/0/Exc" postCell="../ExcPop/0/Exc" preComponent="silent1DL" postComponent="rsExc" weight="10."/>
+        </continuousProjection>
+        <continuousProjection id="Exc_Inh" presynapticPopulation="ExcPop" postsynapticPopulation="InhPop">
+            <continuousConnectionInstanceW id="0" preCell="../ExcPop/0/Exc" postCell="../InhPop/0/Inh" preComponent="silent1DL" postComponent="rsInh" weight="12."/>
+        </continuousProjection>
+        <continuousProjection id="Inh_Exc" presynapticPopulation="InhPop" postsynapticPopulation="ExcPop">
+            <continuousConnectionInstanceW id="0" preCell="../InhPop/0/Inh" postCell="../ExcPop/0/Exc" preComponent="silent1DL" postComponent="rsExc" weight="-8."/>
+        </continuousProjection>
+        <continuousProjection id="Inh_Inh" presynapticPopulation="InhPop" postsynapticPopulation="InhPop">
+            <continuousConnectionInstanceW id="0" preCell="../InhPop/0/Inh" postCell="../InhPop/0/Inh" preComponent="silent1DL" postComponent="rsInh" weight="-3."/>
+        </continuousProjection>
+        <explicitInput target="ExcPop/0/Exc" input="mod_Exc" destination="synapses"/>
+        <explicitInput target="InhPop/0/Inh" input="mod_Inh" destination="synapses"/>
+    </network>
+</neuroml>
