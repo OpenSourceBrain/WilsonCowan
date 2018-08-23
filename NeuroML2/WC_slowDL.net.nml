@@ -33,7 +33,4 @@
         <explicitInput target="ExcPop/0/Exc" input="mod_Exc" destination="synapses"/>
         <explicitInput target="InhPop/0/Inh" input="mod_Inh" destination="synapses"/>
     </network>
-    <network id="net2">
-        <population id="isoDL" component="isoDL" size="1"/>
-    </network>
 </neuroml>

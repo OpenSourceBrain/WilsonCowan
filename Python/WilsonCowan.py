@@ -72,34 +72,36 @@ for dt_idx in range(len(dt)):
 data_file.close()
 
 
-plt.figure()
-plt.plot(dt, uu_p, label='uu', color='red')
-plt.plot(dt, vv_p, label='vv', color='blue')
-plt.xlabel('Time')
-plt.ylabel('Firing Rate')
-plt.legend()
-
-pop_step = .02
-pop_stop = 1
-population = np.arange(pop_step, pop_stop, pop_step)
-I = np.zeros((len(population), 1))
-E = np.zeros((len(population), 1))
-for e_idx, e in enumerate(population):
-    I[e_idx] = 1 / args.wie * (math.log(1/e - 1) - args.ze + args.wee * e)
-
-for i_idx, i in enumerate(population):
-    E[i_idx] = - 1 / args.wei * (math.log(1/i - 1) - args.zi - args.wii * i)
-
-plt.figure()
-plt.plot(uu_p, vv_p)
-plt.plot(population, E, label=r'$\frac{dI}{dt}=0$', linestyle='-.')
-plt.plot(I, population, label=r'$\frac{dE}{dt}=0$', linestyle='-.')
-plt.legend(loc='upper left')
-plt.xlabel('I')
-plt.ylabel('E')
-
 print("Finished running simulation of %sms, saved data to %s"%(args.tstop,savefile))
 
 if not args.nogui:
+    plt.figure()
+    plt.plot(dt, uu_p, label='uu', color='red')
+    plt.plot(dt, vv_p, label='vv', color='blue')
+    plt.xlabel('Time')
+    plt.ylabel('Firing Rate')
+    plt.legend()
+
+    pop_step = .02
+    pop_stop = 1
+    population = np.arange(pop_step, pop_stop, pop_step)
+    I = np.zeros((len(population), 1))
+    E = np.zeros((len(population), 1))
+    for e_idx, e in enumerate(population):
+        I[e_idx] = 1 / args.wie * (math.log(1/e - 1) - args.ze + args.wee * e)
+
+    for i_idx, i in enumerate(population):
+        E[i_idx] = - 1 / args.wei * (math.log(1/i - 1) - args.zi - args.wii * i)
+
+    plt.figure()
+    plt.plot(uu_p, vv_p)
+    plt.plot(population, E, label=r'$\frac{dI}{dt}=0$', linestyle='-.')
+    plt.plot(I, population, label=r'$\frac{dE}{dt}=0$', linestyle='-.')
+    plt.legend(loc='upper left')
+    plt.xlabel('I')
+    plt.ylabel('E')
+
     plt.show()
+    
+
 
