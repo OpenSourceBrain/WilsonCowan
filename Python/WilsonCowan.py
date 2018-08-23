@@ -17,17 +17,23 @@ def calculate_firing_rate(ie0, ie1, ii0, ii1, w, t, dt, uu, vv, wee, wei, wie, w
     vv_p = vv + dI
     return uu_p, vv_p
 
+#-wee 10. -wei 12. -wie 8. -wii 3. -ze 0.2 -zi 4. -ie1 0 -ii1 0 -w 0.25
 
 parser = argparse.ArgumentParser(description='Parameters for the Wilson and Cowan Simulation')
-parser.add_argument('-wee', type=float, dest='wee', help='Weight between Excitatory - Excitatory layers')
-parser.add_argument('-wei', type=float, dest='wei', help='Weight between Excitatory - Inhibitory layers')
-parser.add_argument('-wie', type=float, dest='wie', help='Weight between Excitatory - Inhibitory layers')
-parser.add_argument('-wii', type=float, dest='wii', help='Weight between Inhibitory - Inhibitory layers')
-parser.add_argument('-ze', type=float, dest='ze', help='')
-parser.add_argument('-zi', type=float, dest='zi', help='')
-parser.add_argument('-ie1', type=float, dest='ie1', help='Current')
-parser.add_argument('-ii1', type=float, dest='ii1', help='Current')
-parser.add_argument('-w', type=float, dest='w', help='Phase')
+parser.add_argument('-wee', type=float, dest='wee', default=10, help='Weight between Excitatory - Excitatory layers')
+parser.add_argument('-wei', type=float, dest='wei', default=12, help='Weight between Excitatory - Inhibitory layers')
+parser.add_argument('-wie', type=float, dest='wie', default=8, help='Weight between Excitatory - Inhibitory layers')
+parser.add_argument('-wii', type=float, dest='wii', default=3, help='Weight between Inhibitory - Inhibitory layers')
+parser.add_argument('-ze', type=float, dest='ze', default=0.2, help='')
+parser.add_argument('-zi', type=float, dest='zi', default=4, help='')
+parser.add_argument('-ie1', type=float, dest='ie1', default=0, help='Current')
+parser.add_argument('-ii1', type=float, dest='ii1', default=0, help='Current')
+parser.add_argument('-w', type=float, dest='w', default=0.25, help='Phase')
+
+parser.add_argument('-tstop', type=float, dest='tstop', default=100, help='Duration')
+
+parser.add_argument('-nogui', action='store_true', default=False, help='No GUI')
+
 args = parser.parse_args()
 
 # settings
@@ -36,8 +42,8 @@ ie0 = 0
 ii0 = 0
 
 step = .005
-tstop = 100
-dt = np.arange(0, tstop, step)
+
+dt = np.arange(0, args.tstop, step)
 uu_p = np.zeros((len(dt), 1))
 vv_p = np.zeros((len(dt), 1))
 
@@ -45,10 +51,10 @@ vv_p = np.zeros((len(dt), 1))
 uu0 = 0.1
 vv0 = 0.05
 
-if args.ie1 or args.ii1 != 0:
-    savefile = 'NoDrive.dat'
-else:
+if args.ie1 !=0 or args.ii1 != 0:
     savefile = 'Drive.dat'
+else:
+    savefile = 'NoDrive.dat'
 
 data_file = open(savefile, 'w')
 
@@ -91,5 +97,9 @@ plt.plot(I, population, label=r'$\frac{dE}{dt}=0$', linestyle='-.')
 plt.legend(loc='upper left')
 plt.xlabel('I')
 plt.ylabel('E')
-if not '-nogui' in sys.argv:
+
+print("Finished running simulation of %sms, saved data to %s"%(args.tstop,savefile))
+
+if not args.nogui:
     plt.show()
+
