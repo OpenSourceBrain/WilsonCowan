@@ -2,12 +2,12 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.3.11 (libNeuroML v0.2.39)
+        This LEMS file has been automatically generated using PyNeuroML v0.3.12 (libNeuroML v0.2.44)
 
      -->
     
     <!-- Specify which component to run -->
-    <Target component="sim2"/>
+    <Target component="WC_slowDL"/>
 
     <!-- Include core NeuroML2 ComponentType definitions -->
     <Include file="Cells.xml"/>
@@ -18,7 +18,7 @@
     <Include file="WC_ParametersDL.xml"/>
     <Include file="WC_slowDL.net.nml"/>
    
-    <Simulation id="sim2" length="100ms" step="0.005ms" target="net1" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+    <Simulation id="WC_slowDL" length="100ms" step="0.005ms" target="net1" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
         <Display id="d2" title="Rates" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-0.1" ymax="1.2">
             <Line id="r_Exc" quantity="ExcPop/0/Exc/R" scale="1" color="#ff0000" timeScale="1ms"/>

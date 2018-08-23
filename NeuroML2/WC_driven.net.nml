@@ -3,7 +3,7 @@
     <include href="WC_Parameters.xml"/>
     <sineGenerator id="mod_Exc" delay="0ms" phase="0" duration="100ms" amplitude="0.5nA" period="25ms"/>
     <sineGenerator id="mod_Inh" delay="0ms" phase="0" duration="100ms" amplitude="0.5nA" period="25ms"/>
-    <network id="net">
+    <network id="net1">
         <population id="ExcPop" component="Exc" size="1" type="populationList">
             <property tag="color" value="0 0 1"/>
             <property tag="radius" value="10"/>

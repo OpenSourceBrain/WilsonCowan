@@ -7,7 +7,7 @@
      -->
     
     <!-- Specify which component to run -->
-    <Target component="LEMS_WC_slow.xml"/>
+    <Target component="WC_slow"/>
 
     <!-- Include core NeuroML2 ComponentType definitions -->
     <Include file="Cells.xml"/>
@@ -18,7 +18,7 @@
     <Include file="WC_Parameters.xml"/>
     <Include file="WC_slow.net.nml"/>
    
-    <Simulation id="LEMS_WC_slow.xml" length="100ms" step="0.005ms" target="net" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+    <Simulation id="WC_slow" length="100ms" step="0.005ms" target="net1" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
         <Display id="d2" title="Rates" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-0.1" ymax="1.2">
             <Line id="r_Exc" quantity="ExcPop/0/Exc/r" scale="1" color="#ff0000" timeScale="1ms"/>

@@ -11,7 +11,7 @@ from pyneuroml.lems.LEMSSimulation import LEMSSimulation
 random.seed(42)
 
 # The file GenerateWilsonCowanLEMS contains the description of
-# the Wilson and Cowan model and will generate two files with the
+# the Wilson and Cowan model and will generate two files with the
 # NeuroML2/LEMS definition of the model.
 # Inputs:
 #      -ie0: Modulatory current added to the excitatory population
@@ -20,7 +20,7 @@ random.seed(42)
 #             (if the dims argument is not passed the generated
 #              NeuroML/LEMS file will not contain any units)
 # Output:
-#      - The script will generate a NeuroML/LEMS
+#      - The script will generate a NeuroML/LEMS
 
 def generatePopulationProjection(from_pop, to_pop, n_from_pop, n_to_pop, w_to_from_pop, net):
     connection_count = 0
@@ -45,7 +45,8 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl):
     # Create simulation
     # Create LEMS file
     dl_str = 'DL' if dl else ''
-    sim_id = 'LEMS_WC_%s%s.xml' %(baseline,dl_str)
+    sim_file = 'LEMS_WC_%s%s.xml' %(baseline,dl_str)
+    sim_id = 'WC_%s%s' %(baseline,dl_str)
     dt = 0.005
     ls = LEMSSimulation(sim_id, duration, dt, 'net1')
     colours = ['#ff0000', '#0000ff']
@@ -78,7 +79,7 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl):
         for n_pop in range(n_pops[pop_idx]):
             ls.add_column_to_output_file(of1, 'r_%s' %pop, '%sPop/%d/%s/%s' %(pop, n_pop, pop, 'R' if dl else 'r'))
 
-    save_path = os.path.join(sim_id)
+    save_path = os.path.join(sim_file)
     ls.save_to_file(file_name=save_path)
 
 parser = argparse.ArgumentParser(description='Parameters for the Wilson and Cowan.')
