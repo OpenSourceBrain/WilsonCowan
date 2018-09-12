@@ -1,11 +1,30 @@
+import numpy as np
 from neuromllite.NetworkGenerator import check_to_generate_or_run
 from neuromllite import Simulation
-from neuromllite import Network, Population, Projection, Cell, Synapse, RectangularRegion, RandomLayout
+
+from neuromllite import Network, Population, Projection, Cell, Synapse
+from neuromllite import RandomConnectivity, RectangularRegion, RandomLayout
 
 import sys
 
 # This function generates the overview of the network using neuromllite
+def internal_connections(pops):
+    for pre in pops:
+        for post in pops:
 
+            weight = W[pops.index(post)][pops.index(pre)]
+            print('Connection %s -> %s weight %s'%(pre.id,
+            post.id, weight))
+            if weight!=0:
+
+                net.projections.append(Projection(id='proj_%s_%s'%(pre.id,post.id),
+                                                    presynaptic=pre.id,
+                                                    postsynaptic=post.id,
+                                                    synapse=syns[pre.id],
+                                                    type='continuousProjection',
+                                                    delay=0,
+                                                    weight=weight,
+                                                    random_connectivity=RandomConnectivity(probability=1)))
 # Build the network
 net = Network(id='WC')
 net.notes = 'A simple WC network'
@@ -36,28 +55,14 @@ inh_syn = Synapse(id='rsInh', lems_source_file='RateBased.xml')
 net.synapses.append(exc_syn)
 net.synapses.append(inh_syn)
 
-# Add projections
-net.projections.append(Projection(id='projEE',
-                                 presynaptic=exc_pop.id,
-                                 postsynaptic=exc_pop.id,
-                                 synapse=exc_syn.id))
-                                 
-net.projections.append(Projection(id='projEI',
-                                 presynaptic=exc_pop.id,
-                                 postsynaptic=inh_pop.id,
-                                 synapse=exc_syn.id))
-                                 
-net.projections.append(Projection(id='projIE',
-                                 presynaptic=inh_pop.id,
-                                 postsynaptic=exc_pop.id,
-                                 synapse=inh_syn.id,
-                                 weight=-1))
-                                 
-net.projections.append(Projection(id='projII',
-                                 presynaptic=inh_pop.id,
-                                 postsynaptic=inh_pop.id,
-                                 synapse=inh_syn.id,
-                                 weight=-1))
+syns = {exc_pop.id:exc_syn.id, inh_pop.id:inh_syn.id}
+
+W = np.array([[10, -8],
+              [12, -3]])
+
+# Add internal connections
+pops = [exc_pop, inh_pop]
+internal_connections(pops)
 
 # Save to JSON format
 net.id = 'WC'
