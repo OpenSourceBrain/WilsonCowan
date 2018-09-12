@@ -14,3 +14,6 @@
 /notebooks/.ipynb_checkpoints
 /NeuroML2/*.dat
 /NeuroML2/*.gv
+/NeuroML2/report.*.txt
+/NeuroML2/WC.net.nml
+/NeuroML2/LEMS_SimExample1.xml
