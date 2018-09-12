@@ -96,8 +96,8 @@ if not args.nogui:
 
     plt.figure()
     plt.plot(vv_p, uu_p, label='EI trajectory', color='b',linewidth=0.8)
-    plt.plot(population, E, label=r'$\frac{dI}{dt}=0$', linestyle='-.', color='r',linewidth=0.8)
-    plt.plot(I, population, label=r'$\frac{dE}{dt}=0$', linestyle='-.',color='g',linewidth=0.8)
+    plt.plot(I, population, label=r'$\frac{dE}{dt}=0$', linestyle='-.',color='r',linewidth=0.8)
+    plt.plot(population, E, label=r'$\frac{dI}{dt}=0$', linestyle='-.', color='g',linewidth=0.8)
     plt.legend(loc='upper left')
     plt.xlabel('I')
     plt.ylabel('E')
