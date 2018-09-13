@@ -17,3 +17,6 @@
 /NeuroML2/report.*.txt
 /NeuroML2/WC.net.nml
 /NeuroML2/LEMS_SimExample1.xml
+/NeuroML2/ParamSweep_*
+/NeuroML2/WC.gv.png
+/NeuroML2/average_last_1percent.png
