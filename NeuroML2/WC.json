@@ -1,0 +1,116 @@
+{
+    "WC": {
+        "version": "NeuroMLlite v0.1.4", 
+        "parameters": {
+            "wii": 3.0, 
+            "wei": 12.0, 
+            "wie": 8.0, 
+            "wee": 10.0
+        }, 
+        "notes": "A simple WC network", 
+        "synapses": [
+            {
+                "rsExc": {
+                    "lems_source_file": "WC_Parameters.xml"
+                }
+            }, 
+            {
+                "rsInh": {
+                    "lems_source_file": "RateBased.xml"
+                }
+            }
+        ], 
+        "regions": [
+            {
+                "WilsonCowan": {
+                    "x": 0.0, 
+                    "y": 0.0, 
+                    "z": 0.0, 
+                    "width": 1000.0, 
+                    "height": 100.0, 
+                    "depth": 1000.0
+                }
+            }
+        ], 
+        "populations": [
+            {
+                "Excitatory": {
+                    "size": 1, 
+                    "component": "Exc", 
+                    "properties": {
+                        "color": ".8 0 0"
+                    }, 
+                    "random_layout": {
+                        "region": "WilsonCowan"
+                    }
+                }
+            }, 
+            {
+                "Inhibitory": {
+                    "size": 1, 
+                    "component": "Inh", 
+                    "properties": {
+                        "color": "0 0 .8"
+                    }, 
+                    "random_layout": {
+                        "region": "WilsonCowan"
+                    }
+                }
+            }
+        ], 
+        "projections": [
+            {
+                "proj_Excitatory_Excitatory": {
+                    "presynaptic": "Excitatory", 
+                    "postsynaptic": "Excitatory", 
+                    "synapse": "rsExc", 
+                    "type": "continuousProjection", 
+                    "delay": 0, 
+                    "weight": "wee", 
+                    "random_connectivity": {
+                        "probability": 1.0
+                    }
+                }
+            }, 
+            {
+                "proj_Excitatory_Inhibitory": {
+                    "presynaptic": "Excitatory", 
+                    "postsynaptic": "Inhibitory", 
+                    "synapse": "rsExc", 
+                    "type": "continuousProjection", 
+                    "delay": 0, 
+                    "weight": "wei", 
+                    "random_connectivity": {
+                        "probability": 1.0
+                    }
+                }
+            }, 
+            {
+                "proj_Inhibitory_Excitatory": {
+                    "presynaptic": "Inhibitory", 
+                    "postsynaptic": "Excitatory", 
+                    "synapse": "rsInh", 
+                    "type": "continuousProjection", 
+                    "delay": 0, 
+                    "weight": "-1*wie", 
+                    "random_connectivity": {
+                        "probability": 1.0
+                    }
+                }
+            }, 
+            {
+                "proj_Inhibitory_Inhibitory": {
+                    "presynaptic": "Inhibitory", 
+                    "postsynaptic": "Inhibitory", 
+                    "synapse": "rsInh", 
+                    "type": "continuousProjection", 
+                    "delay": 0, 
+                    "weight": "-1*wii", 
+                    "random_connectivity": {
+                        "probability": 1.0
+                    }
+                }
+            }
+        ]
+    }
+}
