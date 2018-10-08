@@ -6,16 +6,16 @@
 
     <ComponentType name="baseRateUnitDL"
                    extends="baseCellMembPotDL"
-                   description="Base type of any cell/population which has a (dimensionless) rate _R.">
+                   description="Base type of a Component (which could be a cell/population/neural mass) which has a (dimensionless) rate _R.">
         <!-- Note: initially at least this will extend the baseCellMembPotDL (i.e. with V) for greater compatibility with
-        other export simulators... -->
+        other export simulators, particularly Neuron... -->
         <Exposure name="R" dimension="none"/>
     </ComponentType>
 
 
     <ComponentType name="baseRateUnit"
                    extends="baseCellMembPot"
-                   description="Base type of any cell/population which has a (dimensional) rate _r.">
+                   description="Base type of a Component (which could be a cell/population/neural mass) which has a (dimensional) rate _r.">
         <!-- Note: initially at least this will extend the baseCellMembPot (i.e. with v) for greater compatibility with
         other export simulators, particularly Neuron... -->
         <Exposure name="r" dimension="per_time"/>
@@ -24,9 +24,9 @@
 
     <ComponentType  name="wilsonCowanCellDL"
                     extends="baseRateUnitDL"
-                    description="Work in progress...">
+                    description="Population of neurons according to the Wilson and Cowan model with mean riring rate _R">
 
-        <Parameter name="tau" dimension="time"/>
+        <Parameter name="tau" dimension="time" description="Characteristic time course of the population"/>
         <Parameter name="R0" dimension="none"/>
         <Parameter name="z" dimension="none"/>
 
@@ -37,7 +37,7 @@
 
         <Dynamics>
 
-            <StateVariable name="R" dimension="none" exposure="R" description="Rate..."/>
+            <StateVariable name="R" dimension="none" exposure="R" description="Mean firing rate of population"/>
 
             <DerivedVariable name="iSyn" dimension="none" exposure="iSyn" select="synapses[*]/I" reduce="add" />
 
@@ -60,6 +60,7 @@
         </Dynamics>
 
     </ComponentType>
+
 
     <ComponentType  name="wilsonCowanCell"
                     extends="baseRateUnit"
