@@ -5,7 +5,7 @@ The models in this repo are based on: From Excitatory and Inhibitory Interaction
 ## Model
 The Wilson and Cowan model describes the dynamics and interaction between the excitatory and inhibitory population of neurons.
 
-![](https://github.com/OpenSourceBrain/WilsonCowan/tree/master/NeuroML2/img/WC.gv.png)
+![](https://github.com/OpenSourceBrain/WilsonCowan/blob/master/NeuroML2/img/WC.gv.png)
 
 Following the Bard Ermentrout's implementation in [xppau](http://www.math.pitt.edu/~bard/xpp/xpp.html), the dynamics of the model is defined as:
 
