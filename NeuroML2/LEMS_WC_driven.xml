@@ -24,6 +24,10 @@
             <Line id="r_Exc" quantity="ExcPop/0/Exc/r" scale="1" color="#ff0000" timeScale="1ms"/>
             <Line id="r_Inh" quantity="InhPop/0/Inh/r" scale="1" color="#0000ff" timeScale="1ms"/>
         </Display>
+        <Display id="dv" title="Rates" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-0.1" ymax="1.2">
+            <Line id="r_Exc_v" quantity="ExcPop/0/Exc/v" scale="1mV" color="#ff0000" timeScale="1ms"/>
+            <Line id="r_Inh_v" quantity="InhPop/0/Inh/v" scale="1mV" color="#0000ff" timeScale="1ms"/>
+        </Display>
         
         <Display id="d1" title="iSyn" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-2" ymax="8">
             <Line id="iSyn_Exc" quantity="ExcPop/0/Exc/iSyn" scale="1nA" color="#ff0000" timeScale="1ms"/>
