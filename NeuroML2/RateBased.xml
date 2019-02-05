@@ -91,6 +91,9 @@
             <DerivedVariable name="v" dimension="voltage" exposure="v" value="0*MVOLT_SCALE"/>-->
 
             <TimeDerivative variable="r" value="(-1*r + f*HZ_SCALE)/tau"/>
+            
+            <!-- Not working...
+            <TimeDerivative variable="v" value="(MVOLT_SCALE/HZ_SCALE) * (-1*r + f*HZ_SCALE)/tau"/> --> 
 
             <OnStart>
                 <StateAssignment variable="r" value="r0"/>
