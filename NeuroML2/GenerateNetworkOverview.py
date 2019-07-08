@@ -29,6 +29,11 @@ def internal_connections(pops):
 net = Network(id='WC')
 net.notes = 'A simple WC network'
 
+net.parameters = { 'wee':      10,
+                   'wei':      12,
+                   'wie':      -8,
+                   'wii':      -3}  
+
 r1 = RectangularRegion(id='WilsonCowan', x=0,y=0,z=0,width=1000,height=100,depth=1000)
 net.regions.append(r1)
 
@@ -57,8 +62,8 @@ net.synapses.append(inh_syn)
 
 syns = {exc_pop.id:exc_syn.id, inh_pop.id:inh_syn.id}
 
-W = np.array([[10, -8],
-              [12, -3]])
+W = [['wee', 'wie'],
+     ['wei','wii']]
 
 # Add internal connections
 pops = [exc_pop, inh_pop]
@@ -69,9 +74,11 @@ net.id = 'WC'
 print (net.to_json())
 new_file = net.to_json_file('WC.json')
 
-check_to_generate_or_run(sys.argv,
-                         Simulation(id='SimExample1',
+sim = Simulation(id='SimExample1',
                                     duration='100',
                                     dt='0.025',
                                     network=new_file,
-                                    recordRates={'all':'*'}))
+                                    recordRates={'all':'*'})
+sim.to_json_file('SimWC.nmllite.json')
+
+check_to_generate_or_run(sys.argv,sim)
