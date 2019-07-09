@@ -43,13 +43,13 @@ inh_cell = Cell(id='Inh', lems_source_file='RateBased.xml') #  hack to include t
 exc_pop = Population(id='Excitatory', 
                      size=1, 
                      component=exc_cell.id, 
-                     properties={'color': '.8 0 0'},
+                     properties={'color': '0 0 0.8'},
                      random_layout = RandomLayout(region=r1.id))
 
 inh_pop = Population(id='Inhibitory', 
                      size=1, 
                      component=inh_cell.id, 
-                     properties={'color': '0 0 .8'},
+                     properties={'color': '0.8 0 0'},
                      random_layout = RandomLayout(region=r1.id))
 
 net.populations.append(exc_pop)
