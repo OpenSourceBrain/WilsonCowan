@@ -41,13 +41,13 @@ def generatePopulationProjection(from_pop, to_pop, n_from_pop, n_to_pop, w_to_fr
             connection_count += 1
 
 
-def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl):
+def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dt, dl):
     # Create simulation
     # Create LEMS file
     dl_str = 'DL' if dl else ''
     sim_file = 'LEMS_WC_%s%s.xml' %(baseline,dl_str)
     sim_id = 'WC_%s%s' %(baseline,dl_str)
-    dt = 0.005
+    
     ls = LEMSSimulation(sim_id, duration, dt, 'net1')
     colours = ['#ff0000', '#0000ff']
     colours2 = ['#ff7777', '#7777ff']
@@ -114,6 +114,7 @@ else:
 
 nml_doc = NeuroMLDocument(id='WC_%s%s' % (baseline, dl_str))
 duration = 100 # ms
+dt = 0.005 # ms
 
 for pop_idx, pop in enumerate(pops):
     if dl:
@@ -125,6 +126,10 @@ for pop_idx, pop in enumerate(pops):
 
 # Create the network
 net = Network(id='net1')
+
+net.properties.append(Property('recommended_dt_ms', dt))
+net.properties.append(Property('recommended_duration_ms', duration))
+
 nml_doc.networks.append(net)
 nml_doc.includes.append(IncludeType('RateBased.xml'))
 
@@ -159,5 +164,5 @@ nml_file = 'WC_%s%s.net.nml' %(baseline,dl_str)
 writers.NeuroMLWriter.write(nml_doc, nml_file)
 
 print('Written NeuroML file: %s'%nml_file)
-generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dl)
+generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dt, dl)
 
