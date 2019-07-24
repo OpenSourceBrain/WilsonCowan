@@ -135,7 +135,7 @@ nml_doc.includes.append(IncludeType('RateBased.xml'))
 
 nml_doc.includes.append(IncludeType('WC_Parameters%s.xml'%dl_str))
 
-colours = ['0 0 1', '1 0 0']
+colours = ['1 0 0', '0 0 1']
 for pop_idx, pop in enumerate(pops):
     population = Population(id='%sPop' %pop, component=(pops[pop_idx]), size=n_pops[pop_idx], type='populationList')
     net.populations.append(population)

@@ -44,13 +44,13 @@ net.cells.append(inh_cell)
 exc_pop = Population(id='Excitatory', 
                      size=1, 
                      component=exc_cell.id, 
-                     properties={'color': '0 0 0.8','radius':10},
+                     properties={'color': '0.8 0 0','radius':10},
                      relative_layout = RelativeLayout(region=r1.id,x=-20,y=0,z=0))
 
 inh_pop = Population(id='Inhibitory', 
                      size=1, 
                      component=inh_cell.id, 
-                     properties={'color': '0.8 0 0','radius':10},
+                     properties={'color': '0 0 0.8','radius':10},
                      relative_layout = RelativeLayout(region=r1.id,x=20,y=0,z=0))
 
 net.populations.append(exc_pop)

@@ -17,5 +17,11 @@ jnml LEMS_WC_slow.xml -nogui
 jnml LEMS_WC_driven.xml -neuron -run -nogui
 jnml LEMS_WC_slow.xml -neuron -run -nogui
 
+cd test_files
+
+python Spiking.py -jnml
+
+cd -
+
 omv all -V 
 

@@ -21,3 +21,11 @@
 *.pyc
 /NeuroML2/LEMS_SimWC.xml
 /NeuroML2/clean.sh
+/NeuroML2/test_files/LEMS_SimSpiking.xml
+*_nrn.py
+*.spikes
+/NeuroML2/test_files/*.dat
+/NeuroML2/test_files/x86_64
+*.gv*
+/NeuroML2/test_files/*.mod
+/NeuroML2/test_files/report.*.txt
