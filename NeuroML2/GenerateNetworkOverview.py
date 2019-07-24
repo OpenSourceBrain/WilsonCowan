@@ -74,11 +74,12 @@ net.id = 'WC'
 print (net.to_json())
 new_file = net.to_json_file('WC.json')
 
-sim = Simulation(id='SimExample1',
+sim = Simulation(id='SimWC',
                                     duration='100',
-                                    dt='0.025',
+                                    dt='0.005',
                                     network=new_file,
                                     recordRates={'all':'*'})
+                                    
 sim.to_json_file('SimWC.nmllite.json')
 
 check_to_generate_or_run(sys.argv,sim)

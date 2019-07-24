@@ -15,7 +15,9 @@
 /NeuroML2/*.dat
 /NeuroML2/*.gv
 /NeuroML2/report.*.txt
-/NeuroML2/WC.net.nml
 /NeuroML2/LEMS_SimExample1.xml
 /NeuroML2/*.gv*
 /NeuroML2/ParamSweep_*
+*.pyc
+/NeuroML2/LEMS_SimWC.xml
+/NeuroML2/clean.sh

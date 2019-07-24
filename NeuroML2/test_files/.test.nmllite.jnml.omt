@@ -1,0 +1,28 @@
+# Script for running automated tests on OSB using Travis-CI, see https://github.com/OpenSourceBrain/osb-model-validation
+
+target: test_jnml.py 
+engine: NetPyNE 
+mep: ../.test.slow.mep
+experiments:
+  e:
+    observables:
+      spike times:
+        file: 
+          path: ../Excitatory_0.r.dat
+          columns: [0,1]
+          scaling: [1000, 1]
+        spike detection: 
+          method: threshold
+          threshold: 0.557
+        tolerance: 0.0057803468208092535
+  i:
+    observables:
+      spike times:
+        file: 
+          path: ../Inhibitory_0.r.dat
+          columns: [0,1]
+          scaling: [1000, 1]
+        spike detection: 
+          method: threshold
+          threshold: 0.652
+        tolerance: 0.0042182227221596895
