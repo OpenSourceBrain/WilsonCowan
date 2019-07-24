@@ -1,9 +1,8 @@
-import numpy as np
 from neuromllite.NetworkGenerator import check_to_generate_or_run
 from neuromllite import Simulation
 
 from neuromllite import Network, Population, Projection, Cell, Synapse
-from neuromllite import RandomConnectivity, RectangularRegion, RandomLayout
+from neuromllite import RandomConnectivity, RectangularRegion, RelativeLayout
 
 import sys
 
@@ -13,7 +12,7 @@ def internal_connections(pops):
         for post in pops:
 
             weight = W[pops.index(post)][pops.index(pre)]
-            print('Connection %s -> %s weight %s'%(pre.id,
+            print('Connection %s -> %s weight: %s'%(pre.id,
             post.id, weight))
             if weight!=0:
 
@@ -39,18 +38,20 @@ net.regions.append(r1)
 
 exc_cell = Cell(id='Exc', lems_source_file='WC_Parameters.xml')
 inh_cell = Cell(id='Inh', lems_source_file='RateBased.xml') #  hack to include this file too.  
+net.cells.append(exc_cell)
+net.cells.append(inh_cell)
 
 exc_pop = Population(id='Excitatory', 
                      size=1, 
                      component=exc_cell.id, 
-                     properties={'color': '0 0 0.8'},
-                     random_layout = RandomLayout(region=r1.id))
+                     properties={'color': '0 0 0.8','radius':10},
+                     relative_layout = RelativeLayout(region=r1.id,x=-20,y=0,z=0))
 
 inh_pop = Population(id='Inhibitory', 
                      size=1, 
                      component=inh_cell.id, 
-                     properties={'color': '0.8 0 0'},
-                     random_layout = RandomLayout(region=r1.id))
+                     properties={'color': '0.8 0 0','radius':10},
+                     relative_layout = RelativeLayout(region=r1.id,x=20,y=0,z=0))
 
 net.populations.append(exc_pop)
 net.populations.append(inh_pop)
@@ -71,7 +72,6 @@ internal_connections(pops)
 
 # Save to JSON format
 net.id = 'WC'
-print (net.to_json())
 new_file = net.to_json_file('WC.json')
 
 sim = Simulation(id='SimWC',
