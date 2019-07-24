@@ -3,6 +3,10 @@
     Generated network: WC
     Generation seed: 1234
     NeuroMLlite parameters: 
+        exc_input = 0nA
+        inh_input = 0nA
+        input_delay = 20ms
+        input_duration = 60ms
         wee = 10
         wei = 12
         wie = -8
@@ -13,6 +17,8 @@
     <silentSynapse id="silentSyn_proj_Excitatory_Inhibitory"/>
     <silentSynapse id="silentSyn_proj_Inhibitory_Excitatory"/>
     <silentSynapse id="silentSyn_proj_Inhibitory_Inhibitory"/>
+    <pulseGenerator id="Exc_in" delay="20ms" duration="60ms" amplitude="0nA"/>
+    <pulseGenerator id="Inh_in" delay="20ms" duration="60ms" amplitude="0nA"/>
     <network id="WC">
         <notes>A simple WC network</notes>
         <property tag="recommended_dt_ms" value="0.005"/>
@@ -45,5 +51,11 @@
         <continuousProjection id="proj_Inhibitory_Inhibitory" presynapticPopulation="Inhibitory" postsynapticPopulation="Inhibitory">
             <continuousConnectionInstanceW id="0" preCell="../Inhibitory/0/Inh" postCell="../Inhibitory/0/Inh" preComponent="silentSyn_proj_Inhibitory_Inhibitory" postComponent="rsInh" weight="-3."/>
         </continuousProjection>
+        <inputList id="Exc_stim" population="Excitatory" component="Exc_in">
+            <input id="0" target="../Excitatory/0/Exc" destination="synapses"/>
+        </inputList>
+        <inputList id="Inh_stim" population="Inhibitory" component="Inh_in">
+            <input id="0" target="../Inhibitory/0/Inh" destination="synapses"/>
+        </inputList>
     </network>
 </neuroml>
