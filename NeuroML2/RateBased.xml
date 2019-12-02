@@ -22,6 +22,73 @@
     </ComponentType>
 
 
+    <ComponentType  name="mejiasEtAl2016Cell"
+                    extends="baseRateUnit"
+                    description="Work in progress...">
+
+        <Parameter name="tau" dimension="time"/>
+        <Parameter name="r0" dimension="per_time"/>
+        <Parameter name="noiseDt" dimension="time"/>
+
+        <Parameter name="sig" dimension="none" description="Standard deviation of noise"/>
+
+        <Attachments name="synapses" type="basePointCurrent"/>
+
+        <Exposure name="phi" dimension="none"/>
+        <Exposure name="iSyn" dimension="current"/>
+        <Exposure name="xi" dimension="none"/>
+
+        <Constant name="NAMP_SCALE" dimension="current" value="1 nA"/>
+        <Constant name="MS_SCALE" dimension="time" value=".001 s"/>
+        <Constant name="HZ_SCALE" dimension="per_time" value="1 Hz"/>
+        <Constant name="MVOLT_SCALE" dimension="voltage" value="1mV"/>
+
+        <Dynamics>
+
+            <StateVariable name="r" dimension="per_time" exposure="r" description="Rate..."/>
+            <StateVariable name="v" dimension="voltage" exposure="v"/>
+            <StateVariable name="dr" dimension="per_time"/>
+
+            <StateVariable name="U" dimension="none"/>
+            <StateVariable name="V" dimension="none"/>
+            <StateVariable name="xi" dimension="none" exposure="xi"/>
+
+            <DerivedVariable name="iSyn" dimension="current" exposure="iSyn" select="synapses[*]/i" reduce="add" />
+            <DerivedVariable name="x" dimension="none" value="(iSyn)/NAMP_SCALE"/>
+
+            <ConditionalDerivedVariable name="phi" dimension="none" exposure="phi">
+            	<Case condition="x .eq. 0" value="1"/>
+            	<Case condition="x .neq. 0" value="x / (1 - exp(-1*x))"/>
+            </ConditionalDerivedVariable>
+
+            <!-- Set v to r for now...
+            <DerivedVariable name="v" dimension="voltage" exposure="v" value="0*MVOLT_SCALE"/>-->
+            
+           <DerivedVariable name="internalNoise" dimension="per_time"  value="sig * xi * (tau/ noiseDt) ^ .5 * HZ_SCALE"/>
+           
+           <TimeDerivative variable="r" value="((-1*r + phi*HZ_SCALE + internalNoise)/tau) "/>
+
+
+            <OnStart>
+                <StateAssignment variable="r" value="r0"/>
+            </OnStart>
+
+            <!-- On condition is not need on the model but NeuroML requires its definition -->
+            <OnCondition test="r .lt. 0">
+                <EventOut port="spike"/>
+            </OnCondition>
+
+            <OnCondition test="t .geq. 0">
+                <StateAssignment variable="U" value="random(1)"/>
+                <StateAssignment variable="V" value="random(1)"/>
+                <StateAssignment variable="xi" value="sqrt(-2*log(U))*cos(2*3.14159265359*V)"/>
+            </OnCondition>
+
+        </Dynamics>
+
+    </ComponentType>
+
+
     <ComponentType  name="wilsonCowanCellDL"
                     extends="baseRateUnitDL"
                     description="Work in progress...">
@@ -61,6 +128,32 @@
 
     </ComponentType>
 
+    <ComponentType  name="isoclineDL"
+                    extends="baseRateUnitDL"
+                    description="Work in progress...">
+
+        <Parameter name="e0" dimension="none"/>
+        <Parameter name="w1" dimension="none"/>
+        <Parameter name="w2" dimension="none"/>
+        <Parameter name="z" dimension="none"/>
+
+        <Exposure name="f_inverse" dimension="none"/>
+        <Exposure name="R_iso" dimension="none"/>
+        <Exposure name="x" dimension="none"/>
+
+        <Dynamics>
+            <DerivedVariable name="x" dimension="none" exposure="x" value="e0 / 1 - (1 * e0)" />
+            <DerivedVariable name="f_inverse" dimension="none" exposure="f_inverse" value="-log((1/x) - 1) + z"/>
+            <DerivedVariable name="R_iso" dimension="none" exposure="R_iso" value="((w1 * e0) - f_inverse)/w2"/>
+
+            <OnCondition test="R_iso .lt. 0">
+                <EventOut port="spike"/>
+            </OnCondition>
+
+        </Dynamics>
+
+    </ComponentType>
+
     <ComponentType  name="wilsonCowanCell"
                     extends="baseRateUnit"
                     description="Work in progress...">
@@ -91,9 +184,6 @@
             <DerivedVariable name="v" dimension="voltage" exposure="v" value="0*MVOLT_SCALE"/>-->
 
             <TimeDerivative variable="r" value="(-1*r + f*HZ_SCALE)/tau"/>
-            
-            <!-- Not working...
-            <TimeDerivative variable="v" value="(MVOLT_SCALE/HZ_SCALE) * (-1*r + f*HZ_SCALE)/tau"/> --> 
 
             <OnStart>
                 <StateAssignment variable="r" value="r0"/>
