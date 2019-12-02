@@ -105,8 +105,10 @@ sim = Simulation(id='SimWC',
                                     duration='100',
                                     dt='0.005',
                                     network=new_file,
-                                    recordRates={'all':'*'})
-                                    
+                                    recordRates={'all':'*'},
+                                    plots2D={'E-I':{'x_axis':'Excitatory/0/Exc/r',
+                                                    'y_axis':'Inhibitory/0/Inh/r'}})
+                            
 sim.to_json_file('SimWC.nmllite.json')
 
 check_to_generate_or_run(sys.argv,sim)
