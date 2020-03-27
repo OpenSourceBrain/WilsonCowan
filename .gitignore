@@ -8,7 +8,6 @@
 /NeuroML2/x86_64
 /NeuroML2/*_nrn.py
 /NeuroML2/*.pov
-/NeuroML2/*.json
 /Python/*.dat
 /Python/*.dat
 /notebooks/.ipynb_checkpoints
@@ -29,3 +28,4 @@
 *.gv*
 /NeuroML2/test_files/*.mod
 /NeuroML2/test_files/report.*.txt
+/NeuroML2/LEMS_SimWC.png

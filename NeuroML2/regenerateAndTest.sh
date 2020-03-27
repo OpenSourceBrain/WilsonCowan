@@ -2,6 +2,8 @@
 
 set -e
 
+rm LEMS*ml *nml
+
 python GenerateWilsonCowanLEMS.py -ie0 0   -ii0 0    # dimensionless
 python GenerateWilsonCowanLEMS.py -ie0 0.5 -ii0 0.5  # dimensionless
 
@@ -16,6 +18,9 @@ jnml LEMS_WC_slow.xml -nogui
 
 jnml LEMS_WC_driven.xml -neuron -run -nogui
 jnml LEMS_WC_slow.xml -neuron -run -nogui
+
+python GenerateNetworkOverview.py -jnml
+jnml LEMS_SimWC.xml -neuron -run -nogui 
 
 cd test_files
 

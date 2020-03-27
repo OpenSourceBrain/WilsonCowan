@@ -37,7 +37,7 @@ r1 = RectangularRegion(id='WilsonCowan', x=0,y=0,z=0,width=1000,height=100,depth
 net.regions.append(r1)
 
 exc_cell = Cell(id='Exc', lems_source_file='WC_Parameters.xml')
-inh_cell = Cell(id='Inh', lems_source_file='RateBased.xml') #  hack to include this file too.  
+inh_cell = Cell(id='Inh', lems_source_file='WC_Parameters.xml')
 net.cells.append(exc_cell)
 net.cells.append(inh_cell)
 
@@ -57,7 +57,7 @@ net.populations.append(exc_pop)
 net.populations.append(inh_pop)
 
 exc_syn = Synapse(id='rsExc', lems_source_file='WC_Parameters.xml')
-inh_syn = Synapse(id='rsInh', lems_source_file='RateBased.xml')
+inh_syn = Synapse(id='rsInh', lems_source_file='WC_Parameters.xml')
 net.synapses.append(exc_syn)
 net.synapses.append(inh_syn)
 
