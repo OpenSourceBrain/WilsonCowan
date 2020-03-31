@@ -54,7 +54,6 @@ def generatePopulationSimulationLEMS(n_pops, baseline, pops, duration, dt, dl):
 
     # Add additional LEMS files
     # Add Wilson and Cowan Components
-    ls.include_lems_file('RateBased.xml', include_included=True)
     ls.include_lems_file('WC_Parameters%s.xml'%dl_str, include_included=True)
     # Add the network definition
     ls.include_lems_file('WC_%s%s.net.nml' %(baseline,dl_str), include_included=True)
