@@ -130,7 +130,6 @@ net.properties.append(Property('recommended_dt_ms', dt))
 net.properties.append(Property('recommended_duration_ms', duration))
 
 nml_doc.networks.append(net)
-nml_doc.includes.append(IncludeType('RateBased.xml'))
 
 nml_doc.includes.append(IncludeType('WC_Parameters%s.xml'%dl_str))
 
