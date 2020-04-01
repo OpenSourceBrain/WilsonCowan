@@ -1,13 +1,13 @@
-sudo: false
+dist: xenial
+sudo: false  
 
 addons:
    apt:
      packages:
-        - python-numpy 
-        - python-scipy 
-        - python-matplotlib 
-        - python-sympy
         - python-tk
+        - python-lxml
+        - python-tornado
+        - python-tables
     
 
 language: python
@@ -24,9 +24,13 @@ env:
 
 install: 
     - pip install git+https://github.com/OpenSourceBrain/osb-model-validation
+    - pip install numpy scipy # Why is this needed? Scipy doesn't seem to get installed correctly on trusty with addons above...
+    - pip install tables # Ditto
+    - pip install matplotlib # This is more because Matplotlib v2.x is required...
 
 script:
     - omv all -V
+    - omv list -V 
     
     
     
