@@ -65,6 +65,9 @@ While a more detailed description of the dynamics and isoline analysis with diff
 
 ### Requirements
 
-The simulations require [NEURON](https://www.neuron.yale.edu/neuron/download) and [jnml](https://github.com/NeuroML/jNeuroML) to be installed.
+The simulations require [NEURON](https://www.neuron.yale.edu/neuron/download) and [jnml](https://github.com/NeuroML/jNeuroML) to be installed..
 
 [![Build Status](https://travis-ci.org/OpenSourceBrain/WilsonCowan.svg?branch=master)](https://travis-ci.org/OpenSourceBrain/WilsonCowan)
+
+
+
