@@ -2,12 +2,12 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.5.1 (libNeuroML v0.2.50)
+        This LEMS file has been automatically generated using PyNeuroML v0.5.2 (libNeuroML v0.2.50)
 
      -->
     
     <!-- Specify which component to run -->
-    <Target component="WC_slowDL"/>
+    <Target component="WC_slowDL" reportFile="report.txt"/>
 
     <!-- Include core NeuroML2 ComponentType definitions -->
     <Include file="Cells.xml"/>
