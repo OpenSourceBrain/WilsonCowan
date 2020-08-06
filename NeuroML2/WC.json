@@ -1,6 +1,6 @@
 {
     "WC": {
-        "version": "NeuroMLlite v0.2.0", 
+        "version": "NeuroMLlite v0.2.1", 
         "parameters": {
             "wie": -8, 
             "input_duration": "60ms", 

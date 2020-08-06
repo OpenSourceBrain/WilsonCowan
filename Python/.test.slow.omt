@@ -1,9 +1,9 @@
 # Script for running automated tests on OSB using Travis-CI, see https://github.com/OpenSourceBrain/osb-model-validation
  
-# runs with Brian; should be just Python, but Brian engine is quick to set up...
+# runs with Brian2; should be just Python, but Brian engine is quick to set up...
 
 target: WilsonCowan.py 
-engine: Brian   
+engine: Brian2   
 mep: ../NeuroML2/.test.slow.mep
 experiments:
   e:

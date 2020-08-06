@@ -20,7 +20,7 @@ python:
 env:
     - OMV_ENGINE=jNeuroML
     - OMV_ENGINE=jNeuroML_NEURON
-    - OMV_ENGINE=Brian     # Python script runs with Brian; should be just Python, but Brian engine is quick to set up...
+    - OMV_ENGINE=Brian2     # Python script runs with Brian2; should be just Python, but Brian2 engine is quick to set up...
 
 install: 
     - pip install git+https://github.com/OpenSourceBrain/osb-model-validation
