@@ -1,196 +1,196 @@
 {
     "SpikingEI": {
-        "version": "NeuroMLlite v0.2.1", 
+        "version": "NeuroMLlite v0.2.5",
         "parameters": {
-            "wie": -12, 
-            "epsilon": 0.5, 
-            "wii": -3, 
-            "wee": 8, 
-            "tauMem": 20.0, 
-            "wei": 12, 
-            "tauRef": 2.0, 
-            "in_rate": 400, 
-            "w_scale": 0.001, 
-            "tauSyn": 0.1, 
-            "order": 5
-        }, 
-        "notes": "SpikingEI", 
+            "order": 5,
+            "wee": 8,
+            "wei": 12,
+            "wie": -12,
+            "wii": -3,
+            "w_scale": 0.001,
+            "in_rate": 400,
+            "epsilon": 0.5,
+            "tauMem": 20.0,
+            "tauSyn": 0.1,
+            "tauRef": 2.0
+        },
+        "notes": "SpikingEI",
         "cells": [
             {
                 "ifcell": {
-                    "pynn_cell": "IF_curr_alpha", 
+                    "pynn_cell": "IF_curr_alpha",
                     "parameters": {
-                        "tau_refrac": "tauRef", 
-                        "tau_m": "tauMem", 
-                        "i_offset": 0, 
-                        "cm": 0.001, 
-                        "v_thresh": -50, 
-                        "v_rest": -70, 
-                        "v_reset": -70
+                        "tau_m": "tauMem",
+                        "tau_refrac": "tauRef",
+                        "v_rest": -70,
+                        "v_reset": -70,
+                        "v_thresh": -50,
+                        "cm": 0.001,
+                        "i_offset": 0
                     }
                 }
-            }, 
+            },
             {
                 "poisson_input": {
-                    "pynn_cell": "SpikeSourcePoisson", 
+                    "pynn_cell": "SpikeSourcePoisson",
                     "parameters": {
-                        "duration": 1000000000.0, 
-                        "start": 0, 
-                        "rate": "in_rate"
+                        "rate": "in_rate",
+                        "start": 0,
+                        "duration": 1000000000.0
                     }
                 }
             }
-        ], 
+        ],
         "synapses": [
             {
                 "ampa": {
-                    "pynn_synapse_type": "curr_alpha", 
-                    "pynn_receptor_type": "excitatory", 
+                    "pynn_synapse_type": "curr_alpha",
+                    "pynn_receptor_type": "excitatory",
                     "parameters": {
                         "tau_syn": 0.1
                     }
                 }
-            }, 
+            },
             {
                 "gaba": {
-                    "pynn_synapse_type": "curr_alpha", 
-                    "pynn_receptor_type": "inhibitory", 
+                    "pynn_synapse_type": "curr_alpha",
+                    "pynn_receptor_type": "inhibitory",
                     "parameters": {
                         "tau_syn": 0.1
                     }
                 }
             }
-        ], 
+        ],
         "regions": [
             {
                 "region1": {
-                    "x": 0.0, 
-                    "y": 0.0, 
-                    "z": 0.0, 
-                    "width": 1000.0, 
-                    "height": 100.0, 
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "width": 1000.0,
+                    "height": 100.0,
                     "depth": 1000.0
                 }
             }
-        ], 
+        ],
         "populations": [
             {
                 "Excitatory": {
-                    "size": "4*order", 
-                    "component": "ifcell", 
+                    "size": "4*order",
+                    "component": "ifcell",
                     "properties": {
-                        "color": ".9 0 0", 
+                        "color": ".9 0 0",
                         "radius": 5
-                    }, 
+                    },
                     "random_layout": {
                         "region": "region1"
                     }
                 }
-            }, 
+            },
             {
                 "expoisson": {
-                    "size": "4*order", 
-                    "component": "poisson_input", 
+                    "size": "4*order",
+                    "component": "poisson_input",
                     "properties": {
-                        "color": "0.9 0.7 0.7", 
+                        "color": "0.9 0.7 0.7",
                         "radius": 3
-                    }, 
+                    },
                     "random_layout": {
                         "region": "region1"
                     }
                 }
-            }, 
+            },
             {
                 "Inhibitory": {
-                    "size": "1*order", 
-                    "component": "ifcell", 
+                    "size": "1*order",
+                    "component": "ifcell",
                     "properties": {
-                        "color": "0 0 .9", 
+                        "color": "0 0 .9",
                         "radius": 5
-                    }, 
+                    },
                     "random_layout": {
                         "region": "region1"
                     }
                 }
-            }, 
+            },
             {
                 "inpoisson": {
-                    "size": "1*order", 
-                    "component": "poisson_input", 
+                    "size": "1*order",
+                    "component": "poisson_input",
                     "properties": {
-                        "color": "0.7 0.7 0.9", 
+                        "color": "0.7 0.7 0.9",
                         "radius": 3
-                    }, 
+                    },
                     "random_layout": {
                         "region": "region1"
                     }
                 }
             }
-        ], 
+        ],
         "projections": [
             {
                 "projEinput": {
-                    "presynaptic": "expoisson", 
-                    "postsynaptic": "Excitatory", 
-                    "synapse": "ampa", 
-                    "delay": 0.025, 
-                    "weight": 0.01, 
+                    "presynaptic": "expoisson",
+                    "postsynaptic": "Excitatory",
+                    "synapse": "ampa",
+                    "delay": 0.025,
+                    "weight": 0.01,
                     "one_to_one_connector": {}
                 }
-            }, 
+            },
             {
                 "projIinput": {
-                    "presynaptic": "inpoisson", 
-                    "postsynaptic": "Inhibitory", 
-                    "synapse": "ampa", 
-                    "delay": 0.025, 
-                    "weight": 0.01, 
+                    "presynaptic": "inpoisson",
+                    "postsynaptic": "Inhibitory",
+                    "synapse": "ampa",
+                    "delay": 0.025,
+                    "weight": 0.01,
                     "one_to_one_connector": {}
                 }
-            }, 
+            },
             {
                 "projEE": {
-                    "presynaptic": "Excitatory", 
-                    "postsynaptic": "Excitatory", 
-                    "synapse": "ampa", 
-                    "delay": 0.025, 
-                    "weight": "wee * w_scale", 
+                    "presynaptic": "Excitatory",
+                    "postsynaptic": "Excitatory",
+                    "synapse": "ampa",
+                    "delay": 0.025,
+                    "weight": "wee * w_scale",
                     "random_connectivity": {
                         "probability": "epsilon"
                     }
                 }
-            }, 
+            },
             {
                 "projEI": {
-                    "presynaptic": "Excitatory", 
-                    "postsynaptic": "Inhibitory", 
-                    "synapse": "ampa", 
-                    "delay": 0.025, 
-                    "weight": "wei * w_scale", 
+                    "presynaptic": "Excitatory",
+                    "postsynaptic": "Inhibitory",
+                    "synapse": "ampa",
+                    "delay": 0.025,
+                    "weight": "wei * w_scale",
                     "random_connectivity": {
                         "probability": "epsilon"
                     }
                 }
-            }, 
+            },
             {
                 "projIE": {
-                    "presynaptic": "Inhibitory", 
-                    "postsynaptic": "Excitatory", 
-                    "synapse": "gaba", 
-                    "delay": 0.025, 
-                    "weight": "wie * w_scale", 
+                    "presynaptic": "Inhibitory",
+                    "postsynaptic": "Excitatory",
+                    "synapse": "gaba",
+                    "delay": 0.025,
+                    "weight": "wie * w_scale",
                     "random_connectivity": {
                         "probability": "epsilon"
                     }
                 }
-            }, 
+            },
             {
                 "projII": {
-                    "presynaptic": "Inhibitory", 
-                    "postsynaptic": "Inhibitory", 
-                    "synapse": "gaba", 
-                    "delay": 0.025, 
-                    "weight": "wii * w_scale", 
+                    "presynaptic": "Inhibitory",
+                    "postsynaptic": "Inhibitory",
+                    "synapse": "gaba",
+                    "delay": 0.025,
+                    "weight": "wii * w_scale",
                     "random_connectivity": {
                         "probability": "epsilon"
                     }

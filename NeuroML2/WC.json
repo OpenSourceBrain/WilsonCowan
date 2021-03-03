@@ -1,175 +1,175 @@
 {
     "WC": {
-        "version": "NeuroMLlite v0.2.1", 
+        "version": "NeuroMLlite v0.2.5",
         "parameters": {
-            "wie": -8, 
-            "input_duration": "60ms", 
-            "wee": 10, 
-            "wei": 12, 
-            "wii": -3, 
-            "input_delay": "20ms", 
-            "exc_input": "0nA", 
-            "inh_input": "0nA"
-        }, 
-        "notes": "A simple WC network", 
+            "wee": 10,
+            "wei": 12,
+            "wie": -8,
+            "wii": -3,
+            "exc_input": "0nA",
+            "inh_input": "0nA",
+            "input_delay": "20ms",
+            "input_duration": "60ms"
+        },
+        "notes": "A simple WC network",
         "cells": [
             {
                 "Exc": {
                     "lems_source_file": "WC_Parameters.xml"
                 }
-            }, 
+            },
             {
                 "Inh": {
                     "lems_source_file": "WC_Parameters.xml"
                 }
             }
-        ], 
+        ],
         "synapses": [
             {
                 "rsExc": {
                     "lems_source_file": "WC_Parameters.xml"
                 }
-            }, 
+            },
             {
                 "rsInh": {
                     "lems_source_file": "WC_Parameters.xml"
                 }
             }
-        ], 
+        ],
         "input_sources": [
             {
                 "Exc_in": {
-                    "neuroml2_input": "PulseGenerator", 
+                    "neuroml2_input": "PulseGenerator",
                     "parameters": {
-                        "delay": "input_delay", 
-                        "duration": "input_duration", 
-                        "amplitude": "exc_input"
+                        "amplitude": "exc_input",
+                        "delay": "input_delay",
+                        "duration": "input_duration"
                     }
                 }
-            }, 
+            },
             {
                 "Inh_in": {
-                    "neuroml2_input": "PulseGenerator", 
+                    "neuroml2_input": "PulseGenerator",
                     "parameters": {
-                        "delay": "input_delay", 
-                        "duration": "input_duration", 
-                        "amplitude": "inh_input"
+                        "amplitude": "inh_input",
+                        "delay": "input_delay",
+                        "duration": "input_duration"
                     }
                 }
             }
-        ], 
+        ],
         "regions": [
             {
                 "WilsonCowan": {
-                    "x": 0.0, 
-                    "y": 0.0, 
-                    "z": 0.0, 
-                    "width": 1000.0, 
-                    "height": 100.0, 
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "width": 1000.0,
+                    "height": 100.0,
                     "depth": 1000.0
                 }
             }
-        ], 
+        ],
         "populations": [
             {
                 "Excitatory": {
-                    "size": 1, 
-                    "component": "Exc", 
+                    "size": 1,
+                    "component": "Exc",
                     "properties": {
-                        "color": "0.8 0 0", 
+                        "color": "0.8 0 0",
                         "radius": 10
-                    }, 
+                    },
                     "relative_layout": {
-                        "region": "WilsonCowan", 
-                        "x": -20.0, 
-                        "y": 0.0, 
+                        "region": "WilsonCowan",
+                        "x": -20.0,
+                        "y": 0.0,
                         "z": 0.0
                     }
                 }
-            }, 
+            },
             {
                 "Inhibitory": {
-                    "size": 1, 
-                    "component": "Inh", 
+                    "size": 1,
+                    "component": "Inh",
                     "properties": {
-                        "color": "0 0 0.8", 
+                        "color": "0 0 0.8",
                         "radius": 10
-                    }, 
+                    },
                     "relative_layout": {
-                        "region": "WilsonCowan", 
-                        "x": 20.0, 
-                        "y": 0.0, 
+                        "region": "WilsonCowan",
+                        "x": 20.0,
+                        "y": 0.0,
                         "z": 0.0
                     }
                 }
             }
-        ], 
+        ],
         "projections": [
             {
                 "proj_Excitatory_Excitatory": {
-                    "presynaptic": "Excitatory", 
-                    "postsynaptic": "Excitatory", 
-                    "synapse": "rsExc", 
-                    "type": "continuousProjection", 
-                    "delay": 0, 
-                    "weight": "wee", 
+                    "presynaptic": "Excitatory",
+                    "postsynaptic": "Excitatory",
+                    "synapse": "rsExc",
+                    "type": "continuousProjection",
+                    "delay": 0,
+                    "weight": "wee",
                     "random_connectivity": {
                         "probability": 1
                     }
                 }
-            }, 
+            },
             {
                 "proj_Excitatory_Inhibitory": {
-                    "presynaptic": "Excitatory", 
-                    "postsynaptic": "Inhibitory", 
-                    "synapse": "rsExc", 
-                    "type": "continuousProjection", 
-                    "delay": 0, 
-                    "weight": "wei", 
+                    "presynaptic": "Excitatory",
+                    "postsynaptic": "Inhibitory",
+                    "synapse": "rsExc",
+                    "type": "continuousProjection",
+                    "delay": 0,
+                    "weight": "wei",
                     "random_connectivity": {
                         "probability": 1
                     }
                 }
-            }, 
+            },
             {
                 "proj_Inhibitory_Excitatory": {
-                    "presynaptic": "Inhibitory", 
-                    "postsynaptic": "Excitatory", 
-                    "synapse": "rsInh", 
-                    "type": "continuousProjection", 
-                    "delay": 0, 
-                    "weight": "wie", 
+                    "presynaptic": "Inhibitory",
+                    "postsynaptic": "Excitatory",
+                    "synapse": "rsInh",
+                    "type": "continuousProjection",
+                    "delay": 0,
+                    "weight": "wie",
                     "random_connectivity": {
                         "probability": 1
                     }
                 }
-            }, 
+            },
             {
                 "proj_Inhibitory_Inhibitory": {
-                    "presynaptic": "Inhibitory", 
-                    "postsynaptic": "Inhibitory", 
-                    "synapse": "rsInh", 
-                    "type": "continuousProjection", 
-                    "delay": 0, 
-                    "weight": "wii", 
+                    "presynaptic": "Inhibitory",
+                    "postsynaptic": "Inhibitory",
+                    "synapse": "rsInh",
+                    "type": "continuousProjection",
+                    "delay": 0,
+                    "weight": "wii",
                     "random_connectivity": {
                         "probability": 1
                     }
                 }
             }
-        ], 
+        ],
         "inputs": [
             {
                 "Exc_stim": {
-                    "input_source": "Exc_in", 
-                    "population": "Excitatory", 
+                    "input_source": "Exc_in",
+                    "population": "Excitatory",
                     "percentage": 100.0
                 }
-            }, 
+            },
             {
                 "Inh_stim": {
-                    "input_source": "Inh_in", 
-                    "population": "Inhibitory", 
+                    "input_source": "Inh_in",
+                    "population": "Inhibitory",
                     "percentage": 100.0
                 }
             }

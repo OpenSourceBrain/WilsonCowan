@@ -170,7 +170,6 @@
 
         <Constant name="NAMP_SCALE" dimension="current" value="1 nA"/>
         <Constant name="HZ_SCALE" dimension="per_time" value="1 Hz"/>
-        <Constant name="MVOLT_SCALE" dimension="voltage" value="1mV"/>
 
         <Dynamics>
 
