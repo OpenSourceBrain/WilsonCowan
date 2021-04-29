@@ -10,7 +10,7 @@
     <Parameter dimension="time" name="tau"/>
     <Parameter dimension="per_time" name="r0"/>
     <Parameter dimension="time" name="noiseDt"/>
-    <Parameter dimension="none" name="sig"/>
+    <Parameter description="Standard deviation of noise" dimension="none" name="sig"/>
     <Constant dimension="current" name="NAMP_SCALE" value="1 nA"/>
     <Constant dimension="time" name="MS_SCALE" value=".001 s"/>
     <Constant dimension="per_time" name="HZ_SCALE" value="1 Hz"/>

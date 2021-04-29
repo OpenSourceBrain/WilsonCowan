@@ -1,6 +1,6 @@
 {
     "WC": {
-        "version": "NeuroMLlite v0.3.0",
+        "version": "NeuroMLlite v0.3.2",
         "parameters": {
             "wee": 10,
             "wei": 12,

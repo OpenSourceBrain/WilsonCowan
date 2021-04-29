@@ -1,6 +1,6 @@
 {
     "SpikingEI": {
-        "version": "NeuroMLlite v0.3.0",
+        "version": "NeuroMLlite v0.3.2",
         "parameters": {
             "order": 5,
             "wee": 8,
