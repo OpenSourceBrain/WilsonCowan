@@ -1,5 +1,7 @@
 ## Wilson and Cowan model
 
+[![Continuous build using OMV](https://github.com/OpenSourceBrain/WilsonCowan/actions/workflows/omv-ci.yml/badge.svg)](https://github.com/OpenSourceBrain/WilsonCowan/actions/workflows/omv-ci.yml)
+
 The models in this repo are based on: From Excitatory and Inhibitory Interactions in Localized Populations of Model Neurons Hugh R. Wilson and Jack D. Cowan; Biophys J. 1972 January; 12:1-24. [doi:10.1016/S0006-3495(72)86068-5](https://dx.doi.org/10.1016%2FS0006-3495(72)86068-5)
 
 ### Model
@@ -67,7 +69,6 @@ While a more detailed description of the dynamics and isoline analysis with diff
 
 The simulations require [NEURON](https://www.neuron.yale.edu/neuron/download) and [jnml](https://github.com/NeuroML/jNeuroML) to be installed..
 
-[![Build Status](https://travis-ci.com/OpenSourceBrain/WilsonCowan.svg?branch=master)](https://travis-ci.com/OpenSourceBrain/WilsonCowan)
 
 
 
