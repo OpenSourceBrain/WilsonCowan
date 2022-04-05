@@ -1,6 +1,7 @@
 {
     "WC": {
-        "version": "NeuroMLlite v0.3.2",
+        "version": "NeuroMLlite v0.5.0",
+        "notes": "A simple WC network",
         "parameters": {
             "wee": 10,
             "wei": 12,
@@ -11,7 +12,6 @@
             "input_delay": "20ms",
             "input_duration": "60ms"
         },
-        "notes": "A simple WC network",
         "cells": {
             "Exc": {
                 "lems_source_file": "WC_Parameters.xml"
@@ -30,20 +30,20 @@
         },
         "input_sources": {
             "Exc_in": {
-                "neuroml2_input": "PulseGenerator",
                 "parameters": {
                     "amplitude": "exc_input",
                     "delay": "input_delay",
                     "duration": "input_duration"
-                }
+                },
+                "neuroml2_input": "PulseGenerator"
             },
             "Inh_in": {
-                "neuroml2_input": "PulseGenerator",
                 "parameters": {
                     "amplitude": "inh_input",
                     "delay": "input_delay",
                     "duration": "input_duration"
-                }
+                },
+                "neuroml2_input": "PulseGenerator"
             }
         },
         "regions": {

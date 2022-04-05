@@ -31,7 +31,7 @@ net.notes = 'A simple WC network'
 net.parameters = { 'wee':      10,
                    'wei':      12,
                    'wie':      -8,
-                   'wii':      -3}  
+                   'wii':      -3}
 
 r1 = RectangularRegion(id='WilsonCowan', x=0,y=0,z=0,width=1000,height=100,depth=1000)
 net.regions.append(r1)
@@ -41,15 +41,15 @@ inh_cell = Cell(id='Inh', lems_source_file='WC_Parameters.xml')
 net.cells.append(exc_cell)
 net.cells.append(inh_cell)
 
-exc_pop = Population(id='Excitatory', 
-                     size=1, 
-                     component=exc_cell.id, 
+exc_pop = Population(id='Excitatory',
+                     size=1,
+                     component=exc_cell.id,
                      properties={'color': '0.8 0 0','radius':10},
                      relative_layout = RelativeLayout(region=r1.id,x=-20,y=0,z=0))
 
-inh_pop = Population(id='Inhibitory', 
-                     size=1, 
-                     component=inh_cell.id, 
+inh_pop = Population(id='Inhibitory',
+                     size=1,
+                     component=inh_cell.id,
                      properties={'color': '0 0 0.8','radius':10},
                      relative_layout = RelativeLayout(region=r1.id,x=20,y=0,z=0))
 
@@ -87,7 +87,7 @@ net.inputs.append(Input(id='Exc_stim',
                         input_source=input_source_e.id,
                         population=exc_pop.id,
                         percentage=100))
-                        
+
 input_source_i = InputSource(id='Inh_in',
                              neuroml2_input='PulseGenerator',
                              parameters={'amplitude':'inh_input', 'delay':'input_delay', 'duration':'input_duration'})
@@ -105,10 +105,10 @@ sim = Simulation(id='SimWC',
                                     duration='100',
                                     dt='0.005',
                                     network=new_file,
-                                    recordRates={'all':'*'},
+                                    record_rates={'all':'*'},
                                     plots2D={'E-I':{'x_axis':'Excitatory/0/Exc/r',
                                                     'y_axis':'Inhibitory/0/Inh/r'}})
-                            
+
 sim.to_json_file('SimWC.nmllite.json')
 
 check_to_generate_or_run(sys.argv,sim)
