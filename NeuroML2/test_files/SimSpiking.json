@@ -1,15 +1,15 @@
 {
     "SimSpiking": {
-        "version": "NeuroMLlite v0.3.2",
+        "version": "NeuroMLlite v0.5.2",
         "network": "SpikingEI.json",
         "duration": 500.0,
         "dt": 0.025,
         "seed": 123,
-        "recordTraces": {
+        "record_traces": {
             "Excitatory": "*",
             "Inhibitory": "*"
         },
-        "recordSpikes": {
+        "record_spikes": {
             "all": "*"
         }
     }

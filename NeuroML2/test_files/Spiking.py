@@ -1,4 +1,4 @@
-from neuromllite import Network, Cell, Population, Synapse, RectangularRegion, RandomLayout 
+from neuromllite import Network, Cell, Population, Synapse, RectangularRegion, RandomLayout
 from neuromllite import Projection, RandomConnectivity, OneToOneConnector, Simulation
 
 from neuromllite.NetworkGenerator import check_to_generate_or_run
@@ -8,16 +8,16 @@ import sys
 
 
 def generate():
-    
+
     dt = 0.025
     simtime = 500
-    
+
     ################################################################################
     ###   Build new network
 
     net = Network(id='SpikingEI')
     net.notes = 'SpikingEI'
-    
+
 
     net.parameters = { 'order':   5,
                        'wee':      8,
@@ -34,7 +34,7 @@ def generate():
     cell = Cell(id='ifcell', pynn_cell='IF_curr_alpha')
 
 
-    cell.parameters = { 'tau_m':       'tauMem', 
+    cell.parameters = { 'tau_m':       'tauMem',
                         'tau_refrac':  'tauRef',
                         'v_rest':      -70,
                         'v_reset':     -70,
@@ -54,24 +54,24 @@ def generate():
     r1 = RectangularRegion(id='region1', x=0,y=0,z=0,width=1000,height=100,depth=1000)
     net.regions.append(r1)
 
-    pE = Population(id='Excitatory', 
-                    size='4*order', 
-                    component=cell.id, 
+    pE = Population(id='Excitatory',
+                    size='4*order',
+                    component=cell.id,
                     properties={'color':'.9 0 0', 'radius':5},
                     random_layout = RandomLayout(region=r1.id))
-    pEpoisson = Population(id='expoisson', 
-                           size='4*order', 
-                           component=poisson_input.id, 
+    pEpoisson = Population(id='expoisson',
+                           size='4*order',
+                           component=poisson_input.id,
                            properties={'color':'0.9 0.7 0.7', 'radius':3},
                            random_layout = RandomLayout(region=r1.id))
-    pI = Population(id='Inhibitory', 
-                    size='1*order', 
-                    component=cell.id, 
+    pI = Population(id='Inhibitory',
+                    size='1*order',
+                    component=cell.id,
                     properties={'color':'0 0 .9', 'radius':5},
                     random_layout = RandomLayout(region=r1.id))
-    pIpoisson = Population(id='inpoisson', 
-                           size='1*order', 
-                           component=poisson_input.id, 
+    pIpoisson = Population(id='inpoisson',
+                           size='1*order',
+                           component=poisson_input.id,
                            properties={'color':'0.7 0.7 0.9', 'radius':3},
                            random_layout = RandomLayout(region=r1.id))
 
@@ -81,38 +81,38 @@ def generate():
     net.populations.append(pIpoisson)
 
 
-    net.synapses.append(Synapse(id='ampa', 
-                                pynn_receptor_type='excitatory', 
-                                pynn_synapse_type='curr_alpha', 
+    net.synapses.append(Synapse(id='ampa',
+                                pynn_receptor_type='excitatory',
+                                pynn_synapse_type='curr_alpha',
                                 parameters={'tau_syn':0.1}))
-                                
-    net.synapses.append(Synapse(id='gaba', 
-                                pynn_receptor_type='inhibitory', 
-                                pynn_synapse_type='curr_alpha', 
+
+    net.synapses.append(Synapse(id='gaba',
+                                pynn_receptor_type='inhibitory',
+                                pynn_synapse_type='curr_alpha',
                                 parameters={'tau_syn':0.1}))
 
     delay_ext = dt
-    
-    
+
+
     net.projections.append(Projection(id='projEinput',
-                                      presynaptic=pEpoisson.id, 
+                                      presynaptic=pEpoisson.id,
                                       postsynaptic=pE.id,
                                       synapse='ampa',
                                       delay=delay_ext,
                                       weight=0.01,
                                       one_to_one_connector=OneToOneConnector()))
-    
+
     net.projections.append(Projection(id='projIinput',
-                                      presynaptic=pIpoisson.id, 
+                                      presynaptic=pIpoisson.id,
                                       postsynaptic=pI.id,
                                       synapse='ampa',
                                       delay=delay_ext,
                                       weight=0.01,
                                       one_to_one_connector=OneToOneConnector()))
-                                      
-           
+
+
     net.projections.append(Projection(id='projEE',
-                                      presynaptic=pE.id, 
+                                      presynaptic=pE.id,
                                       postsynaptic=pE.id,
                                       synapse='ampa',
                                       delay=delay_ext,
@@ -120,23 +120,23 @@ def generate():
                                       random_connectivity=RandomConnectivity(probability='epsilon')))
 
     net.projections.append(Projection(id='projEI',
-                                      presynaptic=pE.id, 
+                                      presynaptic=pE.id,
                                       postsynaptic=pI.id,
                                       synapse='ampa',
                                       delay=delay_ext,
                                       weight='wei * w_scale',
                                       random_connectivity=RandomConnectivity(probability='epsilon')))
-    
+
     net.projections.append(Projection(id='projIE',
-                                      presynaptic=pI.id, 
+                                      presynaptic=pI.id,
                                       postsynaptic=pE.id,
                                       synapse='gaba',
                                       delay=delay_ext,
                                       weight='wie * w_scale',
                                       random_connectivity=RandomConnectivity(probability='epsilon')))
-                                      
+
     net.projections.append(Projection(id='projII',
-                                      presynaptic=pI.id, 
+                                      presynaptic=pI.id,
                                       postsynaptic=pI.id,
                                       synapse='gaba',
                                       delay=delay_ext,
@@ -156,11 +156,11 @@ def generate():
                      duration=simtime,
                      dt=dt,
                      seed= 123,
-                     recordTraces={pE.id:'*',pI.id:'*'},
-                     recordSpikes={'all':'*'})
+                     record_traces={pE.id:'*',pI.id:'*'},
+                     record_spikes={'all':'*'})
 
     sim.to_json_file()
-    
+
     return sim, net
 
 
@@ -168,12 +168,12 @@ def generate():
 if __name__ == "__main__":
 
     if '-sweep' in sys.argv:
-        
+
         sim, net = generate()
-        sim.recordTraces={}
-        
+        sim.record_traces={}
+
         fixed = {'dt':0.025, 'order':5}
- 
+
         vary = {'eta':[0.5,1,1.5,2,3,4,5,6,7,8,9,10]}
         #vary = {'eta':[1,2,5]}
         vary['seed'] = [i for i in range(10)]
@@ -188,11 +188,11 @@ if __name__ == "__main__":
         nmllr = NeuroMLliteRunner('SimExample7.json',
                                   simulator=simulator)
 
-        ps = ParameterSweep(nmllr, 
-                            vary, 
+        ps = ParameterSweep(nmllr,
+                            vary,
                             fixed,
                             num_parallel_runs=16,
-                            plot_all=False, 
+                            plot_all=False,
                             heatmap_all=False,
                             show_plot_already=False,
                             peak_threshold=0)
@@ -211,21 +211,21 @@ if __name__ == "__main__":
         import matplotlib.pyplot as plt
 
         plt.show()
-        
+
     if '-sweep2' in sys.argv:
-        
+
         sim, net = generate()
-        sim.recordTraces={}
-        
+        sim.record_traces={}
+
         fixed = {'dt':0.025, 'order':5}
- 
+
         vary = {'eta':[0.5,1,1.5,2,3]}
         vary = {'epsilon':[0.01,0.1,0.2,0.5,0.9]}
         vary = {'J':[0.01,0.1,0.2,0.5,0.9]}
         #vary = {'g':[0.5,1,1.5,2,3,20]}
-        
+
         first = vary.keys()[0]
-        
+
         #vary = {'eta':[1,2,5]}
         #vary['seed'] = [i for i in range(10)]
         vary['seed'] = [i for i in range(3)]
@@ -239,11 +239,11 @@ if __name__ == "__main__":
         nmllr = NeuroMLliteRunner('SimExample7.json',
                                   simulator=simulator)
 
-        ps = ParameterSweep(nmllr, 
-                            vary, 
+        ps = ParameterSweep(nmllr,
+                            vary,
                             fixed,
                             num_parallel_runs=16,
-                            plot_all=False, 
+                            plot_all=False,
                             heatmap_all=False,
                             show_plot_already=False,
                             peak_threshold=0)
@@ -254,7 +254,7 @@ if __name__ == "__main__":
         #  ps.plotLines('weightInput','average_last_1percent',save_figure_to='average_last_1percent.png')
         #ps.plotLines('weightInput','mean_spike_frequency',save_figure_to='mean_spike_frequency.png')
         #ps.plotLines('eta','Einput[0]/spike:mean_spike_frequency',save_figure_to='mean_spike_frequency.png')
-        
+
         second = 'seed'
         ps.plotLines(first,'expoisson/0/poisson_input/spike:mean_spike_frequency',second_param=second,save_figure_to='mean_spike_frequency_ein.png')
         ps.plotLines(first,'inpoisson/0/poisson_input/spike:mean_spike_frequency',second_param=second,save_figure_to='mean_spike_frequency_iin.png')
@@ -264,7 +264,7 @@ if __name__ == "__main__":
         import matplotlib.pyplot as plt
 
         plt.show()
-    
+
     else:
 
         sim, net = generate()
@@ -275,4 +275,3 @@ if __name__ == "__main__":
         import sys
 
         check_to_generate_or_run(sys.argv, sim)
-

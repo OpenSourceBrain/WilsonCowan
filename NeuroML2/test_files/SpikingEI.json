@@ -1,6 +1,7 @@
 {
     "SpikingEI": {
-        "version": "NeuroMLlite v0.3.2",
+        "version": "NeuroMLlite v0.5.2",
+        "notes": "SpikingEI",
         "parameters": {
             "order": 5,
             "wee": 8,
@@ -14,10 +15,8 @@
             "tauSyn": 0.1,
             "tauRef": 2.0
         },
-        "notes": "SpikingEI",
         "cells": {
             "ifcell": {
-                "pynn_cell": "IF_curr_alpha",
                 "parameters": {
                     "tau_m": "tauMem",
                     "tau_refrac": "tauRef",
@@ -26,31 +25,32 @@
                     "v_thresh": -50,
                     "cm": 0.001,
                     "i_offset": 0
-                }
+                },
+                "pynn_cell": "IF_curr_alpha"
             },
             "poisson_input": {
-                "pynn_cell": "SpikeSourcePoisson",
                 "parameters": {
                     "rate": "in_rate",
                     "start": 0,
                     "duration": 1000000000.0
-                }
+                },
+                "pynn_cell": "SpikeSourcePoisson"
             }
         },
         "synapses": {
             "ampa": {
-                "pynn_synapse_type": "curr_alpha",
-                "pynn_receptor_type": "excitatory",
                 "parameters": {
                     "tau_syn": 0.1
-                }
+                },
+                "pynn_synapse_type": "curr_alpha",
+                "pynn_receptor_type": "excitatory"
             },
             "gaba": {
-                "pynn_synapse_type": "curr_alpha",
-                "pynn_receptor_type": "inhibitory",
                 "parameters": {
                     "tau_syn": 0.1
-                }
+                },
+                "pynn_synapse_type": "curr_alpha",
+                "pynn_receptor_type": "inhibitory"
             }
         },
         "regions": {
