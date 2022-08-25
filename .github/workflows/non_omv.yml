@@ -1,0 +1,49 @@
+name: Non OMV tests
+
+on:
+  push:
+    branches: [ master, development, experimental ]
+  pull_request:
+    branches: [ master, development, experimental ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.9 ]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python  ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version:  ${{ matrix.python-version }}
+
+    - name: Run pure Python example
+      run: |
+        echo "Running non OMV tests..."
+        cd Python
+        pip install numpy matplotlib argparse
+        python WilsonCowan.py -nogui
+        ./run_WilsonCowan.sh -nogui
+
+    - name: Generate NeuroML version
+      run: |
+
+        cd NeuroML2
+        pip install pyneuroml
+
+        python GenerateNetworkOverview.py -nml
+
+        pip install git+https://github.com/OpenSourceBrain/osb-model-validation
+        pip install scipy sympy matplotlib cython pandas tables
+
+        omv install NEURON
+        export NEURON_HOME=$pythonLocation # so that pynml can find neuron/nrnivmodl etc.
+
+        pip install pyelectro pynn
+
+        ./regenerateAndTest.sh
