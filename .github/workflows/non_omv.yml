@@ -26,7 +26,7 @@ jobs:
       run: |
         echo "Running non OMV tests..."
         cd Python
-        pip install numpy
+        pip install numpy matplotlib argparse
         python WilsonCowan.py -nogui
         ./run_WilsonCowan.sh -nogui
 
