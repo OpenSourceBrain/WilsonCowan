@@ -42,5 +42,6 @@ jobs:
         pip install scipy sympy matplotlib cython pandas tables
 
         omv install NEURON
+        export NEURON_HOME=$pythonLocation # so that pynml can find neuron/nrnivmodl etc.
 
         ./regenerateAndTest.sh
