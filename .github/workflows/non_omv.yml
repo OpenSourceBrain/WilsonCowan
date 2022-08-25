@@ -32,6 +32,8 @@ jobs:
 
     - name: Generate NeuroML version
       run: |
+
+        cd NeuroML2
         pip install pyneuroml
 
         python GenerateNetworkOverview.py -nml
