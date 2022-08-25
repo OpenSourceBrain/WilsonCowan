@@ -44,4 +44,6 @@ jobs:
         omv install NEURON
         export NEURON_HOME=$pythonLocation # so that pynml can find neuron/nrnivmodl etc.
 
+        pip install pyelectro
+
         ./regenerateAndTest.sh
