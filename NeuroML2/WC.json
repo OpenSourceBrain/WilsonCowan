@@ -1,6 +1,6 @@
 {
     "WC": {
-        "version": "NeuroMLlite v0.5.3",
+        "version": "NeuroMLlite v0.5.6",
         "notes": "A simple WC network",
         "parameters": {
             "wee": 10,
@@ -136,12 +136,12 @@
             "Exc_stim": {
                 "input_source": "Exc_in",
                 "population": "Excitatory",
-                "percentage": 100.0
+                "percentage": 100
             },
             "Inh_stim": {
                 "input_source": "Inh_in",
                 "population": "Inhibitory",
-                "percentage": 100.0
+                "percentage": 100
             }
         }
     }
