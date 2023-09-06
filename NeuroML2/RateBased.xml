@@ -265,7 +265,7 @@
 
         <Dynamics>
             <DerivedVariable name="rpeer" dimension="per_time" select="peer/r"/>
-            <DerivedVariable name="i" exposure="i"  value="0"/>
+            <DerivedVariable name="i" dimension="current" exposure="i" value="0"/>
         </Dynamics>
 
     </ComponentType>
