@@ -121,7 +121,7 @@
     <InstanceRequirement name="peer" type="baseGradedSynapse"/>
     <Dynamics>
       <DerivedVariable name="rpeer" dimension="per_time" select="peer/r"/>
-      <DerivedVariable name="i" exposure="i" value="0"/>
+      <DerivedVariable name="i" dimension="current" exposure="i" value="0"/>
     </Dynamics>
   </ComponentType>
   <ComponentType name="rateSynapse" extends="baseRateSynapse" description="...">
