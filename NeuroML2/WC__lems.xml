@@ -14,7 +14,6 @@
     <Constant name="NAMP_SCALE" value="1 nA" dimension="current"/>
     <Constant name="MS_SCALE" value=".001 s" dimension="time"/>
     <Constant name="HZ_SCALE" value="1 Hz" dimension="per_time"/>
-    <Constant name="MVOLT_SCALE" value="1mV" dimension="voltage"/>
     <Attachments name="synapses" type="basePointCurrent"/>
     <Exposure name="phi" dimension="none"/>
     <Exposure name="iSyn" dimension="current"/>
@@ -117,11 +116,12 @@
   </ComponentType>
   <ComponentType name="silentRateSynapse" extends="baseGradedSynapse" description="Dummy synapse which emits no current. Used as presynaptic endpoint for analog synaptic connection.">
     <Property name="weight" dimension="none" defaultValue="1"/>
+    <Constant name="NAMP_SCALE" value="1 nA" dimension="current"/>
     <Exposure name="i" dimension="current"/>
     <InstanceRequirement name="peer" type="baseGradedSynapse"/>
     <Dynamics>
       <DerivedVariable name="rpeer" dimension="per_time" select="peer/r"/>
-      <DerivedVariable name="i" dimension="current" exposure="i" value="0"/>
+      <DerivedVariable name="i" dimension="current" exposure="i" value="0*NAMP_SCALE"/>
     </Dynamics>
   </ComponentType>
   <ComponentType name="rateSynapse" extends="baseRateSynapse" description="...">

@@ -41,7 +41,7 @@
         <Constant name="NAMP_SCALE" dimension="current" value="1 nA"/>
         <Constant name="MS_SCALE" dimension="time" value=".001 s"/>
         <Constant name="HZ_SCALE" dimension="per_time" value="1 Hz"/>
-        <Constant name="MVOLT_SCALE" dimension="voltage" value="1mV"/>
+        <!--<Constant name="MVOLT_SCALE" dimension="voltage" value="1mV"/>-->
 
         <Dynamics>
 
@@ -261,11 +261,13 @@
 
         <Exposure name="i" dimension="current"/>
 
+        <Constant name="NAMP_SCALE" dimension="current" value="1 nA"/>
+
         <InstanceRequirement name="peer" type="baseGradedSynapse"/>
 
         <Dynamics>
             <DerivedVariable name="rpeer" dimension="per_time" select="peer/r"/>
-            <DerivedVariable name="i" dimension="current" exposure="i" value="0"/>
+            <DerivedVariable name="i" dimension="current" exposure="i" value="0*NAMP_SCALE"/>
         </Dynamics>
 
     </ComponentType>
