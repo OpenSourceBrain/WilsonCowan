@@ -2,7 +2,7 @@
 
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v1.1.13 (libNeuroML v0.5.8)
+        This LEMS file has been automatically generated using PyNeuroML v1.3.2 (libNeuroML v0.6.1)
 
      -->
 
@@ -17,7 +17,7 @@
     <Include file="WC_ParametersDL.xml"/>
     <Include file="WC_slowDL.net.nml"/>
 
-    <Simulation id="WC_slowDL" length="100ms" step="0.005ms" target="net1" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+    <Simulation id="WC_slowDL" length="100.0ms" step="0.005ms" target="net1" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         <Display id="d2" title="Rates" timeScale="1ms" xmin="-10.0" xmax="110.00000000000001" ymin="-0.1" ymax="1.2">
             <Line id="r_Exc" quantity="ExcPop/0/Exc/R" scale="1" color="#ff0000" timeScale="1ms"/>
             <Line id="r_Inh" quantity="InhPop/0/Inh/R" scale="1" color="#0000ff" timeScale="1ms"/>

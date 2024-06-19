@@ -1,6 +1,6 @@
 {
     "SimSpiking": {
-        "version": "NeuroMLlite v0.5.8",
+        "version": "NeuroMLlite v0.6.0",
         "network": "SpikingEI.json",
         "duration": 500.0,
         "dt": 0.025,

@@ -1,6 +1,6 @@
 {
     "WC": {
-        "version": "NeuroMLlite v0.5.8",
+        "version": "NeuroMLlite v0.6.0",
         "notes": "A simple WC network",
         "parameters": {
             "wee": 10,
